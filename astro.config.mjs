@@ -10,7 +10,12 @@ export default defineConfig({
   experimental: {
     assets: true,
   },
-  image: {
-    service: sharpImageService(),
+  // image: {
+  //   service: sharpImageService(),
+  // },
+  vite: {
+    ssr: {
+      noExternal: ['usehooks-ts'],
+    },
   },
 })

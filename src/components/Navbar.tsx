@@ -5,9 +5,10 @@ import {
   useTrail,
 } from '@react-spring/web'
 import React from 'react'
-import { BsChevronDoubleDown } from 'react-icons/bs'
 import { cn } from '../utils/misc'
 import { useMediaQuery } from 'usehooks-ts'
+import { ChevronsDown } from 'lucide-react'
+
 const links = [
   {
     text: 'Services',
@@ -54,7 +55,7 @@ export function Navbar() {
           }}
         >
           <span className="sr-only">Open Navigation</span>
-          <BsChevronDoubleDown size={25} />
+          <ChevronsDown size={25} />
         </button>
       </div>
       <animated.div
