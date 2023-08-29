@@ -23,6 +23,7 @@ const links = [
     href: '#contact-us',
   },
 ]
+
 export function Navbar() {
   const [reveal, setReveal] = React.useState(false)
   const isMobile = useMediaQuery('(max-width: 768px)')
@@ -44,7 +45,7 @@ export function Navbar() {
     config: rsConfig.default,
   })
   return (
-    <div className="fixed left-0 right-0 top-0 z-50 bg-black px-4 py-2 font-sans">
+    <div className="fixed left-0 right-0 top-0 z-50 bg-black px-4 py-2 font-sans w-screen">
       <div className="absolute bottom-0 left-1/2 right-1/2  grid h-20 w-20 -translate-x-1/2 transform place-items-center">
         <div className="absolute left-1/2 right-1/2 top-full h-[36px] w-[36px] -translate-x-1/2 transform border-x-[36px] border-b-0 border-t-[36px] border-solid border-x-transparent border-t-black"></div>
         <button
