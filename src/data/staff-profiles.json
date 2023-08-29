@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Tayler",
+    "social": {
+      "instagram": "enveousblonde"
+    },
+    "businessRole": "Part Owner",
+    "jobRole": "Stylist",
+    "order": 1,
+    "description": "My names Tayler aka @enveousblonde. I'm a stylist & part owner of The blonding room. I have been doing hair for 8+ years & have found a love for creating the perfect blonde! I do all colour services but blonding techniques are my favourite. If you've ever sat in my chair you know olaplex is my go to product line. For the last few years it has been my goal to have a space that's not only my own but one that's enjoyable for anyone that sits in my chair!"
+  },
+  {
+    "name": "Lindsey",
+    "social": {
+      "instagram": "blondingbylinds"
+    },
+    "businessRole": "Part Owner",
+    "jobRole": "Stylist",
+    "order": 2,
+    "description": "Lindsey has been a creative stylist in the London area for over the last ten years. She specializes in blonding, balayage services but has a passion for all hair colour services. Creating a space for clients to be able to relax, unwind and end up leaving beautiful has always been her goal! Whether it be a new client or one she's been styling for years, she is very excited to have you in her chair next!"
+  },
+  {
+    "name": "Jing-Jing",
+    "social": {
+      "instagram": "blondetones"
+    },
+    "businessRole": "",
+    "jobRole": "Stylist",
+    "order": 3,
+    "description": "Hi! My name is Jing-Jing, Jing or JJ for short! As a child I knew hairstyling would be my career of choice. I love creating dimensional blondes and brunettes for that perfect “lived in hair”. A fun fact about me is I've had my hair every colour except blue! When I'm not working behind the chair you can typically find me lounging around the house with my husband and two pups or spending quality time with my family. I am so grateful for the relationships I've built over the years whether it be with clients, coworkers, or other talented stylist; this job is truly a dream and so rewarding. I look forward to every new year and to the clients I have yet to meet!"
+  },
+  {
+    "name": "Juana",
+    "social": {
+      "instagram": "nailsbyjuana_"
+    },
+    "businessRole": "",
+    "jobRole": "Nail Technician",
+    "order": 4,
+    "description": "Hello everyone, my name is Juana (pronounced Ju-Anna). I'm excited to start this new journey by joining The Blonding Room. I also find myself very fortunate, as I get to be surrounded by many other talented women and new opportunities. I was born in London, ON but grew up in Brantford, ON. I've always felt like London was my home and where I belong. With having 2 older sisters, we always did each other's nails, hair, make-up, etc. So for me, wanting a career in the beauty industry was always on my mind. When I'm not in the salon I enjoy spending time with my family, hiking, baking and doing puzzles. I'm looking forward to the future here with my new work family and getting to meet new clients but appreciating those who have supported me during this time as a I navigate towards the next chapter in my life."
+  },
+  {
+    "name": "Sim",
+    "social": {
+      "instagram": "nailsbysim"
+    },
+    "businessRole": "",
+    "jobRole": "Nail Technician",
+    "order": 5,
+    "description": "Heyy! I'm Simuon but most call me Sim! I graduated from LubaMera Institute of Aesthetics & Cosmetology in 2016. I've always been fascinated with beauty and knew that I've always wanted a career in that industry. I have been an experienced Nail Technician for 6+ years now. My new chapter with The Blonding Room is very exciting because I'll be joining a great team of driven ladies who are passionate about what they do! When I'm not in the salon I enjoy going to the gym, adventuring outdoors and mostly hanging with my family. I'm so thankful and grateful for my clients that I've built relationships with throughout the years and just as excited to be welcoming new clients at The Blonding Room."
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "name": "The blonding room",
+  "siteUrl": "theblondingroom.ca",
+  "emailAddress": "theblondingroom@hotmail.com",
+  "phoneNumber": "519-854-6330",
+  "socialMedia": {
+    "instagram": "https://www.instagram.com/theblondingroom/"
+  },
+  "description": "Full Service Hair Salon",
+  "contactName": "Taylor Roche",
+  "address": "21578 Richmond Street Arva Ontario, Canada",
+  "openingWeek": "2nd week in April 2022",
+  "headerFont": {
+    "name": "Parisienne",
+    "googleUrl": "https://fonts.google.com/specimen/Parisienne?category=Handwriting&sort=popularity&preview.text=The%20blonding%20room&preview.text_type=custom&thickness=5"
+  },
+  "primaryFont": {
+    "name": "Montserrat",
+    "googleUrl": "https://fonts.google.com/specimen/Montserrat?sort=popularity&preview.text=The%20blonding%20room&preview.text_type=custom&query=m"
+  }
+}

@@ -1,0 +1,14 @@
+---
+import Gallery from '../components/Gallery.astro'
+import Hero from '../components/Hero.astro'
+import { Navbar } from '../components/Navbar'
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title="The Blonding Room">
+  <main>
+    <Navbar client:load />
+    <Hero />
+    <Gallery />
+  </main>
+</Layout>
