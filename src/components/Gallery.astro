@@ -1,11 +1,11 @@
 ---
-import Image from 'astro/components/image.astro'
-const images = await Astro.glob('../assets/gallery-2/salon/*.jpg').then(
-  (files) => {
-    return Promise.all(files.map((file) => file.default))
-  },
-)
-console.log(images)
+// import Image from 'astro/components/image.astro'
+// const images = await Astro.glob('../assets/gallery-2/salon/*.jpg').then(
+//   (files) => {
+//     return Promise.all(files.map((file) => file.default))
+//   },
+// )
+// console.log(images)
 ---
 
 <div class="my-20 px-4">
@@ -13,7 +13,7 @@ console.log(images)
     role="list"
     class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-5 xl:gap-x-8"
   >
-    {
+    <!-- {
       images.map((image) => {
         return (
           <li class="relative">
@@ -34,6 +34,6 @@ console.log(images)
           </li>
         )
       })
-    }
+    } -->
   </ul>
 </div>
