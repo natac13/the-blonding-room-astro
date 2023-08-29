@@ -1,6 +1,6 @@
 ---
 // import { Image } from 'astro:assets'
-// import heroImage from '~/assets/new-hero.png'
+import heroImage from '~/assets/new-hero.png'
 interface Props {}
 
 const {} = Astro.props
@@ -11,6 +11,12 @@ const {} = Astro.props
   class="relative flex h-full w-screen flex-col justify-stretch overflow-hidden bg-gray-50 md:flex-row"
 >
   <div class="mt-4 flex-1 bg-gray-50 shadow-inner lg:-m-8">
+    <img
+      src={heroImage.src}
+      alt="The Blonding Room Main Image"
+      loading="eager"
+      class="-mt-2 aspect-[3/2] object-cover md:aspect-auto md:h-full md:w-full"
+    />
     <!-- <Image
       src={heroImage}
       alt="The Blonding Room Main Image"
