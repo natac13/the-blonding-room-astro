@@ -1,0 +1,42 @@
+---
+import { InstagramIcon } from 'lucide-react'
+const socials = [
+  {
+    name: 'instagram',
+    url: 'https://www.instagram.com/theblondingroom/',
+    icon: InstagramIcon,
+  },
+]
+---
+
+<footer class="w-full bg-black pb-4 pt-3 text-gray-600">
+  <div
+    class="container mx-auto flex max-w-xs flex-col-reverse items-center justify-between gap-4 md:max-w-lg md:flex-row md:gap-0 lg:max-w-xl"
+  >
+    <div>
+      <p class="text-center text-xs md:text-sm">
+        © {new Date().getFullYear()} The blonding room. All rights reserved
+      </p>
+    </div>
+    <div>
+      <ul>
+        {
+          socials.map((social) => {
+            const Icon = social.icon
+            return (
+              <li>
+                <a
+                  href={social.url}
+                  class="group block rounded-sm bg-gray-900 p-1 hover:text-white/90 focus:text-white/90"
+                >
+                  <Icon />
+                  <span class="sr-only">{social.name}</span>
+                </a>
+              </li>
+            )
+          })
+        }
+      </ul>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,22 @@
+---
+interface Props {
+  title: string
+  content: string
+  href: string
+}
+const { title, content, href } = Astro.props
+---
+
+<a href={href} class="group flex max-w-xs flex-col items-center gap-3">
+  <div class="text-primary-600/70">
+    <slot />
+  </div>
+  <h4
+    class="text-center text-lg font-extralight uppercase text-white/60 xl:text-xl"
+  >
+    {title}
+  </h4>
+  <p class="text-center text-white group-hover:underline xl:text-lg">
+    {content}
+  </p>
+</a>

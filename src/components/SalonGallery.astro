@@ -1,0 +1,11 @@
+---
+import Gallery from './Gallery.astro'
+
+const images = await Astro.glob('../assets/gallery-2/salon/*.jpg').then(
+  (files) => {
+    return Promise.all(files.map((file) => file.default))
+  },
+)
+---
+
+<Gallery images={images} />

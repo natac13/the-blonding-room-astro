@@ -1,8 +1,12 @@
 ---
-import Gallery from '../components/Gallery.astro'
+import AboutUs from '../components/AboutUs.astro'
+import Contact from '../components/Contact.astro'
+import Footer from '../components/Footer.astro'
 import HairServices from '../components/HairServices.astro'
 import Hero from '../components/Hero.astro'
+import NailServices from '../components/NailServices.astro'
 import { Navbar } from '../components/Navbar'
+import SalonGallery from '../components/SalonGallery.astro'
 import Layout from '../layouts/Layout.astro'
 ---
 
@@ -10,7 +14,11 @@ import Layout from '../layouts/Layout.astro'
   <main>
     <Navbar client:idle />
     <Hero />
-    <Gallery />
+    <SalonGallery />
     <HairServices />
+    <NailServices />
+    <AboutUs />
+    <Contact />
+    <Footer />
   </main>
 </Layout>

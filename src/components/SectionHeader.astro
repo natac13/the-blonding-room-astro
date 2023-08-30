@@ -1,0 +1,28 @@
+---
+interface Props {
+  title: string
+  id: string
+  /** @default 'light' */
+  color?: 'light' | 'dark'
+}
+
+const { title, id, color = 'light' } = Astro.props
+---
+
+<header class="mx-auto max-w-3xl text-center">
+  <h2
+    class={`font-cursive text-6xl font-thin tracking-normal ${
+      color === 'light' ? 'text-white' : 'text-black'
+    } lg:text-8xl xl:text-9xl`}
+    id={id}
+  >
+    {title}
+  </h2>
+  <p
+    class={`mx-auto mt-8 text-lg ${
+      color === 'light' ? 'text-gray-400' : 'text-gray-600'
+    } md:text-xl lg:text-2xl`}
+  >
+    <slot />
+  </p>
+</header>

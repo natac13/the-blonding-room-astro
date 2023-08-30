@@ -1,0 +1,97 @@
+---
+import { Icon } from 'astro-icon'
+import ContactItem from './ContactItem.astro'
+import SectionHeader from './SectionHeader.astro'
+import Gallery from './Gallery.astro'
+
+const images = await Astro.glob('../assets/gallery-2/staff/*.jpg').then(
+  (files) => {
+    return Promise.all(files.map((file) => file.default))
+  },
+)
+
+const details = [
+  'We are available for bookings Monday to Saturday',
+  'We strive for a work life balance and therefore if we have no bookings we are not at the salon but enjoying the beautiful day!',
+  'Please contact us to make your next appointment!',
+]
+
+const location = {
+  title: 'Location',
+  content: '21578 Richmond St. Arva, Ontario, Canada N0M 1C0',
+  href: 'https://www.google.com/maps?q=21578+Richmond+Street,+Arva,+ON,+Canada',
+}
+
+const phone = {
+  title: 'Phone',
+  content: '(519) 854-6330',
+  href: 'tel:5198546330',
+}
+
+const email = {
+  title: 'Email',
+  content: 'theblondingroom@hotmail.com',
+  href: 'mailto:theblondingroom@hotmail.com',
+}
+
+// const instagram = {
+//   title: 'Instagram',
+//   content: '@theblondingroom',
+//   href: 'https://www.instagram.com/theblondingroom/',
+// }
+---
+
+<section class="bg-gray-900 py-12 md:py-20 lg:py-32">
+  <Gallery images={images} />
+  <SectionHeader title="Get In Touch" id="contact" />
+  <div
+    class="container mx-auto mb-8 flex max-w-xs flex-col items-center justify-center gap-6 text-sm md:max-w-lg lg:max-w-xl"
+  >
+    {
+      details.map((detail) => {
+        return <p class="text-center text-white/80 lg:text-lg">{detail}</p>
+      })
+    }
+  </div>
+  <ul
+    id="contact-us"
+    class="mx-auto mt-16 grid max-w-2xl grid-cols-1 items-start justify-items-center gap-10 md:grid-cols-3 xl:max-w-6xl"
+  >
+    <li>
+      <ContactItem
+        title={location.title}
+        content={location.content}
+        href={location.href}
+      >
+        <Icon name="lucide:map-pin" class="h-5 w-5 lg:h-7 lg:w-7" />
+      </ContactItem>
+    </li>
+    <li>
+      <ContactItem
+        title={phone.title}
+        content={phone.content}
+        href={phone.href}
+      >
+        <Icon name="lucide:phone" class="h-5 w-5 lg:h-7 lg:w-7" />
+      </ContactItem>
+    </li>
+    <li>
+      <ContactItem
+        title={email.title}
+        content={email.content}
+        href={email.href}
+      >
+        <Icon name="lucide:mail" class="h-5 w-5 lg:h-7 lg:w-7" />
+      </ContactItem>
+    </li>
+    <!-- <li>
+      <ContactItem
+        title={instagram.title}
+        content={instagram.content}
+        href={instagram.href}
+      >
+        <Icon name="lucide:instagram" class="h-5 w-5 lg:h-7 lg:w-7" />
+      </ContactItem>
+    </li> -->
+  </ul>
+</section>

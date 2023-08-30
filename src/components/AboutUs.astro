@@ -1,0 +1,27 @@
+---
+import { ABOUT_US } from '../data/aboutUs'
+import SectionHeader from './SectionHeader.astro'
+---
+
+<section
+  id="about"
+  class="relative w-full bg-gray-900 py-12"
+  aria-describedby="about-us-title"
+>
+  <div
+    class="container mx-auto my-8 flex max-w-xs flex-col md:max-w-lg lg:max-w-3xl xl:max-w-5xl"
+  >
+    <SectionHeader title="About Us" id="about-us-title" />
+    <div class="flex flex-col gap-8">
+      {
+        ABOUT_US.map((text) => {
+          return (
+            <p class="text-center text-sm leading-6 text-white/80 sm:text-base lg:text-lg">
+              {text}
+            </p>
+          )
+        })
+      }
+    </div>
+  </div>
+</section>

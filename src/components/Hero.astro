@@ -8,22 +8,22 @@ const {} = Astro.props
 
 <div
   id="hero"
-  class="relative flex h-full w-screen flex-col overflow-hidden bg-gray-50 lg:flex-row"
+  class="relative flex h-full w-full flex-col overflow-hidden bg-gray-50 lg:flex-row"
 >
   <div
-    class="mt-4 flex-1 overflow-hidden bg-gray-50 shadow-inner lg:h-[500px] xl:h-[660px]"
+    class="mt-4 flex-1 overflow-hidden bg-gray-50 shadow-inner lg:h-[500px] xl:h-full"
   >
     <Image
       src={heroImage}
       alt="The Blonding Room Main Image"
       loading="eager"
-      class="-mt-2 aspect-[3/2] object-cover md:h-full md:w-full"
+      class="-mt-2 aspect-[3/2] object-cover md:h-full md:w-full xl:aspect-[1.1/1]"
     />
   </div>
   <div class="grid flex-1 place-items-center px-2 py-6 lg:px-0">
     <div class="max-w-2xl">
       <h1
-        class="max-w-md text-center text-4xl font-extralight tracking-tight text-gray-900 md:text-5xl xl:max-w-lg xl:text-6xl"
+        class="max-w-md text-center text-4xl font-extralight tracking-tight text-gray-900 md:max-w-lg md:text-5xl xl:max-w-xl xl:text-6xl"
       >
         With <span class="font-bold">Blonding, Colouring, Styling</span> and
         <span class="font-bold">Nail</span> Services
@@ -34,7 +34,7 @@ const {} = Astro.props
       <div class="mt-10 flex items-center justify-center gap-x-6">
         <a
           href="#"
-          class="rounded-md bg-primary-600 px-6 py-3 text-xl font-semibold text-black shadow-xl hover:bg-primary-500 hover:shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+          class="rounded-md bg-primary-600 px-4 py-2.5 text-lg font-medium text-black shadow-xl hover:bg-primary-500 hover:shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
           >Book Now!</a
         >
       </div>
