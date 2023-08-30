@@ -8,20 +8,22 @@ const {} = Astro.props
 
 <div
   id="hero"
-  class="relative flex h-full w-screen flex-col overflow-hidden bg-gray-50 md:flex-row"
+  class="relative flex h-full w-screen flex-col overflow-hidden bg-gray-50 lg:flex-row"
 >
-  <div class="mt-4 flex-1 bg-gray-50 shadow-inner lg:-m-8 overflow-hidden">
+  <div
+    class="mt-4 flex-1 overflow-hidden bg-gray-50 shadow-inner lg:h-[500px] xl:h-[660px]"
+  >
     <Image
       src={heroImage}
       alt="The Blonding Room Main Image"
       loading="eager"
-      class="-mt-2 aspect-[3/2] object-cover md:aspect-auto md:h-full md:w-full"
+      class="-mt-2 aspect-[3/2] object-cover md:h-full md:w-full"
     />
   </div>
-  <div class="grid flex-1 place-items-center">
+  <div class="grid flex-1 place-items-center px-2 py-6 lg:px-0">
     <div class="max-w-2xl">
       <h1
-        class="text-4xl font-extralight tracking-tight text-gray-900 sm:text-6xl"
+        class="max-w-md text-center text-4xl font-extralight tracking-tight text-gray-900 md:text-5xl xl:max-w-lg xl:text-6xl"
       >
         With <span class="font-bold">Blonding, Colouring, Styling</span> and
         <span class="font-bold">Nail</span> Services
@@ -39,7 +41,7 @@ const {} = Astro.props
     </div>
   </div>
   <svg
-    class="absolute bottom-0 left-0 right-0 hidden h-16 w-full md:block lg:h-20"
+    class="absolute bottom-0 left-0 right-0 hidden h-16 w-full lg:block lg:h-20"
     viewBox="0 0 100 100"
     preserveAspectRatio="none"
   >

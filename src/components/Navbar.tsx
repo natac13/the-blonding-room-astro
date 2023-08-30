@@ -33,7 +33,6 @@ export function Navbar() {
     opacity: reveal ? 1 : 0,
     delay: isMobile ? 150 : 50,
   })
-  console.log(isMobile)
 
   const navSpring = useSpring({
     height: reveal ? (isMobile ? '160px' : '60px') : '0px',
@@ -45,18 +44,17 @@ export function Navbar() {
     config: rsConfig.default,
   })
   return (
-    <div className="fixed left-0 right-0 top-0 z-50 bg-black px-4 py-2 font-sans w-screen">
-      <div className="absolute bottom-0 left-1/2 right-1/2  grid h-20 w-20 -translate-x-1/2 transform place-items-center">
+    <div className="fixed left-0 right-0 top-0 z-50 w-screen bg-black px-4 py-2 font-sans">
+      <div className="absolute bottom-0 left-1/2 right-1/2 grid h-20 w-full -translate-x-1/2 transform place-items-center">
         <div className="absolute left-1/2 right-1/2 top-full h-[36px] w-[36px] -translate-x-1/2 transform border-x-[36px] border-b-0 border-t-[36px] border-solid border-x-transparent border-t-black"></div>
         <button
           className="absolute -bottom-7 z-auto text-white"
           onClick={() => {
-            console.log('clicked')
             setReveal((state) => !state)
           }}
         >
           <span className="sr-only">Open Navigation</span>
-          <ChevronsDown size={25} />
+          <ChevronsDown className="text-primary-50" size={25} />
         </button>
       </div>
       <animated.div

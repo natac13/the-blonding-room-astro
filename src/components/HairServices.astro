@@ -1,0 +1,65 @@
+---
+import { CheckIcon } from 'lucide-react'
+import { HAIR_SERVICES } from '../data/hair-services'
+---
+
+<section class="bg-gray-900" aria-describedby="hair-services-title">
+  <div
+    class="mx-auto max-w-2xl px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:px-8"
+  >
+    <div class="mx-auto max-w-3xl text-center">
+      <h2
+        class="font-cursive text-3xl font-extralight tracking-tight text-white sm:text-4xl lg:text-7xl xl:text-9xl"
+        id="hair-services-title"
+      >
+        Hair Services
+      </h2>
+      <p class="mx-auto mt-8 text-lg text-gray-400 md:text-xl lg:text-2xl">
+        Pricing is personalized to each independent stylist.
+        <br />All serices include olaplex (Bonding Agent).
+      </p>
+    </div>
+
+    <div class="container mt-16 space-y-36">
+      {
+        HAIR_SERVICES.map((service, idx) => (
+          <>
+            <div class="flex w-full flex-col">
+              <div
+                class={`flex flex-col items-center ${
+                  idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                }`}
+              >
+                <div class="flex w-full items-center justify-center md:w-1/2">
+                  <h3 class="text-center font-cursive text-3xl font-extralight tracking-tight text-white sm:text-left sm:text-4xl lg:text-7xl xl:text-8xl">
+                    {service.title}
+                  </h3>
+                </div>
+                <div class="flex w-full flex-col gap-10 md:w-1/2">
+                  {service.items?.map((item, itemIdx) => {
+                    return (
+                      <div class="flex flex-row items-start">
+                        <div class="pr-4 text-primary-500">
+                          <CheckIcon />
+                        </div>
+                        <div class="flex flex-col items-start">
+                          <p class="xl:2xl text-xl uppercase text-white">
+                            {item?.title}
+                          </p>
+                          <p class="text-lg text-white/80 xl:text-xl">
+                            {item?.description}
+                          </p>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+            <div class="mx-auto my-2 w-1/3 border-b-2 border-white/50" />
+          </>
+        ))
+      }
+    </div>
+  </div>
+</section>

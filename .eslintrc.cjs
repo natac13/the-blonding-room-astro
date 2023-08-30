@@ -35,5 +35,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint', 'react'],
-  rules: {},
+  rules: {
+    'no-console': 'warn',
+  },
 }
