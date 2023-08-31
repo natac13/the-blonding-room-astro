@@ -41,31 +41,30 @@ const imageAlt = imageAltProp || 'The Blonding Room Logo'
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
-    <title>{finalTitle}</title>
-    <meta name="description" content={description} />
     <!-- SEO -->
 
-    <link rel="canonical" href={url} />
-
-    <meta property="og:type" content="website" />
-
-    <meta name="apple-mobile-web-app-title" content={siteTitle} />
     <meta property="og:site_name" content={siteTitle} />
 
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href={url} />
+    <meta name="apple-mobile-web-app-title" content={siteTitle} />
+
+    <title>{finalTitle}</title>
     <meta property="og:title" content={finalTitle} />
     <meta name="twitter:title" content={finalTitle} />
 
-    <meta property="og:image:alt" content={imageAlt} />
-    <meta name="description" property="og:description" content={description} />
+    <meta name="description" content={description} />
+    <meta name="og:description" content={description} />
     <meta name="twitter:description" content={description} />
 
     <meta property="og:image" content={image} />
-    <meta name="twitter:image:src" content={image} />
+    <meta name="twitter:image" content={image} />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
 
     <!--  -->
 
-    {author && <meta name="author" content="Julian Cataldo" />}
+    {author && <meta name="author" content={author} />}
 
     <!-- <meta name="copyright" content="ISC" /> -->
 
