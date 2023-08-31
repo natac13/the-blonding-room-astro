@@ -22,7 +22,7 @@ const {
   author,
 } = Astro.props
 
-const url = Astro.url.hostname.toString()
+const url = Astro.url.origin.toString()
 // const url = import.meta.env.PROD
 //   ? import.meta.env.SITE
 //   : 'http://localhost:4321'
