@@ -43,12 +43,8 @@ export function Navbar() {
     config: rsConfig.slow,
   })
 
-  const titleSpring = useSpring({
-    opacity: reveal ? 1 : 0,
-    config: rsConfig.default,
-  })
   return (
-    <div className="fixed left-0 right-0 top-0 z-50 w-full bg-black px-4 py-2 font-sans">
+    <div className="fixed left-0 right-0 top-0 z-50 w-full bg-black px-4 py-1 font-sans">
       <div className="absolute bottom-0 left-1/2 right-1/2 grid h-20 w-full -translate-x-1/2 transform place-items-center">
         <div className="absolute left-1/2 right-1/2 top-full h-[36px] w-[36px] -translate-x-1/2 transform border-x-[36px] border-b-0 border-t-[36px] border-solid border-x-transparent border-t-black"></div>
         <button
@@ -61,15 +57,20 @@ export function Navbar() {
           <ChevronsDown className="text-primary-50" size={25} />
         </button>
       </div>
+      <header role="presentation">
+        <h3
+          role="presentation"
+          className="text-center font-cursive text-xs text-primary-50 lg:text-sm"
+        >
+          The Blonding Room
+        </h3>
+      </header>
       <animated.div
         style={navSpring}
         className={cn(
           'flex flex-col items-center justify-center overflow-hidden ',
         )}
       >
-        <animated.div style={titleSpring}>
-          <h3 className="text-sm text-primary-50">The Blonding Room</h3>
-        </animated.div>
         <nav
           className={cn(
             'flex h-full  w-full flex-1 flex-col justify-center md:flex-auto md:flex-row',
