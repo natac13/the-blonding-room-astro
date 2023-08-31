@@ -23,7 +23,7 @@ const {
 } = Astro.props
 
 const url = import.meta.env.PROD
-  ? import.meta.env.VERCEL_URL
+  ? import.meta.env.SITE
   : 'http://localhost:4321'
 const siteTitle = 'The Blonding Room'
 const finalTitle = title ? `${title} | ${siteTitle}` : siteTitle
