@@ -2,7 +2,7 @@
 name: 'Jing-Jing'
 slug: 'jing-jing'
 socials:
-  instagram: 'https://www.instagram.com/blondtones/'
+  instagram: 'https://www.instagram.com/blondetones/'
 role: 'Stylist'
 order: 3
 image:

@@ -4,6 +4,7 @@ import type { CollectionEntry } from 'astro:content'
 import { getCollection } from 'astro:content'
 import Layout from '../../layouts/Layout.astro'
 import { InstagramIcon } from 'lucide-react'
+import { Icon } from 'astro-icon'
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
   const blogEntries = await getCollection('staff')
@@ -48,28 +49,41 @@ const { Content } = await entry.render()
             </h1>
             <p
               transition:name={`staff-role-${entry.slug}`}
-              class="mt-4 text-lg font-light italic text-primary-600/95 sm:text-xl"
+              class="mt-4 text-lg font-light italic text-white/60 sm:text-xl"
             >
               {entry.data.role}{
                 entry.data.businessRole && ` - ${entry.data.businessRole}`
               }
             </p>
+            <div
+              class="mt-4 w-4/6 transform border-b border-solid border-primary-600 duration-500"
+            >
+            </div>
             <div class="prose mt-6 max-w-xl text-white/70">
               <Content />
             </div>
           </div>
           <div class="mt-10 flex flex-col gap-2 text-white/90">
-            <h2 class="italic sm:text-lg">
-              Connect with {entry.data.name}:
-            </h2>
             <ul class="flex items-center justify-start gap-2">
               <li>
                 <a
                   href={entry.data.socials.instagram}
-                  class="text-primary-600/70 transition-colors duration-200 hover:text-primary-600/90"
+                  class="group text-primary-600/80 transition-colors hover:text-primary-600/90"
                 >
-                  <span class="sr-only">Instagram</span>
-                  <InstagramIcon />
+                  <span class="sr-only"
+                    >Instagram link for {entry.data.name}</span
+                  >
+                  <Icon
+                    name="lucide:instagram"
+                    class="mr-3 inline h-6 w-6 lg:h-7 lg:w-7"
+                  />
+                  <span class="text-base text-primary-600 group-hover:underline"
+                    >{
+                      entry.data.socials.instagram
+                        .replace('https://www.instagram.com/', '')
+                        .replace('/', '')
+                    }</span
+                  >
                 </a>
               </li>
             </ul>
