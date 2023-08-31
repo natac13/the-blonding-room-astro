@@ -4,11 +4,34 @@ import '@fontsource/parisienne/latin.css'
 import { ViewTransitions } from 'astro:transitions'
 import { Navbar } from '../components/Navbar'
 import Footer from '../components/Footer.astro'
+import heroImage from '../assets/new-hero.png'
+
 interface Props {
-  title: string
+  title?: string
+  description?: string
+  image?: string
+  imageAlt?: string
+  author?: string
 }
 
-const { title } = Astro.props
+const {
+  title,
+  description: descriptionProp,
+  image: imageProp,
+  imageAlt: imageAltProp,
+  author,
+} = Astro.props
+
+const url = import.meta.env.PROD
+  ? import.meta.env.SITE
+  : 'http://localhost:4321'
+const siteTitle = 'The Blonding Room'
+const finalTitle = title ? `${title} | ${siteTitle}` : siteTitle
+const description =
+  descriptionProp ||
+  'Welcome to The Blonding Room. A place to get all your blonding, colouring, styling and nail services in London Ontario Canada'
+const image = imageProp ? `${url}${imageProp}` : `${url}${heroImage.src}`
+const imageAlt = imageAltProp || 'The Blonding Room Logo'
 ---
 
 <!doctype html>
@@ -18,11 +41,39 @@ const { title } = Astro.props
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <meta
-      name="description"
-      content="Welcome to The Blonding Room. A place to get all your blonding, colouring, styling and nail services in London Ontario Canada"
-    />
+    <title>{finalTitle}</title>
+    <meta name="description" content={description} />
+    <!-- SEO -->
+
+    <link rel="canonical" href={url} />
+
+    <meta property="og:type" content="website" />
+
+    <meta name="apple-mobile-web-app-title" content={siteTitle} />
+    <meta property="og:site_name" content={siteTitle} />
+
+    <meta property="og:title" content={finalTitle} />
+    <meta name="twitter:title" content={finalTitle} />
+
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta name="description" property="og:description" content={description} />
+    <meta name="twitter:description" content={description} />
+
+    <meta property="og:image" content={image} />
+    <meta name="twitter:image:src" content={image} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!--  -->
+
+    {author && <meta name="author" content="Julian Cataldo" />}
+
+    <!-- <meta name="copyright" content="ISC" /> -->
+
+    <!--  -->
+
+    <!-- <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" /> -->
+
+    <!-- /SEO -->
     <ViewTransitions />
   </head>
   <body class="flex min-h-screen flex-col bg-gray-900 font-sans font-light">
