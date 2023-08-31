@@ -11,6 +11,10 @@ module.exports = {
         sans: ['Montserrat', ...defaultTheme.fontFamily.sans],
         cursive: ['Parisienne', ...defaultTheme.fontFamily.sans],
       },
+      maxWidth: {
+        '8xl': '90rem',
+        '9xl': '100rem',
+      },
       colors: {
         black: '#020801',
         white: '#F2EFEB',
