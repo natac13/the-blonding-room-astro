@@ -24,14 +24,14 @@ const { staff } = Astro.props
     >
       <h3
         transition:name={`staff-name-${staff.slug}`}
-        class="text-xl font-light text-white/95 group-hover:text-primary-500 lg:text-3xl"
+        class="text-xl font-light text-white/95 group-hover:text-primary-500 lg:text-2xl"
       >
         {staff.data.name}
       </h3>
     </div>
     <p
       transition:name={`staff-role-${staff.slug}`}
-      class="mt-1 text-sm italic text-gray-300 group-hover:text-gray-300 md:text-xl lg:text-2xl"
+      class="mt-1 text-sm italic text-gray-300 group-hover:text-gray-300 md:text-lg"
     >
       {staff.data.businessRole && `${staff.data.businessRole} - `}
       {staff.data.role}
