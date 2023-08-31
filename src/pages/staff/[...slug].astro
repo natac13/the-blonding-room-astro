@@ -1,0 +1,81 @@
+---
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
+import Layout from '../../layouts/Layout.astro'
+import { InstagramIcon } from 'lucide-react'
+// 1. Generate a new path for every collection entry
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('staff')
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }))
+}
+// 2. For your template, you can get the entry directly from the prop
+interface Props {
+  entry: CollectionEntry<'staff'>
+}
+const { entry } = Astro.props
+const { Content } = await entry.render()
+---
+
+<Layout title={`${entry.data.name} | The Blonding Room`}>
+  <div class="py-14 sm:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div
+        class="mx-auto grid max-w-2xl grid-cols-1 items-start gap-x-8 gap-y-8 sm:gap-y-24 lg:mx-0 lg:max-w-none lg:grid-cols-2"
+      >
+        <div class="lg:pr-4">
+          <div
+            class="aspect-h-5 aspect-w-4 relative overflow-hidden rounded-sm bg-gray-900 shadow-2xl"
+          >
+            <Image
+              class="absolute inset-0 h-full w-full object-cover"
+              transition:name={`staff-image-${entry.slug}`}
+              src={entry.data.image.src}
+              alt={entry.data.image.alt}
+            />
+          </div>
+        </div>
+        <div>
+          <div class="text-base text-gray-700 lg:max-w-lg">
+            <h1
+              transition:name={`staff-name-${entry.slug}`}
+              class="text-4xl leading-7 tracking-tight text-white/95 sm:text-5xl"
+            >
+              {entry.data.name}
+            </h1>
+            <p
+              transition:name={`staff-role-${entry.slug}`}
+              class="mt-4 text-lg font-light italic text-primary-600/95 sm:text-xl"
+            >
+              {entry.data.role}{
+                entry.data.businessRole && ` - ${entry.data.businessRole}`
+              }
+            </p>
+            <div class="prose mt-6 max-w-xl text-white/70">
+              <Content />
+            </div>
+          </div>
+          <div class="mt-10 flex flex-col gap-2 text-white/90">
+            <h2 class="italic sm:text-lg">
+              Connect with {entry.data.name}:
+            </h2>
+            <ul class="flex items-center justify-start gap-2">
+              <li>
+                <a
+                  href={entry.data.socials.instagram}
+                  class="text-primary-600/70 transition-colors duration-200 hover:text-primary-600/90"
+                >
+                  <span class="sr-only">Instagram</span>
+                  <InstagramIcon />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

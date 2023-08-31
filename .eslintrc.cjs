@@ -37,5 +37,6 @@ module.exports = {
   plugins: ['@typescript-eslint', 'react'],
   rules: {
     'no-console': 'warn',
+    '@typescript-eslint/triple-slash-reference': 'off',
   },
 }

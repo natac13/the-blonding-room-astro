@@ -12,19 +12,19 @@ import { ChevronsDown } from 'lucide-react'
 const links = [
   {
     text: 'Hair Services',
-    href: '#hair-services',
+    href: '/#hair-services',
   },
   {
     text: 'Nail Services',
-    href: '#nail-services',
+    href: '/#nail-services',
   },
   {
     text: 'About',
-    href: '#about',
+    href: '/#about',
   },
   {
     text: 'Contact Us!',
-    href: '#contact-us',
+    href: '/#contact-us',
   },
 ]
 

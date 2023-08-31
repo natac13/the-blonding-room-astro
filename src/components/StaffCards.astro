@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets'
+import { getCollection } from 'astro:content'
+import StaffCard from './StaffCard.astro'
+
+const owners = await getCollection('staff', ({ data }) => {
+  return data.businessRole?.toLowerCase()?.includes('owner')
+}).then((owners) => {
+  return owners.sort((a, b) => {
+    return a.data.order - b.data.order
+  })
+})
+const staff = await getCollection('staff', ({ data }) => {
+  return !data.businessRole?.toLowerCase()?.includes('owner')
+}).then((owners) => {
+  return owners.sort((a, b) => {
+    return a.data.order - b.data.order
+  })
+})
+---
+
+<section id="profile-cards" class="space-y-20">
+  <ul
+    id="owners"
+    class="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-2 sm:max-w-lg sm:gap-12 md:max-w-3xl lg:max-w-6xl"
+  >
+    {
+      owners.map((owner) => {
+        return <StaffCard staff={owner} />
+      })
+    }
+  </ul>
+  <ul
+    id="staff"
+    class="mx-auto grid max-w-7xl grid-cols-2 gap-3 gap-y-6 px-2 sm:max-w-lg sm:gap-8 md:max-w-3xl md:grid-cols-3 lg:max-w-7xl"
+  >
+    {
+      staff.map((staff) => {
+        return <StaffCard staff={staff} />
+      })
+    }
+  </ul>
+</section>

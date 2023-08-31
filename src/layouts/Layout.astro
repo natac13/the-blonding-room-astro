@@ -1,6 +1,9 @@
 ---
 import '@fontsource/montserrat/latin.css'
 import '@fontsource/parisienne/latin.css'
+import { ViewTransitions } from 'astro:transitions'
+import { Navbar } from '../components/Navbar'
+import Footer from '../components/Footer.astro'
 interface Props {
   title: string
 }
@@ -21,8 +24,16 @@ const { title } = Astro.props
       name="description"
       content="Welcome to The Blonding Room. A place to get all your blonding, colouring, styling and nail services in London Ontario Canada"
     />
+    <ViewTransitions />
   </head>
-  <body class="bg-gray-900 font-sans font-light">
-    <slot />
+  <body
+    class="flex min-h-screen flex-col bg-gray-900 font-sans font-light"
+    transition:animate="fade"
+  >
+    <Navbar client:idle />
+    <div transition:animate="slide" class="grow">
+      <slot />
+    </div>
+    <Footer />
   </body>
 </html>
