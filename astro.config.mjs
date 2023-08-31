@@ -1,25 +1,19 @@
-import { defineConfig, sharpImageService } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import tailwind from '@astrojs/tailwind'
+import { defineConfig } from 'astro/config'
 
 /** @type import('astro').defineConfig */
-import react from '@astrojs/react';
+import react from '@astrojs/react'
 
-import vercel from "@astrojs/vercel/static";
+import vercel from '@astrojs/vercel/static'
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), react()],
-  experimental: {
-    assets: true
-  },
-  image: {
-    service: sharpImageService(),
-  },
   vite: {
     ssr: {
-      noExternal: ['usehooks-ts']
-    }
+      noExternal: ['usehooks-ts'],
+    },
   },
-  output: "static",
-  adapter: vercel()
-});
+  output: 'static',
+  adapter: vercel(),
+})
