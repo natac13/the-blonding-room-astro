@@ -22,9 +22,10 @@ const {
   author,
 } = Astro.props
 
-const url = import.meta.env.PROD
-  ? import.meta.env.SITE
-  : 'http://localhost:4321'
+const url = Astro.url.hostname.toString()
+// const url = import.meta.env.PROD
+//   ? import.meta.env.SITE
+//   : 'http://localhost:4321'
 const siteTitle = 'The Blonding Room'
 const finalTitle = title ? `${title} | ${siteTitle}` : siteTitle
 const description =
@@ -47,6 +48,7 @@ const imageAlt = imageAltProp || 'The Blonding Room Logo'
 
     <meta property="og:type" content="website" />
     <link rel="canonical" href={url} />
+    <meta name="og:url" content={url} />
     <meta name="apple-mobile-web-app-title" content={siteTitle} />
 
     <title>{finalTitle}</title>
