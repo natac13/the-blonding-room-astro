@@ -17,11 +17,11 @@ export const HAIR_SERVICES: {
         title: 'Highlighting',
         description: 'Creates lightness, dimension and / or depth',
       },
-      {
-        title: 'Global Blonding',
-        description:
-          'Root to end blonding application to give the full blonde effect',
-      },
+      // {
+      //   title: 'Global Blonding',
+      //   description:
+      //     'Root to end blonding application to give the full blonde effect',
+      // },
     ],
   },
   {

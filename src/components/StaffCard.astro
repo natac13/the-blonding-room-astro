@@ -9,7 +9,7 @@ type Props = {
 const { staff } = Astro.props
 ---
 
-<div class="w-full max-w-xs rounded-sm lg:max-w-sm 2xl:max-w-md">
+<li class="w-full max-w-xs rounded-sm lg:max-w-sm 2xl:max-w-md">
   <a href={`/staff/${staff.slug}`} class="group">
     <div class="aspect-h-5 aspect-w-4 relative overflow-hidden">
       <Image
@@ -41,4 +41,4 @@ const { staff } = Astro.props
     >
     </div>
   </a>
-</div>
+</li>
