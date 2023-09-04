@@ -6,7 +6,7 @@ socials:
 role: 'Nail Technician'
 order: 5
 image:
-  src: '../../assets/staff/sim.jpg'
+  src: '../../assets/staff-2/sim.jpg'
   alt: 'Sim - Nail Technician'
 ---
 
