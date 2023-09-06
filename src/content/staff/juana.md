@@ -6,7 +6,7 @@ socials:
 role: 'Nail Technician'
 order: 4
 image:
-  src: '../../assets/staff/juana.jpg'
+  src: '../../assets/staff-2/juana.jpg'
   alt: 'Juana - Nail Technician'
 ---
 

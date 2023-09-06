@@ -6,7 +6,7 @@ socials:
 role: 'Stylist'
 order: 3
 image:
-  src: '../../assets/staff/jing-jing.jpg'
+  src: '../../assets/staff-2/jing-jing.jpeg'
   alt: 'Jing-Jing - Stylist'
 ---
 

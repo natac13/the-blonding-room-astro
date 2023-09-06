@@ -7,7 +7,7 @@ businessRole: 'Part Owner'
 role: 'Stylist'
 order: 2
 image:
-  src: '../../assets/staff/lindsey.jpg'
+  src: '../../assets/staff-2/lindsey.jpeg'
   alt: 'Linsey - Stylist & Part Owner'
 ---
 
