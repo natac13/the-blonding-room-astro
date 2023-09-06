@@ -39,7 +39,7 @@ const images = await Astro.glob('../assets/gallery-2/hair/*.jpg').then(
                   </h3>
                 </div>
                 <div class="mt-8 flex w-full flex-col gap-10 md:w-1/2">
-                  {service.items?.map((item, itemIdx) => {
+                  {service.items?.map((item) => {
                     return (
                       <div class="flex flex-row items-start">
                         <div class="pr-4 text-primary-500">

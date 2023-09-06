@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
 import StaffCard from './StaffCard.astro'
 
@@ -22,7 +21,7 @@ const staff = await getCollection('staff', ({ data }) => {
 <section id="profile-cards" class="space-y-6 md:space-y-10 xl:space-y-36">
   <ul
     id="owners"
-    class="max-w-8xl mx-auto flex w-full flex-row flex-wrap justify-around gap-x-2 gap-y-6 px-2 md:gap-y-10"
+    class="mx-auto flex w-full max-w-8xl flex-row flex-wrap justify-around gap-x-2 gap-y-6 px-2 md:gap-y-10"
   >
     {
       owners.map((owner) => {
@@ -32,7 +31,7 @@ const staff = await getCollection('staff', ({ data }) => {
   </ul>
   <ul
     id="staff"
-    class="max-w-9xl mx-auto flex w-full flex-row flex-wrap justify-around gap-x-2 gap-y-6 px-2 md:gap-y-10"
+    class="mx-auto flex w-full max-w-9xl flex-row flex-wrap justify-around gap-x-2 gap-y-6 px-2 md:gap-y-10"
   >
     {
       staff.map((staff) => {

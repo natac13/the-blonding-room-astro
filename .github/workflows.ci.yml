@@ -1,0 +1,72 @@
+name: 🚀 CI
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request: {}
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  lint:
+    name: ⬣ ESLint
+    runs-on: ubuntu-latest
+    # env:
+    #   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+    #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2.4.0
+        with:
+          version: 8
+
+      - name: ⎔ Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+
+      - name: 📥 Download deps
+        run: pnpm install --ignore-scripts
+
+      - name: 🔬 Lint
+        run: npm run lint
+
+  typecheck:
+    name: ʦ TypeScript
+    runs-on: ubuntu-latest
+    # env:
+    #   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+    #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2.4.0
+        with:
+          version: 8
+
+      - name: ⎔ Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+
+      - name: 📥 Download deps
+        run: pnpm install --ignore-scripts
+
+      - name: ⚙️ Build
+        run: pnpm build
+
+      - name: 🔎 Type check
+        run: pnpm typecheck

@@ -1,6 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsconfig.tsbuildinfo",
     "strictNullChecks": true,
     "allowJs": true,
     "strict": true,
@@ -12,5 +13,5 @@
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"
-  }
+  },
 }
