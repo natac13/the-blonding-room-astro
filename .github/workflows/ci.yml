@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - dev
   pull_request: {}
 permissions:
   actions: write
@@ -13,9 +12,6 @@ jobs:
   lint:
     name: ⬣ ESLint
     runs-on: ubuntu-latest
-    # env:
-    #   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-    #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: 🛑 Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.11.0
@@ -42,9 +38,6 @@ jobs:
   typecheck:
     name: ʦ TypeScript
     runs-on: ubuntu-latest
-    # env:
-    #   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-    #   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: 🛑 Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.11.0
