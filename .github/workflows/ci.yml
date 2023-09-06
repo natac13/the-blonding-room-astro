@@ -58,8 +58,8 @@ jobs:
       - name: 📥 Download deps
         run: pnpm install --ignore-scripts
 
-      - name: ⚙️ Build
-        run: pnpm build
+      - name: ⚙️ Sync Astro
+        run: pnpm astro sync
 
       - name: 🔎 Type check
         run: pnpm typecheck
