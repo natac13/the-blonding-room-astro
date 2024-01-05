@@ -14,8 +14,8 @@ export default defineConfig({
       noExternal: ['usehooks-ts'],
     },
   },
-  // site: 'https://theblondingroom.com',
-  site: 'https://the-blonding-room-astro.vercel.app',
+  site: 'https://theblondingroom.com',
+  // site: 'https://the-blonding-room-astro.vercel.app',
   output: 'static',
   adapter: vercel({}),
 })
