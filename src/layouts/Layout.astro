@@ -22,9 +22,11 @@ const {
   author,
 } = Astro.props
 
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 const url = import.meta.env.PROD
-  ? import.meta.env.SITE
-  : 'http://localhost:4321'
+  ? canonicalURL
+  : // ? import.meta.env.SITE
+    'http://localhost:4321'
 const siteTitle = 'The Blonding Room'
 const finalTitle = title ? `${title} | ${siteTitle}` : siteTitle
 const description =
@@ -32,6 +34,7 @@ const description =
   'Welcome to The Blonding Room. A place to get all your blonding, colouring, styling and nail services in London Ontario Canada'
 const image = imageProp ? `${url}${imageProp}` : `${url}${heroImage.src}`
 const imageAlt = imageAltProp || 'The Blonding Room Logo'
+// Example: Construct a canonical URL using your production domain
 ---
 
 <!doctype html>
