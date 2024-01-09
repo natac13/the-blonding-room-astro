@@ -22,10 +22,7 @@ const {
   author,
 } = Astro.props
 
-const canonicalURL = new URL(
-  Astro.url.pathname,
-  import.meta.env.PROP ? Astro.site : 'http://localhost:4321',
-)
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 const url = canonicalURL
 // const url = import.meta.env.PROD
 //   ? canonicalURL
