@@ -11,7 +11,7 @@ const { staff } = Astro.props
 
 <li class="w-full max-w-xs rounded-sm lg:max-w-sm 2xl:max-w-md">
   <a href={`/staff/${staff.id}`} class="group">
-    <div class="aspect-h-5 aspect-w-4 relative overflow-hidden">
+    <div class="aspect-4/5 relative overflow-hidden">
       <Image
         transition:name={`staff-image-${staff.id}`}
         class="absolute inset-0 h-full w-full transform object-cover duration-500 ease-in-out group-hover:scale-110"

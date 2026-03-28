@@ -21,7 +21,7 @@ const { images, id = Math.random().toString() } = Astro.props
       images.map((image) => {
         return (
           <li class="relative">
-            <div class="group aspect-h-10 aspect-w-8 block w-full overflow-hidden rounded-sm bg-gray-100 focus-within:ring-2  focus-within:ring-primary-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+            <div class="group aspect-4/5 block w-full overflow-hidden rounded-sm bg-gray-100 focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
               <Image
                 src={image}
                 alt="image"
