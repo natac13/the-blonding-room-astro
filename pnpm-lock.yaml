@@ -53,12 +53,12 @@ importers:
       clsx:
         specifier: ^2.0.0
         version: 2.1.1
-      fslightbox:
-        specifier: ^3.4.1
-        version: 3.7.5
       lucide-react:
         specifier: ^1.7.0
         version: 1.7.0(react@19.2.4)
+      photoswipe:
+        specifier: ^5.4.4
+        version: 5.4.4
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -1877,9 +1877,6 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
-  fslightbox@3.7.5:
-    resolution: {integrity: sha512-swEUrwMOyiBhdkPf3GXj4nxARX5d8/9yfVCdxgPLl9+ZMiacUTub9O2wxLI0Y2G2jI85Qxfqpv2I24vlbx0zfg==}
-
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
@@ -2634,6 +2631,10 @@ packages:
 
   pend@1.2.0:
     resolution: {integrity: sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==}
+
+  photoswipe@5.4.4:
+    resolution: {integrity: sha512-WNFHoKrkZNnvFFhbHL93WDkW3ifwVOXSW3w1UuZZelSmgXpIGiZSNlZJq37rR8YejqME2rHs9EhH9ZvlvFH2NA==}
+    engines: {node: '>= 0.12.0'}
 
   piccolore@0.1.3:
     resolution: {integrity: sha512-o8bTeDWjE086iwKrROaDf31K0qC/BENdm15/uH9usSC/uZjJOKb2YGiVHfLY4GhwsERiPI1jmwI2XrA7ACOxVw==}
@@ -5269,8 +5270,6 @@ snapshots:
   fsevents@2.3.3:
     optional: true
 
-  fslightbox@3.7.5: {}
-
   function-bind@1.1.2: {}
 
   function.prototype.name@1.1.8:
@@ -6277,6 +6276,8 @@ snapshots:
   pathe@2.0.3: {}
 
   pend@1.2.0: {}
+
+  photoswipe@5.4.4: {}
 
   piccolore@0.1.3: {}
 
