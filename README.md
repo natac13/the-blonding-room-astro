@@ -19,15 +19,15 @@ npm run dev
 
 ## Commands
 
-| Command              | Action                                    |
-| :------------------- | :---------------------------------------- |
-| `npm run dev`        | Start local dev server at `localhost:4321` |
-| `npm run build`      | Build production site to `./dist/`        |
-| `npm run preview`    | Preview the build locally                 |
-| `npm run validate`   | Run formatting, linting, and type checks  |
-| `npm run format`     | Format code with Oxfmt                    |
-| `npm run lint`       | Lint code with Oxlint                     |
-| `npm run typecheck`  | Run TypeScript type checking              |
+| Command             | Action                                     |
+| :------------------ | :----------------------------------------- |
+| `npm run dev`       | Start local dev server at `localhost:4321` |
+| `npm run build`     | Build production site to `./dist/`         |
+| `npm run preview`   | Preview the build locally                  |
+| `npm run validate`  | Run formatting, linting, and type checks   |
+| `npm run format`    | Format code with Oxfmt                     |
+| `npm run lint`      | Lint code with Oxlint                      |
+| `npm run typecheck` | Run TypeScript type checking               |
 
 ## Project Structure
 
