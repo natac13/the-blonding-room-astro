@@ -1,6 +1,7 @@
 ---
 import type { ImageMetadata } from 'astro'
 import { Icon } from 'astro-icon/components'
+import clientProfile from '~/data/client-profile.json'
 import ContactItem from './ContactItem.astro'
 import SectionHeader from './SectionHeader.astro'
 import Gallery from './Gallery.astro'
@@ -24,14 +25,14 @@ const location = {
 
 const phone = {
   title: 'Phone',
-  content: '(519) 854-6330',
-  href: 'tel:5198546330',
+  content: clientProfile.phoneNumber,
+  href: `tel:${clientProfile.phoneNumber.replace(/\D/g, '')}`,
 }
 
 const email = {
   title: 'Email',
-  content: 'theblondingroom@hotmail.com',
-  href: 'mailto:theblondingroom@hotmail.com',
+  content: clientProfile.emailAddress,
+  href: `mailto:${clientProfile.emailAddress}`,
 }
 
 // get the tail of the image list

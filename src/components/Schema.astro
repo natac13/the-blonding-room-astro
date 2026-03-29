@@ -1,0 +1,49 @@
+---
+import heroImage from '~/assets/new-hero.png'
+import clientProfile from '~/data/client-profile.json'
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'HairSalon'],
+  name: 'The Blonding Room',
+  url: `https://${clientProfile.siteUrl}`,
+  telephone: clientProfile.phoneNumber,
+  email: clientProfile.emailAddress,
+  image: `https://${clientProfile.siteUrl}${heroImage.src}`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '21578 Richmond St',
+    addressLocality: 'Arva',
+    addressRegion: 'ON',
+    postalCode: 'N0M 1C0',
+    addressCountry: 'CA',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 43.0505,
+    longitude: -81.2949,
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+      opens: '10:00',
+      closes: '20:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Friday',
+      opens: '10:00',
+      closes: '17:00',
+    },
+  ],
+  sameAs: [clientProfile.socialMedia.instagram],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '53',
+  },
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
