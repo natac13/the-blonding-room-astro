@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "trailingComma": "all",
+  "singleQuote": true,
+  "tabWidth": 2,
+  "semi": false,
+  "sortTailwindcss": {},
+  "printWidth": 80,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "node_modules",
+    "public",
+    "dist",
+    ".vercel",
+    ".astro",
+    "pnpm-lock.yaml"
+  ]
+}
