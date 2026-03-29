@@ -1,4 +1,4 @@
-name: 🚀 CI
+name: CI
 on:
   push:
     branches:
@@ -10,56 +10,46 @@ permissions:
 
 jobs:
   lint:
-    name: ⬣ ESLint
+    name: ESLint
     runs-on: ubuntu-latest
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v4
 
-      - uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          version: 8
-
-      - name: ⎔ Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+          node-version-file: '.nvmrc'
           cache: 'pnpm'
 
-      - name: 📥 Download deps
-        run: pnpm install --ignore-scripts
+      - name: Install deps
+        run: pnpm install
 
-      - name: 🔬 Lint
-        run: npm run lint
+      - name: Lint
+        run: pnpm lint
 
   typecheck:
-    name: ʦ TypeScript
+    name: TypeScript
     runs-on: ubuntu-latest
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v4
 
-      - uses: pnpm/action-setup@v2.4.0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          version: 8
-
-      - name: ⎔ Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+          node-version-file: '.nvmrc'
           cache: 'pnpm'
 
-      - name: 📥 Download deps
-        run: pnpm install --ignore-scripts
+      - name: Install deps
+        run: pnpm install
 
-      - name: ⚙️ Sync Astro
+      - name: Sync Astro
         run: pnpm astro sync
 
-      - name: 🔎 Type check
+      - name: Type check
         run: pnpm typecheck

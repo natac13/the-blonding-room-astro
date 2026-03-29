@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-black: #020801;
+  --color-white: #F2EFEB;
+
+  --color-gray-50: #F2F3F2;
+  --color-gray-100: #DBDDD9;
+  --color-gray-200: #C3C8C1;
+  --color-gray-300: #ACB2A9;
+  --color-gray-400: #959C91;
+  --color-gray-500: #7D8778;
+  --color-gray-600: #646C60;
+  --color-gray-700: #4B5148;
+  --color-gray-800: #323630;
+  --color-gray-900: #191B18;
+  --color-gray-950: #0D0E0D;
+
+  --color-secondary-50: #f3fbe4;
+  --color-secondary-100: #e0f0c0;
+  --color-secondary-200: #cde599;
+  --color-secondary-300: #b8db71;
+  --color-secondary-400: #a5d14b;
+  --color-secondary-500: #8cb732;
+  --color-secondary-600: #6c8f26;
+  --color-secondary-700: #4d661a;
+  --color-secondary-800: #2d3d0c;
+  --color-secondary-900: #0d1500;
+
+  --color-primary-50: #fff6dc;
+  --color-primary-100: #fbeab0;
+  --color-primary-200: #f9e183;
+  --color-primary-300: #f6db53;
+  --color-primary-400: #f4d824;
+  --color-primary-500: #dbc60b;
+  --color-primary-600: #aa8f04;
+  --color-primary-700: #795e00;
+  --color-primary-800: #493300;
+  --color-primary-900: #191000;
+
+  --font-sans: 'Montserrat', sans-serif;
+  --font-cursive: 'Parisienne', sans-serif;
+
+  --max-width-8xl: 90rem;
+  --max-width-9xl: 100rem;
+}

@@ -1,7 +1,8 @@
 import { defineCollection, z } from 'astro:content'
+import { glob } from 'astro/loaders'
 
 const staffCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/staff' }),
   schema: ({ image }) =>
     z.object({
       name: z.string(),
@@ -17,8 +18,7 @@ const staffCollection = defineCollection({
       }),
     }),
 })
-// 3. Export a single `collections` object to register your collection(s)
-//    This key should match your collection directory name in "src/content"
+
 export const collections = {
   staff: staffCollection,
 }
