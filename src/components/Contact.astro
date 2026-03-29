@@ -154,3 +154,15 @@ const firstImage = images[0]
     </li> -->
   </ul>
 </section>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox'
+  import 'photoswipe/style.css'
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#team-group-photo',
+    children: 'a',
+    pswpModule: () => import('photoswipe'),
+  })
+  lightbox.init()
+</script>

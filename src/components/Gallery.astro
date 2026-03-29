@@ -11,53 +11,272 @@ interface Props {
 const { images, id = Math.random().toString(), context = 'The Blonding Room' } = Astro.props
 ---
 
-<div class="container mx-auto my-20">
-  <ul
-    role="list"
-    class:list={[
-      'pswp-gallery grid grid-flow-row-dense grid-cols-2 max-w-[90rem] items-center mx-auto justify-center gap-x-4 gap-y-8 px-2 sm:grid-cols-3 sm:gap-x-6',
-      images.length > 3 ? 'lg:grid-cols-4' : 'lg:max-w-6xl',
-      images.length > 4 && '2xl:grid-cols-5',
-    ]}
-    id={`gallery-${id}`}
-  >
-    {
-      images.map((image, idx) => {
-        return (
-          <li class="relative">
-            <a
-              href={image.src}
-              data-pswp-width={image.width}
-              data-pswp-height={image.height}
-              target="_blank"
-              class="group aspect-4/5 block w-full overflow-hidden rounded-sm bg-gray-100 focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
-            >
-              <Image
-                src={image}
-                alt={`${context} — photo ${idx + 1} of ${images.length}`}
-                class="h-full w-full object-cover group-hover:opacity-75"
-              />
-            </a>
-          </li>
-        )
-      })
+<section class="py-12 md:py-20">
+  <div class="embla group relative" id={`gallery-${id}`}>
+    <div class="embla__container">
+      {
+        images.map((image, i) => (
+          <div class="embla__slide">
+            <div class="embla__slide-inner embla__slide-inner--inactive">
+              <a
+                href={image.src}
+                data-pswp-width={image.width}
+                data-pswp-height={image.height}
+                target="_blank"
+                class="block aspect-4/5 overflow-hidden rounded-sm"
+              >
+                <Image
+                  src={image}
+                  alt={`${context} — photo ${i + 1} of ${images.length}`}
+                  class="h-full w-full object-cover transition-opacity duration-300 hover:opacity-90"
+                />
+              </a>
+              <div class="embla__slide-overlay" aria-hidden="true"></div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Navigation arrows (desktop only, appear on hover) -->
+    <button
+      class="embla__arrow embla__arrow--prev"
+      aria-label="Previous slide"
+      type="button"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-5 w-5"
+      >
+        <path d="M15 18l-6-6 6-6"></path>
+      </svg>
+    </button>
+    <button
+      class="embla__arrow embla__arrow--next"
+      aria-label="Next slide"
+      type="button"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-5 w-5"
+      >
+        <path d="M9 18l6-6-6-6"></path>
+      </svg>
+    </button>
+
+    <!-- Dot indicators (populated by JS) -->
+    <div class="embla__dots"></div>
+  </div>
+</section>
+
+<style>
+  .embla {
+    overflow: hidden;
+  }
+
+  .embla__container {
+    display: flex;
+  }
+
+  .embla__slide {
+    flex: 0 0 72%;
+    min-width: 0;
+    padding: 0 0.375rem;
+  }
+
+  .embla__slide-inner {
+    position: relative;
+    transition: transform 400ms ease;
+  }
+
+  .embla__slide-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.4) 25%,
+      rgba(0, 0, 0, 0.2) 45%,
+      rgba(0, 0, 0, 0.2) 55%,
+      rgba(0, 0, 0, 0.4) 75%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+    opacity: 0;
+    transition: opacity 400ms ease;
+    pointer-events: none;
+    border-radius: 2px;
+    z-index: 1;
+  }
+
+  .embla__slide-inner--inactive {
+    transform: scale(0.95);
+  }
+
+  .embla__slide-inner--inactive .embla__slide-overlay {
+    opacity: 1;
+  }
+
+  .embla__arrow {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    border: none;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 300ms ease, background-color 200ms ease;
+  }
+
+  .embla__arrow--prev {
+    left: 1rem;
+  }
+
+  .embla__arrow--next {
+    right: 1rem;
+  }
+
+  .embla__arrow:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .embla__arrow:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+    opacity: 1;
+  }
+
+  .embla__dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .embla__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background-color: var(--color-gray-400);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background-color 300ms ease, transform 300ms ease;
+  }
+
+  .embla__dot--active {
+    background-color: var(--color-primary-700);
+    transform: scale(1.25);
+  }
+
+  @media (min-width: 768px) {
+    .embla__slide {
+      flex: 0 0 40%;
+      padding: 0 0.75rem;
     }
-  </ul>
-</div>
+
+    .embla__arrow {
+      display: flex;
+    }
+
+    .group:hover .embla__arrow {
+      opacity: 1;
+    }
+  }
+</style>
 
 <script>
+  import EmblaCarousel from 'embla-carousel'
   import PhotoSwipeLightbox from 'photoswipe/lightbox'
   import 'photoswipe/style.css'
 
-  function initLightbox() {
-    const lightbox = new PhotoSwipeLightbox({
-      gallery: '.pswp-gallery',
-      children: 'a',
-      pswpModule: () => import('photoswipe'),
+  function initGalleries() {
+    document.querySelectorAll<HTMLElement>('.embla').forEach((emblaNode) => {
+      const embla = EmblaCarousel(emblaNode, {
+        loop: true,
+        align: 'center',
+        containScroll: false,
+        duration: 30,
+      })
+
+      // Scale + overlay effect on non-active slides
+      const inners = Array.from(
+        emblaNode.querySelectorAll<HTMLElement>('.embla__slide-inner'),
+      )
+
+      const applySlideStyles = () => {
+        const selected = embla.selectedScrollSnap()
+        for (let i = 0; i < inners.length; i++) {
+          inners[i].classList.toggle('embla__slide-inner--inactive', i !== selected)
+        }
+      }
+      embla.on('select', applySlideStyles)
+      embla.on('init', applySlideStyles)
+
+      // Arrow navigation
+      const prevBtn =
+        emblaNode.querySelector<HTMLButtonElement>('.embla__arrow--prev')
+      const nextBtn =
+        emblaNode.querySelector<HTMLButtonElement>('.embla__arrow--next')
+      prevBtn?.addEventListener('click', () => embla.scrollPrev())
+      nextBtn?.addEventListener('click', () => embla.scrollNext())
+
+      // Dot indicators
+      const dotsContainer = emblaNode.querySelector<HTMLElement>('.embla__dots')
+      if (dotsContainer) {
+        const dots = embla.scrollSnapList().map((_, index) => {
+          const dot = document.createElement('button')
+          dot.classList.add('embla__dot')
+          dot.setAttribute('aria-label', `Go to slide ${index + 1}`)
+          dot.addEventListener('click', () => embla.scrollTo(index))
+          dotsContainer.appendChild(dot)
+          return dot
+        })
+
+        const updateDots = () => {
+          const selected = embla.selectedScrollSnap()
+          for (let i = 0; i < dots.length; i++) {
+            dots[i].classList.toggle('embla__dot--active', i === selected)
+          }
+        }
+        embla.on('select', updateDots)
+        embla.on('init', updateDots)
+      }
+
+      // PhotoSwipe lightbox
+      const galleryId = emblaNode.id
+      if (galleryId) {
+        const lightbox = new PhotoSwipeLightbox({
+          gallery: `#${galleryId}`,
+          children: '.embla__slide-inner > a',
+          pswpModule: () => import('photoswipe'),
+        })
+        lightbox.init()
+      }
     })
-    lightbox.init()
   }
 
   // Re-initialize after View Transitions swap the DOM
-  document.addEventListener('astro:page-load', initLightbox)
+  document.addEventListener('astro:page-load', initGalleries)
 </script>
