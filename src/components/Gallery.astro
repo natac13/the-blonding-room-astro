@@ -49,10 +49,15 @@ const { images, id = Math.random().toString(), context = 'The Blonding Room' } =
   import PhotoSwipeLightbox from 'photoswipe/lightbox'
   import 'photoswipe/style.css'
 
-  const lightbox = new PhotoSwipeLightbox({
-    gallery: '.pswp-gallery',
-    children: 'a',
-    pswpModule: () => import('photoswipe'),
-  })
-  lightbox.init()
+  function initLightbox() {
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '.pswp-gallery',
+      children: 'a',
+      pswpModule: () => import('photoswipe'),
+    })
+    lightbox.init()
+  }
+
+  // Re-initialize after View Transitions swap the DOM
+  document.addEventListener('astro:page-load', initLightbox)
 </script>
