@@ -5,9 +5,10 @@ import { Image } from 'astro:assets'
 interface Props {
   images: ImageMetadata[]
   id?: string
+  context?: string
 }
 
-const { images, id = Math.random().toString() } = Astro.props
+const { images, id = Math.random().toString(), context = 'The Blonding Room' } = Astro.props
 ---
 
 <div class="container mx-auto my-20">
@@ -21,7 +22,7 @@ const { images, id = Math.random().toString() } = Astro.props
     id={`gallery-${id}`}
   >
     {
-      images.map((image) => {
+      images.map((image, idx) => {
         return (
           <li class="relative">
             <a
@@ -33,7 +34,7 @@ const { images, id = Math.random().toString() } = Astro.props
             >
               <Image
                 src={image}
-                alt="image"
+                alt={`${context} — photo ${idx + 1} of ${images.length}`}
                 class="h-full w-full object-cover group-hover:opacity-75"
               />
             </a>
