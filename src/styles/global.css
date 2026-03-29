@@ -38,8 +38,8 @@
   --color-primary-800: #493300;
   --color-primary-900: #191000;
 
-  --font-sans: 'Montserrat', sans-serif;
-  --font-cursive: 'Parisienne', sans-serif;
+  --font-sans: var(--font-montserrat), sans-serif;
+  --font-cursive: var(--font-parisienne), sans-serif;
 
   --max-width-8xl: 90rem;
   --max-width-9xl: 100rem;

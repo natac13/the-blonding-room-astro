@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config'
+import { defineConfig, fontProviders } from 'astro/config'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import vercel from '@astrojs/vercel'
@@ -17,4 +17,20 @@ export default defineConfig({
   site: 'https://theblondingroom.ca',
   output: 'static',
   adapter: vercel({}),
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: 'Montserrat',
+      cssVariable: '--font-montserrat',
+      weights: [200, 300, 400, 500, 600, 700],
+      styles: ['normal', 'italic'],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: 'Parisienne',
+      cssVariable: '--font-parisienne',
+      weights: [400],
+      styles: ['normal'],
+    },
+  ],
 })

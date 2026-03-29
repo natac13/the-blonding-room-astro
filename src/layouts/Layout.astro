@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css'
-import '@fontsource/montserrat/latin.css'
-import '@fontsource/parisienne/latin.css'
+import { Font } from 'astro:assets'
 import { ClientRouter } from 'astro:transitions'
 import { Navbar } from '../components/Navbar'
 import Footer from '../components/Footer.astro'
@@ -92,6 +91,8 @@ const imageAlt = imageAltProp || 'The Blonding Room Logo'
 
     <!-- /SEO -->
     <Schema />
+    <Font cssVariable="--font-montserrat" preload />
+    <Font cssVariable="--font-parisienne" preload />
     <ClientRouter />
   </head>
   <body class="flex min-h-screen flex-col bg-gray-900 font-sans font-light">
