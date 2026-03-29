@@ -1,89 +1,101 @@
-import {
-  animated,
-  config as rsConfig,
-  useSpring,
-  useTrail,
-} from '@react-spring/web'
 import React from 'react'
 import { cn } from '../utils/misc'
-import { useMediaQuery } from 'usehooks-ts'
-import { ChevronsDown } from 'lucide-react'
 
 const links = [
-  {
-    text: 'Hair Services',
-    href: '/#hair-services',
-  },
-  {
-    text: 'About',
-    href: '/#about',
-  },
-  {
-    text: 'Contact Us!',
-    href: '/#contact-us',
-  },
+  { text: 'Hair Services', href: '/#hair-services' },
+  { text: 'About', href: '/#about' },
+  { text: 'Contact Us', href: '/#contact-us' },
 ]
 
 export function Navbar() {
-  const [reveal, setReveal] = React.useState(false)
-  const isMobile = useMediaQuery('(max-width: 768px)')
+  const [scrolled, setScrolled] = React.useState(false)
+  const [menuOpen, setMenuOpen] = React.useState(false)
 
-  const linkTrail = useTrail(links?.length, {
-    transform: `translate${isMobile ? 'X' : 'Y'}(${reveal ? '0px' : '-20px'})`,
-    opacity: reveal ? 1 : 0,
-    delay: isMobile ? 150 : 50,
-  })
-
-  const navSpring = useSpring({
-    height: reveal ? (isMobile ? '160px' : '60px') : '0px',
-    config: rsConfig.slow,
-  })
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <div className="fixed top-0 right-0 left-0 z-50 w-full bg-black px-4 py-1 font-sans">
-      <div className="absolute right-1/2 bottom-0 left-1/2 grid h-20 w-full -translate-x-1/2 transform place-items-center">
-        <div className="absolute top-full right-1/2 left-1/2 h-[36px] w-[36px] -translate-x-1/2 transform border-x-[36px] border-t-[36px] border-b-0 border-solid border-x-transparent border-t-black"></div>
-        <button
-          className="absolute -bottom-7 z-auto text-white"
-          onClick={() => {
-            setReveal((state) => !state)
-          }}
-        >
-          <span className="sr-only">Open Navigation</span>
-          <ChevronsDown className="text-primary-50" size={25} />
-        </button>
-      </div>
-      <header role="presentation">
-        <h3
-          role="presentation"
-          className="font-cursive text-primary-50 text-center text-xs lg:text-sm"
+    <nav
+      className={cn(
+        'fixed top-0 right-0 left-0 z-50 transition-all duration-500',
+        scrolled ? 'bg-black/90 backdrop-blur-md shadow-lg' : 'bg-transparent',
+      )}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <a
+          href="/"
+          className="font-cursive text-xl tracking-wide text-white lg:text-2xl"
         >
           The Blonding Room
-        </h3>
-      </header>
-      <animated.div
-        style={navSpring}
+        </a>
+
+        {/* Desktop links */}
+        <ul className="hidden items-center gap-10 md:flex">
+          {links.map((link) => (
+            <li key={link.text}>
+              <a
+                href={link.href}
+                className="hover:text-primary-400 text-[13px] font-light tracking-[0.2em] text-white/80 uppercase transition-colors duration-300"
+              >
+                {link.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        {/* Mobile menu button */}
+        <button
+          className="flex flex-col gap-[5px] md:hidden"
+          onClick={() => setMenuOpen((s) => !s)}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+        >
+          <span
+            className={cn(
+              'block h-px w-6 bg-white transition-all duration-300',
+              menuOpen && 'translate-y-[6px] rotate-45',
+            )}
+          />
+          <span
+            className={cn(
+              'block h-px w-6 bg-white transition-all duration-300',
+              menuOpen && 'opacity-0',
+            )}
+          />
+          <span
+            className={cn(
+              'block h-px w-6 bg-white transition-all duration-300',
+              menuOpen && '-translate-y-[6px] -rotate-45',
+            )}
+          />
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      <div
         className={cn(
-          'flex flex-col items-center justify-center overflow-hidden ',
+          'overflow-hidden transition-all duration-500 md:hidden',
+          menuOpen ? 'max-h-60 bg-black/95 backdrop-blur-md' : 'max-h-0',
         )}
       >
-        <nav
-          className={cn(
-            'flex h-full  w-full flex-1 flex-col justify-center md:flex-auto md:flex-row',
-          )}
-        >
-          {linkTrail.map((styles, idx) => (
-            <animated.a
-              style={styles}
-              key={links[idx]?.text}
-              href={links[idx].href}
-              className="font-xl text-primary-200 hover:text-primary-300 focus:text-primary-400 flex flex-1 items-center justify-center font-light tracking-wide uppercase hover:underline focus:underline focus:outline-none"
-            >
-              {links[idx].text}
-            </animated.a>
+        <ul className="flex flex-col items-center gap-6 px-6 pt-2 pb-8">
+          {links.map((link) => (
+            <li key={link.text}>
+              <a
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="hover:text-primary-400 text-sm font-light tracking-[0.2em] text-white/80 uppercase transition-colors duration-300"
+              >
+                {link.text}
+              </a>
+            </li>
           ))}
-        </nav>
-      </animated.div>
-    </div>
+        </ul>
+      </div>
+    </nav>
   )
 }
