@@ -37,6 +37,18 @@ const schema = {
       closes: '17:00',
     },
   ],
+  areaServed: [
+    {
+      '@type': 'City',
+      name: 'London',
+      containedInPlace: { '@type': 'AdministrativeArea', name: 'Ontario' },
+    },
+    {
+      '@type': 'Place',
+      name: 'Arva',
+      containedInPlace: { '@type': 'AdministrativeArea', name: 'Ontario' },
+    },
+  ],
   sameAs: [clientProfile.socialMedia.instagram],
   aggregateRating: {
     '@type': 'AggregateRating',
