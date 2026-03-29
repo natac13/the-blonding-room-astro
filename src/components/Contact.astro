@@ -83,20 +83,24 @@ const firstImage = images[0]
 
 <section class="bg-gray-900 py-12 md:py-20 lg:py-32">
   <div class="container mx-auto -mb-6 max-w-5xl p-2">
-    <a
-      href={firstImage.src}
-      data-fslightbox="team-group-photo"
-      class="aspect-3/2 relative mx-auto block"
-    >
-      <Image
-        src={firstImage}
-        id="team-photo"
-        alt="The Blonding Room team photo"
-        class="absolute inset-0 bg-no-repeat"
-      />
-    </a>
+    <div class="pswp-gallery" id="team-group-photo">
+      <a
+        href={firstImage.src}
+        data-pswp-width={firstImage.width}
+        data-pswp-height={firstImage.height}
+        target="_blank"
+        class="aspect-3/2 relative mx-auto block"
+      >
+        <Image
+          src={firstImage}
+          id="team-photo"
+          alt="The Blonding Room team photo"
+          class="absolute inset-0 bg-no-repeat"
+        />
+      </a>
+    </div>
   </div>
-  <Gallery images={imagesInList} />
+  <Gallery images={imagesInList} id="staff" />
   <SectionHeader title="Get In Touch" id="contact" />
   <div
     class="container mx-auto mb-8 flex max-w-xs flex-col items-center justify-center gap-6 text-sm md:max-w-lg lg:max-w-xl"
