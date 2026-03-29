@@ -55,9 +55,6 @@ export const HAIR_SERVICES: {
         title: 'Womans Cut',
       },
       {
-        title: 'Mens Cut',
-      },
-      {
         title: 'Kids Cut',
       },
       {

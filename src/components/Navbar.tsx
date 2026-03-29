@@ -15,10 +15,6 @@ const links = [
     href: '/#hair-services',
   },
   {
-    text: 'Nail Services',
-    href: '/#nail-services',
-  },
-  {
     text: 'About',
     href: '/#about',
   },
