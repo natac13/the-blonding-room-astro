@@ -18,11 +18,16 @@ interface Props {
 }
 const { entry } = Astro.props
 const { Content } = await render(entry)
+
+const roleDescription = entry.data.businessRole
+  ? `${entry.data.role} & ${entry.data.businessRole}`
+  : entry.data.role
+const staffDescription = `Meet ${entry.data.name}, ${roleDescription} at The Blonding Room in Arva, Ontario. Specializing in blonding, balayage, and colour services.`
 ---
 
 <Layout
   title={entry.data.name}
-  description={`${entry.data.name} ${entry.data.role}`}
+  description={staffDescription}
   imageAlt={entry.data.image.alt}
   image={entry.data.image.src.src}
 >
