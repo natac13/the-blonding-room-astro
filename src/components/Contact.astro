@@ -1,6 +1,7 @@
 ---
 import type { ImageMetadata } from 'astro'
 import { Icon } from 'astro-icon/components'
+import clientProfile from '~/data/client-profile.json'
 import ContactItem from './ContactItem.astro'
 import SectionHeader from './SectionHeader.astro'
 import Gallery from './Gallery.astro'
@@ -24,14 +25,14 @@ const location = {
 
 const phone = {
   title: 'Phone',
-  content: '(519) 854-6330',
-  href: 'tel:5198546330',
+  content: clientProfile.phoneNumber,
+  href: `tel:${clientProfile.phoneNumber.replace(/\D/g, '')}`,
 }
 
 const email = {
   title: 'Email',
-  content: 'theblondingroom@hotmail.com',
-  href: 'mailto:theblondingroom@hotmail.com',
+  content: clientProfile.emailAddress,
+  href: `mailto:${clientProfile.emailAddress}`,
 }
 
 // get the tail of the image list
@@ -100,7 +101,7 @@ const firstImage = images[0]
       </a>
     </div>
   </div>
-  <Gallery images={imagesInList} id="staff" />
+  <Gallery images={imagesInList} id="staff" context="The Blonding Room team" />
   <SectionHeader title="Get In Touch" id="contact" />
   <div
     class="container mx-auto mb-8 flex max-w-xs flex-col items-center justify-center gap-6 text-sm md:max-w-lg lg:max-w-xl"

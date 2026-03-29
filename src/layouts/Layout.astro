@@ -5,6 +5,7 @@ import '@fontsource/parisienne/latin.css'
 import { ClientRouter } from 'astro:transitions'
 import { Navbar } from '../components/Navbar'
 import Footer from '../components/Footer.astro'
+import Schema from '../components/Schema.astro'
 import heroImage from '../assets/new-hero.png'
 
 interface Props {
@@ -33,7 +34,7 @@ const siteTitle = 'The Blonding Room'
 const finalTitle = title ? `${title} | ${siteTitle}` : siteTitle
 const description =
   descriptionProp ||
-  'Welcome to The Blonding Room. A place to get all your blonding, colouring and styling services in London Ontario Canada'
+  'The Blonding Room is a full service hair salon in Arva, Ontario specializing in blonding, balayage, colouring and styling services.'
 const image = imageProp ? `${url}${imageProp}` : `${url}${heroImage.src}`
 const imageAlt = imageAltProp || 'The Blonding Room Logo'
 // Example: Construct a canonical URL using your production domain
@@ -80,10 +81,17 @@ const imageAlt = imageAltProp || 'The Blonding Room Logo'
 
     <!--  -->
 
+    <!-- Geo -->
+    <meta name="geo.region" content="CA-ON" />
+    <meta name="geo.placename" content="Arva, Ontario" />
+    <meta name="geo.position" content="43.0505;-81.2949" />
+    <meta name="ICBM" content="43.0505, -81.2949" />
+
     <!-- <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" /> -->
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- /SEO -->
+    <Schema />
     <ClientRouter />
   </head>
   <body class="flex min-h-screen flex-col bg-gray-900 font-sans font-light">

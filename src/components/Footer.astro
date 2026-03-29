@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components'
+import clientProfile from '~/data/client-profile.json'
 ---
 
 <footer class="w-full bg-black pb-4 pt-3 text-gray-400">
@@ -15,7 +16,7 @@ import { Icon } from 'astro-icon/components'
       <ul>
         <li>
           <a
-            href="https://www.instagram.com/theblondingroom/"
+            href={clientProfile.socialMedia.instagram}
             class="group block rounded-sm bg-gray-900 p-1 hover:text-white/90 focus:text-white/90"
           >
             <Icon name="lucide:instagram" class="h-6 w-6" />
