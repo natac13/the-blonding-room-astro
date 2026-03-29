@@ -34,7 +34,7 @@ const siteTitle = 'The Blonding Room'
 const finalTitle = title ? `${title} | ${siteTitle}` : siteTitle
 const description =
   descriptionProp ||
-  'Welcome to The Blonding Room. A place to get all your blonding, colouring and styling services in London Ontario Canada'
+  'The Blonding Room is a full service hair salon in Arva, Ontario specializing in blonding, balayage, colouring and styling services.'
 const image = imageProp ? `${url}${imageProp}` : `${url}${heroImage.src}`
 const imageAlt = imageAltProp || 'The Blonding Room Logo'
 // Example: Construct a canonical URL using your production domain
@@ -80,6 +80,12 @@ const imageAlt = imageAltProp || 'The Blonding Room Logo'
     <!-- <meta name="copyright" content="ISC" /> -->
 
     <!--  -->
+
+    <!-- Geo -->
+    <meta name="geo.region" content="CA-ON" />
+    <meta name="geo.placename" content="Arva, Ontario" />
+    <meta name="geo.position" content="43.0505;-81.2949" />
+    <meta name="ICBM" content="43.0505, -81.2949" />
 
     <!-- <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" /> -->
     <link rel="sitemap" href="/sitemap-index.xml" />
