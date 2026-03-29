@@ -9,9 +9,8 @@
     "strict": true,
     "incremental": true,
     "noErrorTruncation": true,
-    "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": ["./src/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"
