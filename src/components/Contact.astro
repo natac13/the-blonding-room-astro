@@ -1,47 +1,49 @@
 ---
-import type { ImageMetadata } from 'astro'
-import { Icon } from 'astro-icon/components'
-import clientProfile from '~/data/client-profile.json'
-import ContactItem from './ContactItem.astro'
-import SectionHeader from './SectionHeader.astro'
-import Gallery from './Gallery.astro'
-import { Image } from 'astro:assets'
+import type { ImageMetadata } from "astro";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import clientProfile from "~/data/client-profile.json";
+import ContactItem from "./ContactItem.astro";
+import SectionHeader from "./SectionHeader.astro";
 
 const images = Object.values(
-  import.meta.glob<{ default: ImageMetadata }>('../assets/gallery-2/staff/*.jpg', { eager: true }),
-).map((mod) => mod.default)
+  import.meta.glob<{ default: ImageMetadata }>(
+    "../assets/gallery-2/staff/*.jpg",
+    { eager: true },
+  ),
+).map((mod) => mod.default);
 
 const details = [
-  'We are available for bookings Monday to Saturday.',
-  'We strive for a work life balance and therefore if we have no bookings we are not at the salon but enjoying the beautiful day!',
-  'Please contact us to make your next appointment!',
-]
+  "We are available for bookings Monday to Saturday.",
+  "We strive for a work life balance and therefore if we have no bookings we are not at the salon but enjoying the beautiful day!",
+  "Please contact us to make your next appointment!",
+];
 
 const location = {
-  title: 'Location',
-  content: '21578 Richmond St. Arva, Ontario, Canada N0M 1C0',
-  href: 'https://www.google.com/maps?q=21578+Richmond+Street,+Arva,+ON,+Canada',
-}
+  title: "Location",
+  content: "21578 Richmond St. Arva, Ontario, Canada N0M 1C0",
+  href: "https://www.google.com/maps?q=21578+Richmond+Street,+Arva,+ON,+Canada",
+};
 
 const phone = {
-  title: 'Phone',
+  title: "Phone",
   content: clientProfile.phoneNumber,
-  href: `tel:${clientProfile.phoneNumber.replace(/\D/g, '')}`,
-}
+  href: `tel:${clientProfile.phoneNumber.replace(/\D/g, "")}`,
+};
 
 const email = {
-  title: 'Email',
+  title: "Email",
   content: clientProfile.emailAddress,
   href: `mailto:${clientProfile.emailAddress}`,
-}
+};
 
-const imagesInList = images.slice(1)
-const firstImage = images[0]
+const firstImage = images[0];
+const gridImages = images.slice(1);
 ---
 
 <section class="bg-gray-900 py-16 md:py-24">
-  <div class="container mx-auto max-w-5xl px-4">
-    <div class="pswp-gallery" id="team-group-photo">
+  <div class="container mx-auto max-w-7xl px-4">
+    <div class="pswp-gallery" id="team-gallery" data-pswp-uid="team">
       <a
         href={firstImage.src}
         data-pswp-width={firstImage.width}
@@ -55,10 +57,28 @@ const firstImage = images[0]
           class="h-full w-full object-cover"
         />
       </a>
+
+      <div class="mt-3 grid grid-cols-3 gap-3">
+        {
+          gridImages.map((image, i) => (
+            <a
+              href={image.src}
+              data-pswp-width={image.width}
+              data-pswp-height={image.height}
+              target="_blank"
+              class="aspect-4/5 block overflow-hidden rounded-sm"
+            >
+              <Image
+                src={image}
+                alt={`The Blonding Room team — photo ${i + 2} of ${images.length}`}
+                class="h-full w-full object-cover transition-opacity duration-300 hover:opacity-90"
+              />
+            </a>
+          ))
+        }
+      </div>
     </div>
   </div>
-
-  <Gallery images={imagesInList} id="staff" context="The Blonding Room team" />
 
   <div class="py-16 md:py-24">
     <SectionHeader title="Get In Touch" id="contact">
@@ -80,36 +100,32 @@ const firstImage = images[0]
       class="mx-auto mt-14 grid max-w-sm grid-cols-1 gap-10 px-4 sm:max-w-none sm:grid-cols-3 sm:px-8 md:mt-16 lg:max-w-4xl"
     >
       <li>
-        <ContactItem title={location.title} content={location.content} href={location.href}>
+        <ContactItem
+          title={location.title}
+          content={location.content}
+          href={location.href}
+        >
           <Icon name="lucide:map-pin" class="h-5 w-5" />
         </ContactItem>
       </li>
       <li>
-        <ContactItem title={phone.title} content={phone.content} href={phone.href}>
+        <ContactItem
+          title={phone.title}
+          content={phone.content}
+          href={phone.href}
+        >
           <Icon name="lucide:phone" class="h-5 w-5" />
         </ContactItem>
       </li>
       <li>
-        <ContactItem title={email.title} content={email.content} href={email.href}>
+        <ContactItem
+          title={email.title}
+          content={email.content}
+          href={email.href}
+        >
           <Icon name="lucide:mail" class="h-5 w-5" />
         </ContactItem>
       </li>
     </ul>
   </div>
 </section>
-
-<script>
-  import PhotoSwipeLightbox from 'photoswipe/lightbox'
-  import 'photoswipe/style.css'
-
-  function initTeamPhoto() {
-    const lightbox = new PhotoSwipeLightbox({
-      gallery: '#team-group-photo',
-      children: 'a',
-      pswpModule: () => import('photoswipe'),
-    })
-    lightbox.init()
-  }
-
-  document.addEventListener('astro:page-load', initTeamPhoto)
-</script>

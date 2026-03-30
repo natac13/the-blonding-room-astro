@@ -12,7 +12,7 @@ const { images, id = Math.random().toString(), context = 'The Blonding Room' } =
 ---
 
 <section class="py-12 md:py-20">
-  <div class="embla group relative" id={`gallery-${id}`}>
+  <div class="embla pswp-gallery group relative" id={`gallery-${id}`}>
     <div class="embla__container">
       {
         images.map((image, i) => (
@@ -212,77 +212,72 @@ const { images, id = Math.random().toString(), context = 'The Blonding Room' } =
   import PhotoSwipeLightbox from "photoswipe/lightbox";
   import "photoswipe/style.css";
 
-  function initGalleries() {
-    document.querySelectorAll<HTMLElement>(".embla").forEach((emblaNode) => {
-      const embla = EmblaCarousel(emblaNode, {
+  let lightboxes: PhotoSwipeLightbox[] = [];
+
+  document.addEventListener("astro:page-load", () => {
+    // Embla carousels
+    document.querySelectorAll<HTMLElement>(".embla").forEach((node) => {
+      const embla = EmblaCarousel(node, {
         loop: true,
         align: "center",
         containScroll: false,
         duration: 30,
       });
 
-      // Scale + overlay effect on non-active slides
       const inners = Array.from(
-        emblaNode.querySelectorAll<HTMLElement>(".embla__slide-inner"),
+        node.querySelectorAll<HTMLElement>(".embla__slide-inner"),
       );
-
-      const applySlideStyles = () => {
-        const selected = embla.selectedScrollSnap();
-        for (let i = 0; i < inners.length; i++) {
-          inners[i].classList.toggle(
-            "embla__slide-inner--inactive",
-            i !== selected,
-          );
-        }
+      const applyStyles = () => {
+        const sel = embla.selectedScrollSnap();
+        inners.forEach((el, i) =>
+          el.classList.toggle("embla__slide-inner--inactive", i !== sel),
+        );
       };
-      embla.on("select", applySlideStyles);
-      embla.on("init", applySlideStyles);
+      embla.on("select", applyStyles);
+      embla.on("init", applyStyles);
 
-      // Arrow navigation
-      const prevBtn = emblaNode.querySelector<HTMLButtonElement>(
-        ".embla__arrow--prev",
-      );
-      const nextBtn = emblaNode.querySelector<HTMLButtonElement>(
-        ".embla__arrow--next",
-      );
-      prevBtn?.addEventListener("click", () => embla.scrollPrev());
-      nextBtn?.addEventListener("click", () => embla.scrollNext());
+      node
+        .querySelector(".embla__arrow--prev")
+        ?.addEventListener("click", () => embla.scrollPrev());
+      node
+        .querySelector(".embla__arrow--next")
+        ?.addEventListener("click", () => embla.scrollNext());
 
-      // Dot indicators
-      const dotsContainer = emblaNode.querySelector<HTMLElement>(".embla__dots");
-      if (dotsContainer) {
-        const dots = embla.scrollSnapList().map((_, index) => {
-          const dot = document.createElement("button");
-          dot.classList.add("embla__dot");
-          dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
-          dot.addEventListener("click", () => embla.scrollTo(index));
-          dotsContainer.appendChild(dot);
-          return dot;
+      const dots = node.querySelector<HTMLElement>(".embla__dots");
+      if (dots) {
+        const btns = embla.scrollSnapList().map((_, i) => {
+          const btn = document.createElement("button");
+          btn.classList.add("embla__dot");
+          btn.setAttribute("aria-label", `Go to slide ${i + 1}`);
+          btn.addEventListener("click", () => embla.scrollTo(i));
+          dots.appendChild(btn);
+          return btn;
         });
-
         const updateDots = () => {
-          const selected = embla.selectedScrollSnap();
-          for (let i = 0; i < dots.length; i++) {
-            dots[i].classList.toggle("embla__dot--active", i === selected);
-          }
+          const sel = embla.selectedScrollSnap();
+          btns.forEach((b, i) =>
+            b.classList.toggle("embla__dot--active", i === sel),
+          );
         };
         embla.on("select", updateDots);
         embla.on("init", updateDots);
       }
-
-      // PhotoSwipe lightbox
-      const galleryId = emblaNode.id;
-      if (galleryId) {
-        const lightbox = new PhotoSwipeLightbox({
-          gallery: `#${galleryId}`,
-          children: ".embla__slide-inner > a",
-          pswpModule: () => import("photoswipe"),
-        });
-        lightbox.init();
-      }
     });
-  }
 
-  // Re-initialize after View Transitions swap the DOM
-  document.addEventListener("astro:page-load", initGalleries);
+    // PhotoSwipe on all .pswp-gallery elements (carousels + standalone)
+    document.querySelectorAll<HTMLElement>(".pswp-gallery").forEach((gallery) => {
+      const lightbox = new PhotoSwipeLightbox({
+        gallery,
+        children: "a",
+        pswpModule: () => import("photoswipe"),
+      });
+      lightbox.init();
+      lightboxes.push(lightbox);
+    });
+  });
+
+  document.addEventListener("astro:before-swap", () => {
+    lightboxes.forEach((lb) => lb.destroy());
+    lightboxes = [];
+  });
 </script>
