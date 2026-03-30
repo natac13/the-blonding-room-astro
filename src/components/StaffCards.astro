@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 import StaffCard from './StaffCard.astro'
+import SectionHeader from './SectionHeader.astro'
 
 const owners = await getCollection('staff', ({ data }) => {
   return data.businessRole?.toLowerCase()?.includes('owner')
@@ -18,25 +19,23 @@ const staff = await getCollection('staff', ({ data }) => {
 })
 ---
 
-<section id="profile-cards" class="space-y-6 md:space-y-10 xl:space-y-36">
-  <ul
-    id="owners"
-    class="mx-auto flex w-full max-w-8xl flex-row flex-wrap justify-around gap-x-2 gap-y-6 px-2 md:gap-y-10"
-  >
-    {
-      owners.map((owner) => {
-        return <StaffCard staff={owner} />
-      })
-    }
-  </ul>
-  <ul
-    id="staff"
-    class="mx-auto flex w-full max-w-9xl flex-row flex-wrap justify-around gap-x-2 gap-y-6 px-2 md:gap-y-10"
-  >
-    {
-      staff.map((staff) => {
-        return <StaffCard staff={staff} />
-      })
-    }
-  </ul>
+<section id="profile-cards" class="bg-gray-900 py-20 sm:py-28">
+  <div class="container mx-auto px-4 lg:px-8">
+    <SectionHeader title="Our Team" id="team-title">
+      <div class="mx-auto my-6 h-px w-24 bg-primary-500"></div>
+    </SectionHeader>
+
+    <ul
+      id="owners"
+      class="mx-auto mt-12 grid max-w-sm grid-cols-1 gap-8 sm:max-w-none sm:grid-cols-2 md:mt-16 md:gap-10 lg:gap-12"
+    >
+      {owners.map((owner) => <StaffCard staff={owner} />)}
+    </ul>
+    <ul
+      id="staff"
+      class="mx-auto mt-10 grid max-w-sm grid-cols-1 gap-8 sm:max-w-none sm:grid-cols-2 md:mt-12 md:gap-10 lg:grid-cols-3 lg:gap-12"
+    >
+      {staff.map((s) => <StaffCard staff={s} />)}
+    </ul>
+  </div>
 </section>
