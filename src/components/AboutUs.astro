@@ -1,27 +1,52 @@
 ---
-import { ABOUT_US } from '../data/aboutUs'
-import SectionHeader from './SectionHeader.astro'
+import { Image } from "astro:assets";
+import { ABOUT_US } from "../data/aboutUs";
+import SectionHeader from "./SectionHeader.astro";
+import salonImage from "../assets/gallery-2/salon/salon-3.jpg";
+
+const [pullQuote, ...rest] = ABOUT_US;
 ---
 
 <section
   id="about"
-  class="relative w-full bg-gray-900 py-12"
+  class="relative w-full bg-gray-900 py-20 sm:py-28"
   aria-describedby="about-us-title"
 >
-  <div
-    class="container mx-auto my-8 flex max-w-md flex-col px-4 md:max-w-lg md:px-0 lg:max-w-3xl xl:max-w-5xl"
-  >
-    <SectionHeader title="About Us" id="about-us-title" />
-    <div class="flex flex-col gap-8">
-      {
-        ABOUT_US.map((text) => {
-          return (
-            <p class="text-center text-sm leading-6 text-white/80 sm:text-base lg:text-lg">
+  <div class="container mx-auto px-4 lg:px-8">
+    <SectionHeader title="About Us" id="about-us-title">
+      <div class="mx-auto my-6 h-px w-24 bg-primary-500"></div>
+    </SectionHeader>
+
+    <div
+      class="mt-12 flex flex-col items-center gap-10 md:mt-16 md:flex-row md:gap-16 lg:gap-20"
+    >
+      <div class="w-full md:w-1/2">
+        <div class="aspect-4/5 w-full overflow-hidden rounded-sm">
+          <Image
+            src={salonImage}
+            alt="Inside The Blonding Room salon"
+            class="h-full w-full object-cover"
+          />
+        </div>
+      </div>
+
+      <div class="flex w-full flex-col gap-8 md:w-1/2">
+        <blockquote class="border-l-2 border-primary-500 pl-5">
+          <p
+            class="text-base font-light italic leading-7 text-gray-200 md:text-lg md:leading-8 lg:text-2xl"
+          >
+            {pullQuote}
+          </p>
+        </blockquote>
+
+        {
+          rest.map((text) => (
+            <p class="text-sm font-light leading-6 text-gray-300 md:text-base md:leading-7 lg:text-lg">
               {text}
             </p>
-          )
-        })
-      }
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>
