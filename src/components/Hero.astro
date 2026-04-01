@@ -1,56 +1,58 @@
 ---
-import { Image } from 'astro:assets'
-import heroImage from '~/assets/new-hero.png'
+import { Image } from "astro:assets";
+import heroImage from "~/assets/gallery-2/staff/group-0.jpg";
 ---
 
-<div
+<section
   id="hero"
-  class="relative flex h-full w-full flex-col overflow-hidden bg-gray-50 lg:flex-row"
+  class="relative flex min-h-[85vh] w-full items-center justify-center overflow-hidden bg-gray-950 lg:min-h-screen"
 >
+  <Image
+    src={heroImage}
+    alt="The Blonding Room team"
+    loading="eager"
+    class="absolute inset-0 h-full w-full object-cover opacity-40"
+    widths={[640, 1024, 1440, 1920]}
+    sizes="100vw"
+  />
   <div
-    class="mt-4 flex-1 overflow-hidden bg-gray-50 shadow-inner lg:h-[500px] xl:h-full"
+    class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-gray-900"
   >
-    <Image
-      src={heroImage}
-      alt="The Blonding Room Main Image"
-      loading="eager"
-      class="-mt-2 aspect-[3/2] object-cover md:h-full md:w-full xl:aspect-[1.1/1]"
-    />
   </div>
-  <div class="grid flex-1 place-items-center px-2 py-6 lg:px-0">
-    <div class="max-w-2xl">
-      <h1
-        class="font-cursive text-center text-5xl tracking-wide text-gray-900 md:text-6xl xl:text-7xl"
+  <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
+    <p
+      class="mb-4 text-sm font-light uppercase tracking-[0.35em] text-primary-300"
+    >
+      Welcome to
+    </p>
+    <h1
+      class="font-cursive text-6xl font-thin text-white md:text-7xl lg:text-8xl xl:text-9xl"
+    >
+      The Blonding Room
+    </h1>
+    <p
+      class="mt-1 text-sm tracking-widest text-gray-400 uppercase lg:text-base"
+    >
+      Hair Salon in Arva, Near London, Ontario
+    </p>
+    <div class="mx-auto my-6 h-px w-24 bg-primary-500"></div>
+    <h2
+      class="text-lg font-extralight tracking-wide text-gray-200 md:text-xl lg:text-3xl"
+    >
+      <span class="font-medium">Blonding</span>,{" "}
+      <span class="font-medium">Colouring</span> &{" "}
+      <span class="font-medium">Styling</span> Services
+    </h2>
+    <p class="mt-3 text-base font-light text-gray-400 lg:text-lg">
+      Are you ready to join us?
+    </p>
+    <div class="mt-10">
+      <a
+        href="/#contact-us"
+        class="inline-block border border-primary-500 bg-primary-600 px-8 py-3 text-sm font-medium uppercase tracking-[0.2em] text-black transition-all duration-300 hover:bg-transparent hover:text-primary-400"
       >
-        The Blonding Room
-      </h1>
-      <p class="mt-1 text-center text-sm tracking-widest text-gray-500 uppercase">
-        Hair Salon in Arva, Near London, Ontario
-      </p>
-      <h2
-        class="mt-10 max-w-md text-center text-4xl font-extralight tracking-tight text-gray-900 md:max-w-lg md:text-5xl xl:max-w-xl xl:text-6xl"
-      >
-        With <span class="font-bold">Blonding, Colouring</span> and
-        <span class="font-bold">Styling</span> Services
-      </h2>
-      <p class="mt-6 text-center text-lg leading-8 text-gray-600">
-        Are you ready to join us at The Blonding Room?
-      </p>
-      <div class="mt-10 flex items-center justify-center gap-x-6">
-        <a
-          href="/#contact-us"
-          class="rounded-md bg-primary-600 px-4 py-2.5 text-lg font-medium text-black shadow-xl hover:bg-primary-500 hover:shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
-          >Book Now!</a
-        >
-      </div>
+        Book Now
+      </a>
     </div>
   </div>
-  <svg
-    class="absolute bottom-0 left-0 right-0 hidden h-16 w-full lg:block lg:h-20"
-    viewBox="0 0 100 100"
-    preserveAspectRatio="none"
-  >
-    <polygon points="100 0, 100 100,0 100,0 100" class="fill-gray-900"
-    ></polygon>
-  </svg>
-</div>
+</section>

@@ -1,31 +1,31 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-black: #020801;
-  --color-white: #f2efeb;
+  --color-black: oklch(0.12 0.01 70);
+  --color-white: oklch(0.96 0.01 80);
 
-  --color-gray-50: #f2f3f2;
-  --color-gray-100: #dbddd9;
-  --color-gray-200: #c3c8c1;
-  --color-gray-300: #acb2a9;
-  --color-gray-400: #959c91;
-  --color-gray-500: #7d8778;
-  --color-gray-600: #646c60;
-  --color-gray-700: #4b5148;
-  --color-gray-800: #323630;
-  --color-gray-900: #191b18;
-  --color-gray-950: #0d0e0d;
+  --color-gray-50: oklch(0.95 0.008 75);
+  --color-gray-100: oklch(0.9 0.01 75);
+  --color-gray-200: oklch(0.83 0.012 75);
+  --color-gray-300: oklch(0.74 0.015 75);
+  --color-gray-400: oklch(0.65 0.018 70);
+  --color-gray-500: oklch(0.56 0.02 65);
+  --color-gray-600: oklch(0.47 0.02 65);
+  --color-gray-700: oklch(0.38 0.015 65);
+  --color-gray-800: oklch(0.28 0.012 65);
+  --color-gray-900: oklch(0.18 0.01 65);
+  --color-gray-950: oklch(0.13 0.008 65);
 
-  --color-secondary-50: #f3fbe4;
-  --color-secondary-100: #e0f0c0;
-  --color-secondary-200: #cde599;
-  --color-secondary-300: #b8db71;
-  --color-secondary-400: #a5d14b;
-  --color-secondary-500: #8cb732;
-  --color-secondary-600: #6c8f26;
-  --color-secondary-700: #4d661a;
-  --color-secondary-800: #2d3d0c;
-  --color-secondary-900: #0d1500;
+  --color-secondary-50: oklch(0.97 0.008 85);
+  --color-secondary-100: oklch(0.94 0.015 85);
+  --color-secondary-200: oklch(0.9 0.025 80);
+  --color-secondary-300: oklch(0.84 0.035 78);
+  --color-secondary-400: oklch(0.78 0.05 75);
+  --color-secondary-500: oklch(0.72 0.06 70);
+  --color-secondary-600: oklch(0.62 0.06 65);
+  --color-secondary-700: oklch(0.52 0.05 60);
+  --color-secondary-800: oklch(0.4 0.04 60);
+  --color-secondary-900: oklch(0.28 0.03 60);
 
   --color-primary-50: #fff6dc;
   --color-primary-100: #fbeab0;
@@ -38,8 +38,8 @@
   --color-primary-800: #493300;
   --color-primary-900: #191000;
 
-  --font-sans: 'Montserrat', sans-serif;
-  --font-cursive: 'Parisienne', sans-serif;
+  --font-sans: var(--font-montserrat), sans-serif;
+  --font-cursive: var(--font-parisienne), sans-serif;
 
   --max-width-8xl: 90rem;
   --max-width-9xl: 100rem;
