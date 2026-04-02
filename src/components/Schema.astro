@@ -1,6 +1,7 @@
 ---
 import heroImage from '~/assets/new-hero.png'
 import clientProfile from '~/data/client-profile.json'
+import { HAIR_SERVICES } from '~/data/hair-services'
 
 const schema = {
   '@context': 'https://schema.org',
@@ -10,6 +11,17 @@ const schema = {
   telephone: clientProfile.phoneNumber,
   email: clientProfile.emailAddress,
   image: `https://${clientProfile.siteUrl}${heroImage.src}`,
+  priceRange: '$$$',
+  keywords: [
+    'hair salon london ontario',
+    'hair stylist london ontario',
+    'hairdresser london ontario',
+    'balayage london ontario',
+    'hair colouring london ontario',
+    'blonde specialist london ontario',
+    'hair salon near masonville',
+    'hair salon arva ontario',
+  ],
   address: {
     '@type': 'PostalAddress',
     streetAddress: '21578 Richmond St',
@@ -37,6 +49,22 @@ const schema = {
       closes: '17:00',
     },
   ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Hair Salon Services',
+    itemListElement: HAIR_SERVICES.map((category) => ({
+      '@type': 'OfferCatalog',
+      name: category.title,
+      itemListElement: category.items.map((service) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: service.title,
+          ...(service.description && { description: service.description }),
+        },
+      })),
+    })),
+  },
   areaServed: [
     {
       '@type': 'City',
@@ -47,6 +75,36 @@ const schema = {
       '@type': 'Place',
       name: 'Arva',
       containedInPlace: { '@type': 'AdministrativeArea', name: 'Ontario' },
+    },
+    {
+      '@type': 'Place',
+      name: 'Masonville',
+      containedInPlace: { '@type': 'City', name: 'London' },
+    },
+    {
+      '@type': 'Place',
+      name: 'North London',
+      containedInPlace: { '@type': 'City', name: 'London' },
+    },
+    {
+      '@type': 'Place',
+      name: 'Hyde Park',
+      containedInPlace: { '@type': 'City', name: 'London' },
+    },
+    {
+      '@type': 'Place',
+      name: 'Sunningdale',
+      containedInPlace: { '@type': 'City', name: 'London' },
+    },
+    {
+      '@type': 'Place',
+      name: 'Stoney Creek',
+      containedInPlace: { '@type': 'City', name: 'London' },
+    },
+    {
+      '@type': 'Place',
+      name: 'Byron',
+      containedInPlace: { '@type': 'City', name: 'London' },
     },
   ],
   sameAs: [clientProfile.socialMedia.instagram],

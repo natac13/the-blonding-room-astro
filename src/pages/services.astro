@@ -1,0 +1,324 @@
+---
+import { Image } from 'astro:assets'
+import Layout from '../layouts/Layout.astro'
+import SectionHeader from '../components/SectionHeader.astro'
+import heroBlonding from '../assets/gallery-2/hair/hair-1.jpg'
+import heroColouring from '../assets/gallery-2/hair/hair-3.jpg'
+import heroCuts from '../assets/gallery-2/hair/hair-5.jpg'
+
+const categoryImages = [heroBlonding, heroColouring, heroCuts]
+
+const services = [
+  {
+    category: 'Blonding',
+    description:
+      'Our signature blonding services are what put The Blonding Room on the map. Whether you want a sun-kissed balayage or a full platinum transformation, our stylists in Arva (just minutes from Masonville and North London) customize every application to complement your skin tone, lifestyle, and maintenance preferences.',
+    items: [
+      {
+        title: 'Balayage',
+        description:
+          'A hand-painted highlighting technique that creates soft, natural-looking dimension. Balayage grows out beautifully with minimal upkeep — perfect if you love a lived-in, effortless blonde. One of the most requested hair colouring services at our London, Ontario area salon.',
+      },
+      {
+        title: 'Highlighting',
+        description:
+          'Traditional foil highlights to add lightness, dimension, or depth throughout your hair. Whether you want subtle face-framing pieces or a bold, bright blonde, we tailor the placement and tone to your unique look.',
+      },
+    ],
+  },
+  {
+    category: 'Colouring',
+    description:
+      'From root touch-ups to full colour transformations, our colouring services cover every need. All colour services at The Blonding Room include Olaplex bonding treatment to keep your hair healthy and strong throughout the process.',
+    items: [
+      {
+        title: 'Root Retouch',
+        description:
+          'Ideal for maintaining your colour between full appointments. Whether you need grey coverage or want to blend in your natural roots, a root retouch keeps your colour fresh. Typically done every 4 to 8 weeks.',
+      },
+      {
+        title: 'Full Colour',
+        description:
+          'A root-to-end colour application for a complete colour change or overall colour maintenance. Whether you are going darker, richer, or refreshing your current shade, this service covers it all.',
+      },
+      {
+        title: 'Toner Refresh',
+        description:
+          'A quick service to revitalize your current colour tone without a full colour appointment. Great for blondes looking to eliminate brassiness or anyone wanting to tweak their shade between visits.',
+      },
+      {
+        title: 'Colour & Highlight Combo',
+        description:
+          'The best of both worlds — root coverage combined with highlights for added depth and dimension. This is our most popular service for clients who want to cover grey while still keeping a multi-tonal, natural look.',
+      },
+    ],
+  },
+  {
+    category: 'Haircuts & Styling',
+    description:
+      "A great colour deserves a great cut. Our stylists offer precision haircuts and styling services for women and kids at our salon near London, Ontario. Every cut is tailored to your hair's texture, density, and your personal style.",
+    items: [
+      {
+        title: "Women's Cut",
+        description:
+          'A personalized haircut consultation and cut, tailored to your face shape, hair texture, and lifestyle. Includes a shampoo and blow-dry finish.',
+      },
+      {
+        title: 'Kids Cut',
+        description:
+          "A relaxed, kid-friendly haircut experience. We make sure your little ones feel comfortable and leave looking great.",
+      },
+      {
+        title: 'Treatment & Blow-dry Style',
+        description:
+          'A nourishing hair treatment paired with a professional blow-dry and style. Perfect for a special occasion or whenever you want your hair to look and feel its best.',
+      },
+    ],
+  },
+]
+
+const faq = [
+  {
+    question: 'Where is The Blonding Room located?',
+    answer:
+      'We are located at 21578 Richmond St in Arva, Ontario — just 5 minutes north of Masonville Mall and the north end of London, Ontario. We serve clients from across the greater London area including Hyde Park, Sunningdale, Byron, and beyond.',
+  },
+  {
+    question: 'Do I need to be blonde to come to The Blonding Room?',
+    answer:
+      "Not at all! While blonding is our specialty, we are a full-service hair salon offering colouring, cuts, and styling for all hair tones and types. The name is just our favourite part of what we do.",
+  },
+  {
+    question: 'What is the difference between balayage and highlights?',
+    answer:
+      'Balayage is a hand-painted technique that creates soft, blended results with a natural grow-out. Highlights use foils for more uniform lightness and brighter contrast. Our stylists will recommend the best technique for your hair goals during your consultation.',
+  },
+  {
+    question: 'Do you offer haircuts without colour services?',
+    answer:
+      "Yes! We offer women's cuts, kids cuts, and treatment blow-dry styles as standalone services. You do not need to book a colour service to get a haircut at our salon.",
+  },
+  {
+    question: 'Is Olaplex included in colour services?',
+    answer:
+      'Yes — all of our colour and blonding services include Olaplex bonding treatment at no extra charge. This helps protect and strengthen your hair during the colouring process.',
+  },
+  {
+    question: 'How do I book an appointment?',
+    answer:
+      'You can reach us by phone at 519-854-6330 or email at theblondingroom@hotmail.com. We are available for bookings Monday through Friday.',
+  },
+  {
+    question: 'What are your hours?',
+    answer:
+      'We are open Monday through Thursday from 10 a.m. to 8 p.m. and Friday from 10 a.m. to 5 p.m. If we have no bookings, we may not be at the salon, so please contact us to make your next appointment.',
+  },
+]
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+}
+---
+
+<Layout
+  title="Hair Salon Services Near London, Ontario — Blonding, Balayage, Colour & Cuts"
+  description="Full-service hair salon near London, Ontario offering blonding, balayage, highlighting, hair colouring, haircuts, and styling. Located in Arva, minutes from Masonville Mall. All colour services include Olaplex."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <!-- Hero header -->
+  <section class="bg-gray-900 pt-32 pb-12 sm:pt-40 sm:pb-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <header class="mx-auto max-w-3xl text-center">
+        <p
+          class="mb-4 text-sm font-light uppercase tracking-[0.35em] text-primary-300"
+        >
+          What We Offer
+        </p>
+        <h1
+          class="font-cursive text-6xl font-thin text-white lg:text-8xl xl:text-9xl"
+        >
+          Our Services
+        </h1>
+        <div class="mx-auto my-6 h-px w-24 bg-primary-500"></div>
+        <p class="text-lg font-light text-gray-300 md:text-xl">
+          Full-service hair salon in Arva, serving London, Ontario and
+          surrounding areas. All colour services include Olaplex.
+        </p>
+      </header>
+    </div>
+  </section>
+
+  <!-- Service categories with alternating image/text layout -->
+  {
+    services.map((service, idx) => (
+      <section class={idx % 2 === 0 ? 'bg-gray-900' : 'bg-gray-950'}>
+        <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div
+            class={`flex flex-col items-center gap-10 md:gap-16 ${
+              idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+            }`}
+          >
+            {/* Image */}
+            <div class="w-full md:w-1/2">
+              <div class="aspect-3/4 overflow-hidden rounded-sm">
+                <Image
+                  src={categoryImages[idx]}
+                  alt={`${service.category} services at The Blonding Room`}
+                  class="h-full w-full object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Content */}
+            <div class="w-full md:w-1/2">
+              <h2 class="font-cursive text-4xl font-thin text-white sm:text-5xl md:text-6xl">
+                {service.category}
+              </h2>
+              <p class="mt-4 text-sm font-light leading-6 text-gray-300 md:text-base md:leading-7">
+                {service.description}
+              </p>
+
+              <div class="mt-8 space-y-6">
+                {service.items.map((item) => (
+                  <div class="flex flex-row items-start">
+                    <div class="mr-3 mt-2.5 h-px w-5 shrink-0 bg-primary-500 md:mr-4 md:w-6" />
+                    <div class="flex flex-col items-start gap-y-1.5">
+                      <h3 class="text-sm font-medium uppercase tracking-widest text-white md:text-base">
+                        {item.title}
+                      </h3>
+                      <p class="text-sm font-light leading-6 text-gray-300 md:text-base md:leading-7">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <!-- FAQ accordion -->
+  <section class="bg-gray-950 py-20 sm:py-28">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <SectionHeader title="FAQ" id="faq">
+        <div class="mx-auto my-6 h-px w-24 bg-primary-500"></div>
+      </SectionHeader>
+
+      <dl class="mt-12 divide-y divide-gray-800 md:mt-16">
+        {
+          faq.map((item, idx) => (
+            <div class="faq-item">
+              <dt>
+                <button
+                  type="button"
+                  class="faq-toggle flex w-full items-center justify-between py-5 text-left"
+                  aria-expanded="false"
+                  aria-controls={`faq-answer-${idx}`}
+                >
+                  <span class="text-base font-medium text-white md:text-lg">
+                    {item.question}
+                  </span>
+                  <span class="ml-4 shrink-0">
+                    <svg
+                      class="faq-icon h-5 w-5 text-primary-500 transition-transform duration-300"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </dt>
+              <dd
+                id={`faq-answer-${idx}`}
+                class="faq-answer"
+              >
+                <div class="overflow-hidden">
+                  <p class="pb-5 text-sm font-light leading-6 text-gray-300 md:text-base md:leading-7">
+                    {item.answer}
+                  </p>
+                </div>
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-gray-900 py-16 text-center sm:py-20">
+    <div class="mx-auto max-w-xl px-4">
+      <h2
+        class="font-cursive text-4xl font-thin text-white sm:text-5xl md:text-6xl"
+      >
+        Ready to Book?
+      </h2>
+      <p class="mt-4 text-base font-light text-gray-300 md:text-lg">
+        Contact us to schedule your next appointment.
+      </p>
+      <div class="mt-8">
+        <a
+          href="/#contact-us"
+          class="inline-block border border-primary-500 bg-primary-600 px-8 py-3 text-sm font-medium uppercase tracking-[0.2em] text-black transition-all duration-300 hover:bg-transparent hover:text-primary-400"
+        >
+          Get In Touch
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .faq-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+
+  .faq-answer > div {
+    min-height: 0;
+  }
+
+  .faq-item.is-open .faq-answer {
+    grid-template-rows: 1fr;
+  }
+
+  .faq-item.is-open .faq-icon {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  function initFaqAccordion() {
+    document.querySelectorAll('.faq-toggle').forEach((button) => {
+      button.addEventListener('click', () => {
+        const item = button.closest('.faq-item')
+        if (!item) return
+        const isOpen = item.classList.contains('is-open')
+        item.classList.toggle('is-open', !isOpen)
+        button.setAttribute('aria-expanded', String(!isOpen))
+      })
+    })
+  }
+
+  document.addEventListener('astro:page-load', initFaqAccordion)
+</script>

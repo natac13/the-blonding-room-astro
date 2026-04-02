@@ -2,7 +2,7 @@ import React from 'react'
 import { cn } from '../utils/misc'
 
 const links = [
-  { text: 'Hair Services', href: '/#hair-services' },
+  { text: 'Hair Services', href: '/services' },
   { text: 'About', href: '/#about' },
   { text: 'Contact Us', href: '/#contact-us' },
 ]
