@@ -16,11 +16,19 @@ function extractJsonLd(html: string): Record<string, unknown>[] {
 }
 
 function extractMeta(html: string, name: string): string | null {
-  const match = html.match(
-    new RegExp(`<meta\\s+(?:name|property)=["']${name}["']\\s+content=["']([^"']*)["']`, 'i'),
-  ) ?? html.match(
-    new RegExp(`<meta\\s+content=["']([^"']*)["']\\s+(?:name|property)=["']${name}["']`, 'i'),
-  )
+  const match =
+    html.match(
+      new RegExp(
+        `<meta\\s+(?:name|property)=["']${name}["']\\s+content=["']([^"']*)["']`,
+        'i',
+      ),
+    ) ??
+    html.match(
+      new RegExp(
+        `<meta\\s+content=["']([^"']*)["']\\s+(?:name|property)=["']${name}["']`,
+        'i',
+      ),
+    )
   return match?.[1] ?? null
 }
 
@@ -32,7 +40,9 @@ describe('Homepage schema (LocalBusiness + HairSalon)', () => {
   const html = readPage('index.html')
   const schemas = extractJsonLd(html)
   const business = schemas.find(
-    (s) => Array.isArray(s['@type']) && (s['@type'] as string[]).includes('HairSalon'),
+    (s) =>
+      Array.isArray(s['@type']) &&
+      (s['@type'] as string[]).includes('HairSalon'),
   )
 
   it('has a LocalBusiness/HairSalon schema', () => {
