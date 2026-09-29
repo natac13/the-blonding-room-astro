@@ -1,0 +1,60 @@
+name: Release
+
+# Publishing a GitHub release (tag v*) deploys production.
+on:
+  release:
+    types: [published]
+
+# Never cancel an in-flight production deploy — an interrupted `sst deploy`
+# leaves the stage locked (fix: `pnpm sst unlock --stage production`).
+concurrency:
+  group: release-production
+  cancel-in-progress: false
+
+permissions:
+  id-token: write # required for AWS OIDC
+  contents: read
+
+jobs:
+  deploy-production:
+    name: Deploy Production
+    runs-on: ubuntu-latest
+    env:
+      # Role is created by infra/github.ts for the production stage; trust
+      # policy only allows this repo's v* tags.
+      AWS_ROLE_TO_ASSUME: arn:aws:iam::771992926532:role/the-blonding-room-production-github
+      AWS_REGION: us-east-1
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
+          role-session-name: github-deploy-production
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Validate
+        run: pnpm astro sync && pnpm validate
+
+      - name: Setup SST
+        run: pnpm sst install
+
+      - name: Dedupe SST platform deps
+        run: npm dedupe
+        working-directory: .sst/platform
+
+      - name: Deploy to Production
+        run: pnpm sst deploy --stage production

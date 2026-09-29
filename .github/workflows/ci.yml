@@ -77,3 +77,57 @@ jobs:
 
       - name: Type check
         run: pnpm typecheck
+
+  # Merges to main deploy the dev stage. Production deploys are handled by
+  # release.yml when a GitHub release is published (see the /release skill).
+  deploy-dev:
+    name: Deploy Development
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    needs: [lint, build, typecheck]
+    # Never cancel an in-flight deploy — an interrupted `sst deploy` leaves
+    # the stage locked (fix: `pnpm sst unlock --stage dev`).
+    concurrency:
+      group: deploy-dev
+      cancel-in-progress: false
+    permissions:
+      id-token: write # required for AWS OIDC
+      contents: read
+    env:
+      # Role is created by infra/github.ts for the dev stage; trust policy
+      # only allows this repo's main branch.
+      AWS_ROLE_TO_ASSUME: arn:aws:iam::771992926532:role/the-blonding-room-dev-github
+      AWS_REGION: us-east-1
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
+          role-session-name: github-deploy-dev
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Setup SST
+        run: pnpm sst install
+
+      # A fresh .sst/platform install can carry duplicated protobuf/grpc deps
+      # that break Pulumi RPC ("b.Va is not a function"). Dedupe first.
+      - name: Dedupe SST platform deps
+        run: npm dedupe
+        working-directory: .sst/platform
+
+      - name: Deploy to Development
+        run: pnpm sst deploy --stage dev

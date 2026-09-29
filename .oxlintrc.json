@@ -7,5 +7,12 @@
   "rules": {
     "no-console": "warn"
   },
-  "ignorePatterns": ["dist", "public", ".vercel", ".astro", "**/*.astro"]
+  "ignorePatterns": [
+    "dist",
+    "public",
+    ".vercel",
+    ".sst",
+    ".astro",
+    "**/*.astro"
+  ]
 }
