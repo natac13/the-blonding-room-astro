@@ -27,38 +27,57 @@ export const zone = isPermanentStage
   : undefined
 
 // Copies of the DigitalOcean records, so moving nameservers to Route 53
-// changes nothing for visitors. The cutover replaces them (override: true).
+// changes nothing for visitors. retainOnDelete: at cutover these leave the
+// code but stay in Route 53, so SST overwrites apex/www in place
+// (override: true). Deleting them instead could remove SST's new records,
+// since Route 53 deletes by name + type.
 if (zone && !productionCutover) {
-  new aws.route53.Record('VercelApex', {
-    zoneId: zone.zoneId,
-    name: ROOT_DOMAIN,
-    type: 'A',
-    ttl: 300,
-    records: ['76.76.21.21'],
-  })
-  new aws.route53.Record('VercelWww', {
-    zoneId: zone.zoneId,
-    name: `www.${ROOT_DOMAIN}`,
-    type: 'CNAME',
-    ttl: 300,
-    records: ['cname.vercel-dns.com'],
-  })
+  new aws.route53.Record(
+    'VercelApex',
+    {
+      zoneId: zone.zoneId,
+      name: ROOT_DOMAIN,
+      type: 'A',
+      ttl: 300,
+      records: ['76.76.21.21'],
+    },
+    { retainOnDelete: true },
+  )
+  new aws.route53.Record(
+    'VercelWww',
+    {
+      zoneId: zone.zoneId,
+      name: `www.${ROOT_DOMAIN}`,
+      type: 'CNAME',
+      ttl: 300,
+      records: ['cname.vercel-dns.com'],
+    },
+    { retainOnDelete: true },
+  )
   // Leftover Let's Encrypt DNS-01 tokens (likely stale), mirrored so the
   // zone matches DigitalOcean exactly.
-  new aws.route53.Record('AcmeChallengeApex', {
-    zoneId: zone.zoneId,
-    name: `_acme-challenge.${ROOT_DOMAIN}`,
-    type: 'TXT',
-    ttl: 1200,
-    records: ['ZWaFvRrsjbA8QP-YqZkv23dk8ah51ir0jXqNrv7e728'],
-  })
-  new aws.route53.Record('AcmeChallengeWww', {
-    zoneId: zone.zoneId,
-    name: `_acme-challenge.www.${ROOT_DOMAIN}`,
-    type: 'TXT',
-    ttl: 1200,
-    records: ['ntUZvjE08RtwGChgJmy9K-RavdHepN8NSsMIqREFFjg'],
-  })
+  new aws.route53.Record(
+    'AcmeChallengeApex',
+    {
+      zoneId: zone.zoneId,
+      name: `_acme-challenge.${ROOT_DOMAIN}`,
+      type: 'TXT',
+      ttl: 1200,
+      records: ['ZWaFvRrsjbA8QP-YqZkv23dk8ah51ir0jXqNrv7e728'],
+    },
+    { retainOnDelete: true },
+  )
+  new aws.route53.Record(
+    'AcmeChallengeWww',
+    {
+      zoneId: zone.zoneId,
+      name: `_acme-challenge.www.${ROOT_DOMAIN}`,
+      type: 'TXT',
+      ttl: 1200,
+      records: ['ntUZvjE08RtwGChgJmy9K-RavdHepN8NSsMIqREFFjg'],
+    },
+    { retainOnDelete: true },
+  )
 }
 
 export const outputs = {

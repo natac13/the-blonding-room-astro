@@ -16,6 +16,12 @@ const assetsAccess = new aws.cloudfront.OriginAccessControl(
   },
 )
 
+// Keep dev and personal stages out of search results.
+const noIndex = isPermanentStage
+  ? ''
+  : `
+        h['x-robots-tag'] = { value: 'noindex, nofollow' };`
+
 export const site = new sst.aws.StaticSite('Site', {
   build: { command: 'pnpm build', output: 'dist' },
   // Real 404 status for unknown URLs. Without it SST serves index.html with a
@@ -49,7 +55,7 @@ export const site = new sst.aws.StaticSite('Site', {
         const h = event.response.headers;
         h['strict-transport-security'] = { value: 'max-age=63072000' };
         h['x-content-type-options'] = { value: 'nosniff' };
-        h['referrer-policy'] = { value: 'strict-origin-when-cross-origin' };`,
+        h['referrer-policy'] = { value: 'strict-origin-when-cross-origin' };${noIndex}`,
     },
   },
   transform: {
