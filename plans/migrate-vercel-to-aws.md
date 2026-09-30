@@ -1,6 +1,6 @@
 # Plan: Move theblondingroom.ca from Vercel to AWS (SST)
 
-Status: **Phase 0 done, Phase 1 in review** (`chore/sst-aws`). Researched 2026-09-25.
+Status: **Phases 0 and 2 done, Phase 1 PR #58 awaiting Sean's merge**. Researched 2026-09-25.
 
 ## TL;DR
 
@@ -142,6 +142,17 @@ The NS list is in the production deploy output (`nameServers`).
 
 Then merge the PR (Sean's call). Merging triggers the Vercel production build and CI `deploy-dev`.
 Confirm both are green.
+
+**✅ Done 2026-09-30 (from `chore/sst-aws`):**
+
+| Stage        | URL                                  | Acceptance checks |
+| ------------ | ------------------------------------ | ----------------- |
+| `production` | https://drbjbuw91uuet.cloudfront.net | all pass          |
+| `dev`        | https://dh12ilww8bl7y.cloudfront.net | all pass          |
+
+Route 53 nameservers (for Grape.ca in Phase 3):
+`ns-224.awsdns-28.com`, `ns-1011.awsdns-62.net`, `ns-1286.awsdns-32.org`, `ns-1968.awsdns-54.co.uk`.
+All 4 answer A, CNAME, both TXT, MX (none) and AAAA (none) **identically** to `ns1.digitalocean.com`.
 
 ## Phase 3: Move nameservers to Route 53 (5 min of work, 24-48h of waiting)
 
