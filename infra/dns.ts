@@ -8,7 +8,7 @@ const ROOT_DOMAIN = 'theblondingroom.ca'
 //   ACM can validate certs and non-production stages can take their domains.
 // - productionCutover: apex + www point at CloudFront instead of Vercel (Phase 4).
 const route53Live = true
-const productionCutover = false
+const productionCutover = true
 
 const stageDomains: Record<string, string> = {
   production: ROOT_DOMAIN,
