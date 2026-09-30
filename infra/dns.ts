@@ -7,7 +7,7 @@ const ROOT_DOMAIN = 'theblondingroom.ca'
 // - route53Live: Grape.ca nameservers point at Route 53 (Phase 3 done), so
 //   ACM can validate certs and non-production stages can take their domains.
 // - productionCutover: apex + www point at CloudFront instead of Vercel (Phase 4).
-const route53Live = false
+const route53Live = true
 const productionCutover = false
 
 const stageDomains: Record<string, string> = {
