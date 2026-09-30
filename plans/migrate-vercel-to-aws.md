@@ -147,9 +147,13 @@ Confirm both are green.
 
 Prep (a day before, optional): at DigitalOcean, drop the `www` CNAME TTL 43200 → 300 and the apex 3600 → 300.
 
-1. **Export the full DigitalOcean zone** and diff it against Route 53. `dig` only finds
-   names we guessed. Add anything extra to `infra/dns.ts` and redeploy production **before**
-   switching.
+1. ✅ **Zone contents confirmed without DigitalOcean access** (2026-09-30). Sean has no DO
+   account with this zone; it's someone's legacy account, and DO access isn't needed since the
+   switch happens at Grape.ca. Querying `ns1.digitalocean.com` directly for 25 common names
+   found nothing, and the apex has no MX/TXT/CAA/SRV/AAAA. crt.sh shows 86 certs, all for the
+   apex and `www` only. So the two mirrored records **are** the full zone. (Skip the TTL-lowering
+   prep above; it needs DO access, and the only cost is up to 12h of the old `www` answer, which
+   is identical anyway.)
 2. **Grape.ca** → nameservers → replace DO's 3 with Route 53's 4. `clientUpdateProhibited`
    may need unlocking at Grape first.
 3. Wait up to **48h**. Both providers give identical answers (Vercel), so visitors notice nothing.
@@ -203,14 +207,14 @@ Pre-flight: Route 53 is authoritative everywhere, `dev.theblondingroom.ca` works
 1. Vercel project → Settings → Git → **Disconnect**.
 2. Vercel project → Domains → remove `theblondingroom.ca` and `www`.
 3. Delete the Vercel project. Then delete the account/team if nothing else is on it.
-4. Delete the DigitalOcean DNS zone (check the DO account for anything else first).
+4. Nothing to do at DigitalOcean (no access). The zone is ignored once Grape points at Route 53.
 5. Remove `.vercel/` locally and `.vercel` from ignore lists.
 
 ## Risks & gotchas
 
 | Risk                                                 | Mitigation                                                               |
 | ---------------------------------------------------- | ------------------------------------------------------------------------ |
-| Hidden DO records lost                               | Phase 3 step 1: export the full zone                                     |
+| Hidden DO records lost                               | Checked externally (step 1 of Phase 3): only apex + www exist            |
 | Grape.ca `clientUpdateProhibited`                    | Unlock in the Grape UI or via support, before cutover day                |
 | ACM validation hangs                                 | Only if Route 53 isn't authoritative. The `route53Live` gate prevents it |
 | 404s return 502 (SST #6848)                          | Own-bucket default-origin workaround in `infra/site.ts`                  |
