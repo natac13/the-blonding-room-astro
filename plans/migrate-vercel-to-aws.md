@@ -1,6 +1,6 @@
 # Plan: Move theblondingroom.ca from Vercel to AWS (SST)
 
-Status: **Phases 0 and 2 done, Phase 1 PR #58 awaiting Sean's merge**. Researched 2026-09-25.
+Status: **Phases 0-2 done (PR #58 merged). Phase 3: nameservers moved to Route 53 on 2026-09-30; `route53Live` PR open.** Researched 2026-09-25.
 
 ## TL;DR
 
@@ -155,6 +155,11 @@ Route 53 nameservers (for Grape.ca in Phase 3):
 All 4 answer A, CNAME, both TXT, MX (none) and AAAA (none) **identically** to `ns1.digitalocean.com`.
 
 ## Phase 3: Move nameservers to Route 53 (5 min of work, 24-48h of waiting)
+
+**✅ 2026-09-30:** the nameservers were saved at Grape at 16:04 UTC (WHOIS updated; the lock didn't block it).
+The `.ca` registry published them at 16:39 UTC. Google, Cloudflare, Quad9 and OpenDNS resolved via Route 53
+within minutes, still answering Vercel `76.76.21.21`. `sst diff` for `route53Live = true` showed dev-only
+changes (cert, validation, `dev.` A/AAAA). Production had no changes.
 
 1. ✅ **Zone contents confirmed** (2026-09-30, from Sean's DigitalOcean account `sean.campbell13`).
    The records are: apex `A 76.76.21.21`, `www CNAME cname.vercel-dns.com`, and two leftover Let's Encrypt
