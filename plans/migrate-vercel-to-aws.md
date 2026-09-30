@@ -181,29 +181,46 @@ changes (cert, validation, `dev.` A/AAAA). Production had no changes.
    with no production risk.
 6. **Keep the DigitalOcean zone.** It is the rollback (set Grape back to DO NS).
 
-## Phase 4: Cutover (~30 min, quiet evening, no content merges during it)
+## Phase 4: Cutover (scheduled 2026-09-30, 7pm Eastern)
 
-Pre-flight: Route 53 is authoritative everywhere, `dev.theblondingroom.ca` works, and Vercel is green.
+**Why it's sequenced like this** (found while preparing the cutover):
 
-1. Branch, then set `productionCutover = true`.
-2. `pnpm sst diff --stage production`. Expect: an ACM cert + validation records, the domain on the
-   distribution, a www redirect distribution + bucket, alias records for apex + www, and the
-   Vercel mirror records replaced. **Nothing else.**
-3. `pnpm sst deploy --stage production` (15-25 min). Resolvers holding the old answer keep hitting
-   Vercel (still up) until the ≤300s TTL expires.
-   > If the deploy fails with "record already exists", or the diff shows delete-then-create
-   > for apex/www, keep the mirror records for this deploy (change the mirror condition to
-   > `zone && true`) and remove them in a follow-up.
-4. Verify:
+- `www` is a CNAME, and DNS doesn't allow a CNAME and an A record on the same name. SST's
+  `override` only upserts the _same_ type, so the cutover deploy would fail on `www`.
+- Removing the mirror records from code makes Pulumi delete them **after** SST creates the new
+  records. Route 53 deletes by name + type, so this could remove SST's new apex record, causing an outage.
+
+**Prep (earlier the same day, no visitor impact):**
+
+1. PR #60: `retainOnDelete` on the mirror records, plus `noindex` on non-production. Merge, then
+   publish release `v0.1.0`. This deploys production (routine rebuild only) and records the
+   option in state. It's also a dry run of the release pipeline.
+2. Verify `retainOnDelete` is in production state (`sst state export --stage production`).
+3. Atomically change `www` from `CNAME cname.vercel-dns.com` to `A 76.76.21.21` (Vercel's apex IP,
+   verified to serve `www` identically: 308 → apex, valid cert), using one Route 53 change batch:
+   DELETE CNAME + CREATE A. There is no gap because the batch is atomic. From here the `www`
+   record is outside IaC until cutover.
+
+**Cutover (7pm):**
+
+1. PR: `productionCutover = true`. The mirror block leaves the code and Pulumi forgets the records.
+   `sst diff --stage production` should show only: ACM cert + validation, aliases on the
+   distribution, a `www` redirect distribution + bucket, and apex/`www` A (upsert over Vercel)
+   - AAAA (new) alias records. Pulumi should show **no deletes** of the mirror records.
+2. Merge, then publish release `v1.0.0`. The production deploy takes about 15-25 min. Vercel serves until the
+   A records flip. They are upserted in place, so there's no NXDOMAIN window.
+3. Verify:
    ```bash
    curl -sI https://theblondingroom.ca | grep -iE "server|x-cache|strict"   # CloudFront
    curl -sI https://www.theblondingroom.ca/staff/tayler/ | grep -i location  # 301 → apex same path
    curl -sI http://theblondingroom.ca | head -3                              # 301 → https
    curl -s -o /dev/null -w "%{http_code}\n" https://theblondingroom.ca/nope  # 404
+   curl -sI https://theblondingroom.ca | grep -i x-robots                    # must be absent
    ```
-   Re-run the acceptance checks on the real domain, and on a phone off Wi-Fi.
-5. PR → merge. Cut the first release (`/release`, tag `v1.0.0`) so production and CI agree.
-6. Follow-up PR: delete both gates and the Vercel mirror block from `infra/dns.ts`.
+   Re-run the acceptance checks on the real domain, and check on a phone off Wi-Fi.
+4. Leftovers in Route 53 (unmanaged, harmless): the two `_acme-challenge` TXT records.
+   Delete them with the CLI after ~1 week.
+5. Follow-up PR: delete both gates and the mirror block from `infra/dns.ts`.
 
 **Rollback (first 2 weeks):** Route 53 console → apex A `76.76.21.21`, `www` CNAME
 `cname.vercel-dns.com`. Vercel still holds the domain and cert.
