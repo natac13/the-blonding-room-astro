@@ -145,15 +145,11 @@ Confirm both are green.
 
 ## Phase 3: Move nameservers to Route 53 (5 min of work, 24-48h of waiting)
 
-~~Prep: lower the DigitalOcean TTLs.~~ Skipped: it needs DO access (see step 1).
-
-1. ✅ **Zone contents confirmed without DigitalOcean access** (2026-09-30). Sean has no DO
-   account with this zone; it's someone's legacy account, and DO access isn't needed since the
-   switch happens at Grape.ca. Querying `ns1.digitalocean.com` directly for 25 common names
-   found nothing, and the apex has no MX/TXT/CAA/SRV/AAAA. crt.sh shows 86 certs, all for the
-   apex and `www` only. So the two mirrored records **are** the full zone. (Skip the TTL-lowering
-   prep above; it needs DO access, and the only cost is up to 12h of the old `www` answer, which
-   is identical anyway.)
+1. ✅ **Zone contents confirmed** (2026-09-30, from Sean's DigitalOcean account `sean.campbell13`).
+   The records are: apex `A 76.76.21.21`, `www CNAME cname.vercel-dns.com`, and two leftover Let's Encrypt
+   TXT tokens (`_acme-challenge` and `_acme-challenge.www`). No MX, so there's no email to break. All four
+   are mirrored in `infra/dns.ts`. No TTL-lowering prep is needed: by the Phase 4 cutover, Route 53
+   (TTL 300) is authoritative and the DigitalOcean TTLs no longer apply.
 2. **Grape.ca** → nameservers → replace DO's 3 with Route 53's 4. `clientUpdateProhibited`
    may need unlocking at Grape first.
 3. Wait up to **48h**. Both providers give identical answers (Vercel), so visitors notice nothing.
@@ -207,21 +203,21 @@ Pre-flight: Route 53 is authoritative everywhere, `dev.theblondingroom.ca` works
 1. Vercel project → Settings → Git → **Disconnect**.
 2. Vercel project → Domains → remove `theblondingroom.ca` and `www`.
 3. Delete the Vercel project. Then delete the account/team if nothing else is on it.
-4. Nothing to do at DigitalOcean (no access). The zone is ignored once Grape points at Route 53.
+4. Delete the `theblondingroom.ca` zone in DigitalOcean (account `sean.campbell13`). It's ignored once Grape points at Route 53, and keeping it until now is the Phase 3 rollback.
 5. Remove `.vercel/` locally and `.vercel` from ignore lists.
 
 ## Risks & gotchas
 
-| Risk                                                 | Mitigation                                                               |
-| ---------------------------------------------------- | ------------------------------------------------------------------------ |
-| Hidden DO records lost                               | Checked externally (step 1 of Phase 3): only apex + www exist            |
-| Grape.ca `clientUpdateProhibited`                    | Unlock in the Grape UI or via support, before cutover day                |
-| ACM validation hangs                                 | Only if Route 53 isn't authoritative. The `route53Live` gate prevents it |
-| 404s return 502 (SST #6848)                          | Own-bucket default-origin workaround in `infra/site.ts`                  |
-| Stale robots/sitemap                                 | Custom `fileOptions`                                                     |
-| Stage locked                                         | `pnpm sst unlock --stage <stage>`. CI never cancels deploys              |
-| `b.Va is not a function`                             | `npm dedupe` in `.sst/platform` (CI does it)                             |
-| AWS and Vercel drift apart between merge and cutover | The Phase 4 deploy builds current `main`                                 |
+| Risk                                                 | Mitigation                                                                |
+| ---------------------------------------------------- | ------------------------------------------------------------------------- |
+| Hidden DO records lost                               | Zone checked in the DO dashboard; all 4 records mirrored (Phase 3 step 1) |
+| Grape.ca `clientUpdateProhibited`                    | Unlock in the Grape UI or via support, before cutover day                 |
+| ACM validation hangs                                 | Only if Route 53 isn't authoritative. The `route53Live` gate prevents it  |
+| 404s return 502 (SST #6848)                          | Own-bucket default-origin workaround in `infra/site.ts`                   |
+| Stale robots/sitemap                                 | Custom `fileOptions`                                                      |
+| Stage locked                                         | `pnpm sst unlock --stage <stage>`. CI never cancels deploys               |
+| `b.Va is not a function`                             | `npm dedupe` in `.sst/platform` (CI does it)                              |
+| AWS and Vercel drift apart between merge and cutover | The Phase 4 deploy builds current `main`                                  |
 
 **Cost:** about $1/month (Route 53 zone plus pennies of CloudFront/S3/KVS).
 
