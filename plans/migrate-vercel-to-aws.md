@@ -145,7 +145,7 @@ Confirm both are green.
 
 ## Phase 3: Move nameservers to Route 53 (5 min of work, 24-48h of waiting)
 
-Prep (a day before, optional): at DigitalOcean, drop the `www` CNAME TTL 43200 → 300 and the apex 3600 → 300.
+~~Prep: lower the DigitalOcean TTLs.~~ Skipped: it needs DO access (see step 1).
 
 1. ✅ **Zone contents confirmed without DigitalOcean access** (2026-09-30). Sean has no DO
    account with this zone; it's someone's legacy account, and DO access isn't needed since the
