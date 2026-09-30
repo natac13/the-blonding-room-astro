@@ -41,11 +41,14 @@ pnpm dev        # sst dev: runs astro dev at localhost:4321 under your personal 
 
 ## Stages & Deploys
 
-| Stage        | Domain                           | Deployed by                      |
-| :----------- | :------------------------------- | :------------------------------- |
-| `production` | `theblondingroom.ca` (+ `www`)   | Publishing a `v*` GitHub release |
-| `dev`        | `dev.theblondingroom.ca`         | Every push to `main`             |
-| personal     | `<stage>.dev.theblondingroom.ca` | `pnpm deploy --stage <stage>`    |
+| Stage        | Domain                               | Deployed by                      |
+| :----------- | :----------------------------------- | :------------------------------- |
+| `production` | `theblondingroom.ca` (+ `www`)       | Publishing a `v*` GitHub release |
+| `dev`        | `dev.theblondingroom.ca`             | Every push to `main`             |
+| personal     | `localhost:4321` (site runs locally) | `pnpm dev` (`sst dev`)           |
+
+`sst dev` never deploys the site: it runs Astro locally and removes any
+deployed copy from that stage. Check a real deploy on `dev`, not your personal stage.
 
 Infrastructure lives in `infra/` and is loaded by `sst.config.ts`. Production
 is retained on removal and owns the Route 53 zone and GitHub OIDC provider.

@@ -102,7 +102,7 @@ Vercel keeps deploying `main` the whole time. PR pushes only create Vercel **pre
 
 **Migration gates** (`infra/dns.ts`). These are two constants, deleted after Phase 4:
 
-- `route53Live = false`: flip after Phase 3. Then `dev` and personal stages get their domains.
+- `route53Live = false`: flip after Phase 3. Then `dev` gets `dev.theblondingroom.ca`.
 - `productionCutover = false`: flip in Phase 4. Then production takes apex + www, and the
   Vercel mirror records are replaced.
 
@@ -110,7 +110,8 @@ Vercel keeps deploying `main` the whole time. PR pushes only create Vercel **pre
 
 - [ ] `pnpm dev` (sst dev) → Astro at `localhost:4321` works. `pnpm start` works without AWS
 - [ ] `pnpm build && pnpm preview` looks right
-- [ ] Personal stage `natac`: https://dijme4hymlqrg.cloudfront.net passes the checks below
+- [x] A deployed test stage passed the checks below (deployed to `natac`, since replaced by
+      `sst dev`, which removes a deployed StaticSite from the stage it runs on)
 - [ ] The Vercel **preview** check on the PR is green and the preview URL works. That preview is
       exactly what `main` will build once the adapter is removed. If it's broken, fall back to
       `adapter: process.env.VERCEL ? vercel() : undefined` until Phase 6
@@ -204,7 +205,6 @@ Pre-flight: Route 53 is authoritative everywhere, `dev.theblondingroom.ca` works
 3. Delete the Vercel project. Then delete the account/team if nothing else is on it.
 4. Delete the DigitalOcean DNS zone (check the DO account for anything else first).
 5. Remove `.vercel/` locally and `.vercel` from ignore lists.
-6. Remove the personal stage if unused: `pnpm remove --stage natac`.
 
 ## Risks & gotchas
 
