@@ -12,6 +12,8 @@
     "public",
     "dist",
     ".vercel",
+    ".sst",
+    "sst-env.d.ts",
     ".astro",
     "pnpm-lock.yaml"
   ]

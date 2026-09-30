@@ -4,11 +4,15 @@
   "version": "0.0.1",
   "packageManager": "pnpm@10.11.0",
   "scripts": {
-    "dev": "astro dev",
+    "aws:sso": "aws sso login --sso-session=the-blonding-room",
+    "dev": "sst dev",
+    "dev:astro": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "deploy": "sst deploy",
+    "remove": "sst remove",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "lint": "oxlint",
@@ -20,7 +24,6 @@
     "@astrojs/check": "^0.9.8",
     "@astrojs/react": "^5.0.2",
     "@astrojs/sitemap": "^3.7.2",
-    "@astrojs/vercel": "^10.0.3",
     "@fontsource/montserrat": "^5.0.16",
     "@fontsource/parisienne": "^5.0.8",
     "@heroicons/react": "^2.1.1",
@@ -46,6 +49,7 @@
     "npm-run-all": "^4.1.5",
     "oxfmt": "^0.42.0",
     "oxlint": "^1.57.0",
+    "sst": "4.17.1",
     "vitest": "^4.1.2"
   }
 }

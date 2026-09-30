@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
+  "exclude": ["dist", ".sst", "infra", "sst.config.ts", "sst-env.d.ts"],
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsconfig.tsbuildinfo",
     "strictNullChecks": true,
