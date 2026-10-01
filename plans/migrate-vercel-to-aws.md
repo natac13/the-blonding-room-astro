@@ -1,6 +1,6 @@
 # Plan: Move theblondingroom.ca from Vercel to AWS (SST)
 
-Status: **Phases 0-2 done (PR #58 merged). Phase 3: nameservers moved to Route 53 on 2026-09-30; `route53Live` PR open.** Researched 2026-09-25.
+Status: **Cut over 2026-09-30 19:26 EDT (`v1.0.0`). theblondingroom.ca is served by AWS. Phase 6 (decommission Vercel) due ~2026-10-14.** Researched 2026-09-25.
 
 ## TL;DR
 
@@ -100,7 +100,7 @@ Vercel keeps deploying `main` the whole time. PR pushes only create Vercel **pre
 | tsconfig / oxlint / oxfmt / .gitignore | Exclude `.sst`, `infra`, `sst.config.ts`, `sst-env.d.ts` where needed                        |
 | `README.md`                            | Hosting, AWS creds, stages, commands, troubleshooting                                        |
 
-**Migration gates** (`infra/dns.ts`). These are two constants, deleted after Phase 4:
+**Migration gates** (`infra/dns.ts`). These were two constants, removed after Phase 4 (PR #62):
 
 - `route53Live = false`: flip after Phase 3. Then `dev` gets `dev.theblondingroom.ca`.
 - `productionCutover = false`: flip in Phase 4. Then production takes apex + www, and the
@@ -181,7 +181,7 @@ changes (cert, validation, `dev.` A/AAAA). Production had no changes.
    with no production risk.
 6. **Keep the DigitalOcean zone.** It is the rollback (set Grape back to DO NS).
 
-## Phase 4: Cutover (scheduled 2026-09-30, 7pm Eastern)
+## Phase 4: Cutover ✅ 2026-09-30, 7:26pm Eastern
 
 **Why it's sequenced like this** (found while preparing the cutover):
 
@@ -218,12 +218,28 @@ changes (cert, validation, `dev.` A/AAAA). Production had no changes.
    curl -sI https://theblondingroom.ca | grep -i x-robots                    # must be absent
    ```
    Re-run the acceptance checks on the real domain, and check on a phone off Wi-Fi.
-4. Leftovers in Route 53 (unmanaged, harmless): the two `_acme-challenge` TXT records.
-   Delete them with the CLI after ~1 week.
-5. Follow-up PR: delete both gates and the mirror block from `infra/dns.ts`.
+4. Leftovers in Route 53 (unmanaged, harmless): the two `_acme-challenge` TXT records. Deleted in Phase 6.
+5. ✅ Follow-up PR #62: deleted both gates and the mirror block from `infra/dns.ts`. `sst diff` showed no
+   AWS changes on either stage.
 
-**Rollback (first 2 weeks):** Route 53 console → apex A `76.76.21.21`, `www` CNAME
-`cname.vercel-dns.com`. Vercel still holds the domain and cert.
+**What actually happened (2026-09-30):**
+
+- Prep: `v0.1.0` released at 18:54 and `retainOnDelete` was verified in state. The `www` CNAME → A swap was atomic.
+- `v1.0.0` deploy: 19:24 → 19:26 (about 3 min; the certs validated in seconds). Apex records upserted in place,
+  with no gap. The mirror records were dropped from state only (Route 53 untouched), as designed.
+- **`www` didn't resolve for ~2 min (19:26:28 → 19:28:34).** SST upserted `www` onto the **brand-new**
+  redirect distribution, and a new `*.cloudfront.net` hostname doesn't resolve until its first deployment
+  propagates. Route 53 aliases to it answered empty (NODATA), and some resolvers cached that for up
+  to 15 min (SOA negative TTL 900s). The apex wasn't affected because its distribution already existed. The
+  `dev` rehearsal couldn't catch this because it has no `www` redirect. **Lesson:** when a deploy creates a
+  new distribution _and_ moves live traffic onto it, create the distribution first and switch DNS in a
+  second deploy, after `Status = Deployed`.
+- Verified after cutover: all pages 200, unknown URLs 404 with the styled page, Amazon certs on apex and `www`,
+  `www` 301 → apex with path kept, `http` → `https`, HSTS/nosniff/referrer-policy present, no `x-robots-tag`
+  on production. Sean checked on mobile data.
+
+**Rollback (until Phase 6):** Route 53 console → apex A `76.76.21.21`, `www` A `76.76.21.21` (Vercel serves `www` on that IP).
+Vercel still holds the domain and cert.
 
 ## Phase 5: CI ✅ built in Phase 1
 
@@ -238,6 +254,7 @@ changes (cert, validation, `dev.` A/AAAA). Production had no changes.
 3. Delete the Vercel project. Then delete the account/team if nothing else is on it.
 4. Delete the `theblondingroom.ca` zone in DigitalOcean (account `sean.campbell13`). It's ignored once Grape points at Route 53, and keeping it until now is the Phase 3 rollback.
 5. Remove `.vercel/` locally and `.vercel` from ignore lists.
+6. Delete the two orphaned `_acme-challenge` TXT records in Route 53 (unmanaged since cutover, harmless).
 
 ## Risks & gotchas
 
