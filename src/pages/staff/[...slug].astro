@@ -45,6 +45,9 @@ const staffDescription = `Meet ${entry.data.name}, ${roleDescription} at The Blo
               transition:name={`staff-image-${entry.id}`}
               src={entry.data.image.src}
               alt={entry.data.image.alt}
+              widths={[400, 600, 800, 1024]}
+              sizes="(min-width: 1024px) 600px, (min-width: 640px) 100vw, 384px"
+              priority
             />
           </div>
         </div>

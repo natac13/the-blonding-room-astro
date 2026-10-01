@@ -54,6 +54,8 @@ const categoryImages = [heroBlonding, heroColouring, heroCuts];
                       src={categoryImages[idx]}
                       alt={`${service.title} services at The Blonding Room`}
                       class="h-full w-full object-cover"
+                      widths={[400, 600, 800, 1200]}
+                      sizes="(min-width: 1024px) 600px, (min-width: 768px) 320px, 100vw"
                     />
                   </div>
                   <h3 class="text-center font-cursive text-3xl font-extralight text-white sm:text-4xl md:text-5xl lg:text-6xl">
