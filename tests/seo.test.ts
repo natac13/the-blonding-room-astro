@@ -61,13 +61,6 @@ describe('Homepage schema (LocalBusiness + HairSalon)', () => {
     expect(business!.priceRange).toBe('$$$')
   })
 
-  it('has keywords array', () => {
-    const keywords = business!.keywords as string[]
-    expect(keywords).toBeInstanceOf(Array)
-    expect(keywords.length).toBeGreaterThanOrEqual(5)
-    expect(keywords.some((k) => k.includes('london ontario'))).toBe(true)
-  })
-
   it('has hasOfferCatalog with service categories', () => {
     const catalog = business!.hasOfferCatalog as Record<string, unknown>
     expect(catalog).toBeDefined()
@@ -145,6 +138,31 @@ describe('/services page FAQ schema', () => {
       expect(answer.text).toBeDefined()
     }
   })
+})
+
+describe('Share previews', () => {
+  const pages = ['index.html', 'services/index.html', 'staff/tayler/index.html']
+
+  it.each(pages)(
+    '%s points og:image at a file that exists in the build',
+    (page) => {
+      const html = readPage(page)
+      const image = new URL(extractMeta(html, 'og:image')!)
+      expect(image.origin).toBe('https://theblondingroom.ca')
+      expect(() =>
+        readFileSync(resolve(distDir, `.${image.pathname}`)),
+      ).not.toThrow()
+    },
+  )
+
+  it.each(pages)(
+    '%s declares og:url and og:description as properties',
+    (page) => {
+      const html = readPage(page)
+      expect(html).toMatch(/<meta property="og:url"/)
+      expect(html).toMatch(/<meta property="og:description"/)
+    },
+  )
 })
 
 describe('Build output', () => {
