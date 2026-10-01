@@ -44,3 +44,22 @@
   --max-width-8xl: 90rem;
   --max-width-9xl: 100rem;
 }
+
+/* Booking CTA prototype switch. Layout sets html[data-booking] and html[data-hero]
+   from ?booking=bar|pill and ?hero=call|book; defaults are bar + call. */
+html:not([data-booking='pill']) .proto-pill,
+html[data-booking='pill'] .proto-bar,
+html:not([data-hero='book']) .proto-hero-book,
+html[data-hero='book'] .proto-hero-call {
+  display: none !important;
+}
+
+/* Keep the footer's last line clear of the fixed booking affordance on mobile. */
+@media (width < 48rem) {
+  body {
+    padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
+  }
+  html[data-booking='pill'] body {
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom));
+  }
+}

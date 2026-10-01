@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import heroImage from "~/assets/gallery-2/staff/group-0.jpg";
+import { booking } from "~/data/booking";
 ---
 
 <section
@@ -46,7 +47,30 @@ import heroImage from "~/assets/gallery-2/staff/group-0.jpg";
     <p class="mt-3 text-base font-light text-gray-400 lg:text-lg">
       Are you ready to join us?
     </p>
-    <div class="mt-10">
+    <div class="proto-hero-call mt-10">
+      <p class="text-sm font-light tracking-wide text-gray-300">
+        Book by calling or texting
+      </p>
+      <p class="mt-1 text-2xl font-normal tracking-wider text-white">
+        {booking.phoneDisplay}
+      </p>
+      <div class="mt-6 flex justify-center gap-3">
+        <a
+          href={booking.telHref}
+          class="inline-flex min-w-32 justify-center border border-primary-500 bg-primary-600 px-6 py-3 text-sm font-medium uppercase tracking-[0.2em] text-black transition-all duration-300 hover:bg-transparent hover:text-primary-400"
+        >
+          Call
+        </a>
+        <a
+          href={booking.smsHref}
+          class="inline-flex min-w-32 justify-center border border-primary-500 px-6 py-3 text-sm font-medium uppercase tracking-[0.2em] text-primary-300 transition-all duration-300 hover:bg-primary-600 hover:text-black"
+        >
+          Text
+        </a>
+      </div>
+      <p class="mt-4 text-xs tracking-wide text-gray-400">{booking.hours}</p>
+    </div>
+    <div class="proto-hero-book mt-10">
       <a
         href="/#contact-us"
         class="inline-block border border-primary-500 bg-primary-600 px-8 py-3 text-sm font-medium uppercase tracking-[0.2em] text-black transition-all duration-300 hover:bg-transparent hover:text-primary-400"

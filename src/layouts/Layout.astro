@@ -5,6 +5,7 @@ import { ClientRouter } from 'astro:transitions'
 import { Navbar } from '../components/Navbar'
 import Footer from '../components/Footer.astro'
 import Schema from '../components/Schema.astro'
+import BookingBar from '../components/BookingBar.astro'
 import heroImage from '../assets/new-hero.png'
 
 interface Props {
@@ -43,7 +44,10 @@ const imageAlt = imageAltProp || 'The Blonding Room Logo'
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <!-- SEO -->
@@ -94,6 +98,29 @@ const imageAlt = imageAltProp || 'The Blonding Room Logo'
     <Font cssVariable="--font-montserrat" preload />
     <Font cssVariable="--font-parisienne" preload />
     <ClientRouter />
+    <script is:inline>
+      // Prototype variant switch: ?booking=bar|pill&hero=call|book, remembered for the tab.
+      // Re-applied after ClientRouter swaps, which replaces <html> attributes.
+      ;(() => {
+        const variants = { booking: ['bar', 'pill'], hero: ['call', 'book'] }
+        const apply = () => {
+          const params = new URLSearchParams(location.search)
+          for (const [key, allowed] of Object.entries(variants)) {
+            let value = params.get(key)
+            try {
+              if (allowed.includes(value))
+                sessionStorage.setItem(`proto-${key}`, value)
+              else value = sessionStorage.getItem(`proto-${key}`)
+            } catch {}
+            document.documentElement.dataset[key] = allowed.includes(value)
+              ? value
+              : allowed[0]
+          }
+        }
+        apply()
+        document.addEventListener('astro:after-swap', apply)
+      })()
+    </script>
   </head>
   <body class="flex min-h-screen flex-col bg-gray-900 font-sans font-light">
     <Navbar client:idle />
@@ -101,5 +128,6 @@ const imageAlt = imageAltProp || 'The Blonding Room Logo'
       <slot />
     </div>
     <Footer />
+    <BookingBar />
   </body>
 </html>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { cn } from '../utils/misc'
+import { booking } from '../data/booking'
 
 const links = [
   { text: 'Hair Services', href: '/services' },
@@ -45,6 +46,14 @@ export function Navbar() {
               </a>
             </li>
           ))}
+          <li>
+            <a
+              href={booking.telHref}
+              className="border-primary-500/60 text-primary-300 hover:bg-primary-600 border px-4 py-2 text-[13px] font-normal tracking-[0.15em] transition-colors duration-300 hover:text-black"
+            >
+              Call or text {booking.phoneDisplay}
+            </a>
+          </li>
         </ul>
 
         {/* Mobile menu button */}
