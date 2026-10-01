@@ -1,4 +1,4 @@
-import { domain, hasDomain, zone } from './dns'
+import { domain, zone } from './dns'
 import { isPermanentStage } from './stage'
 
 // Workaround for SST bug anomalyco/sst#6848 (open as of 4.17.1): StaticSite's
@@ -27,17 +27,11 @@ export const site = new sst.aws.StaticSite('Site', {
   // Real 404 status for unknown URLs. Without it SST serves index.html with a
   // 200 (SPA fallback), which search engines treat as a soft 404.
   errorPage: '404.html',
-  domain: hasDomain
-    ? {
-        name: domain,
-        redirects: isPermanentStage ? [`www.${domain}`] : undefined,
-        dns: sst.aws.dns({
-          zone: zone?.zoneId,
-          // Upsert over the Vercel records instead of failing on them.
-          override: isPermanentStage,
-        }),
-      }
-    : undefined,
+  domain: {
+    name: domain,
+    redirects: isPermanentStage ? [`www.${domain}`] : undefined,
+    dns: sst.aws.dns({ zone: zone?.zoneId }),
+  },
   assets: {
     bucket: assets.name,
     // Replaces SST's defaults, which cache every non-HTML file (robots.txt,
