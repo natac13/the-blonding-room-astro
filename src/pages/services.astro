@@ -175,6 +175,9 @@ const faqSchema = {
                   src={categoryImages[idx]}
                   alt={`${service.category} services at The Blonding Room`}
                   class="h-full w-full object-cover"
+                  widths={[400, 600, 800, 1200]}
+                  sizes="(min-width: 1280px) 600px, (min-width: 768px) 50vw, 100vw"
+                  priority={idx === 0}
                 />
               </div>
             </div>
