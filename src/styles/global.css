@@ -63,3 +63,11 @@ html[data-hero='book'] .proto-hero-call {
     padding-bottom: calc(5rem + env(safe-area-inset-bottom));
   }
 }
+
+@layer base {
+  /* Site-wide keyboard focus ring; gold reads on both the dark page and gold buttons. */
+  :focus-visible {
+    outline: 2px solid var(--color-primary-400);
+    outline-offset: 4px;
+  }
+}
