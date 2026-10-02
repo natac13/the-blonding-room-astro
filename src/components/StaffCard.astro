@@ -17,6 +17,8 @@ const { staff } = Astro.props
         class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
         src={staff.data.image.src}
         alt={staff.data.image.alt}
+        widths={[400, 600, 800]}
+        sizes="(min-width: 640px) 50vw, 384px"
       />
       <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <div class="absolute bottom-0 w-full p-4 md:p-5">
