@@ -115,7 +115,7 @@ const imageAlt = imageAltProp || 'The Blonding Room team in the salon'
       )
     </script>
     <script is:inline>
-      // PROTOTYPE: ?variant=A|B|C|D picks a booking + hero combo, remembered for the tab.
+      // PROTOTYPE: ?variant=A–G picks a booking + hero combo, remembered for the tab.
       // Re-applied after ClientRouter swaps, which replaces <html> attributes.
       ;(() => {
         const variants = {
@@ -123,6 +123,9 @@ const imageAlt = imageAltProp || 'The Blonding Room team in the salon'
           B: ['bar', 'book'],
           C: ['pill', 'call'],
           D: ['pill', 'book'],
+          E: ['barscroll', 'call'],
+          F: ['tab', 'book'],
+          G: ['strip', 'book'],
         }
         const apply = () => {
           let v = new URLSearchParams(location.search).get('variant')

@@ -11,6 +11,8 @@ export default defineConfig({
   },
   site: 'https://theblondingroom.ca',
   output: 'static',
+  // PROTOTYPE: the dev toolbar sits on top of the bottom booking CTAs being judged.
+  devToolbar: { enabled: false },
   fonts: [
     {
       provider: fontProviders.fontsource(),

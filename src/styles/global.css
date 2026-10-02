@@ -45,13 +45,19 @@
   --max-width-9xl: 100rem;
 }
 
-/* Booking CTA prototype switch. Layout maps ?variant=A|B|C|D to html[data-booking]
-   and html[data-hero]; A (bar + call hero) is the default. */
+/* PROTOTYPE: booking CTA switch. Layout maps ?variant= to html[data-booking]
+   (bar | barscroll | pill | tab | strip) and html[data-hero] (call | book). */
+html:not([data-booking='bar']):not([data-booking='barscroll']) .proto-bar,
 html:not([data-booking='pill']) .proto-pill,
-html[data-booking='pill'] .proto-bar,
+html:not([data-booking='tab']) .proto-tab,
+html:not([data-booking='strip']) .proto-strip,
 html:not([data-hero='book']) .proto-hero-book,
 html[data-hero='book'] .proto-hero-call {
   display: none !important;
+}
+
+html[data-booking='barscroll'][data-hero-cta-visible] .proto-bar {
+  transform: translateY(100%);
 }
 
 /* Keep the footer's last line clear of the fixed booking affordance on mobile. */
@@ -59,7 +65,8 @@ html[data-hero='book'] .proto-hero-call {
   body {
     padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
   }
-  html[data-booking='pill'] body {
+  html[data-booking='pill'] body,
+  html[data-booking='tab'] body {
     padding-bottom: calc(5rem + env(safe-area-inset-bottom));
   }
 }

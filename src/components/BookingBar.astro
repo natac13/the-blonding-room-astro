@@ -2,14 +2,14 @@
 import { Icon } from 'astro-icon/components'
 import { booking } from '~/data/booking'
 
-// Mobile-only persistent booking affordance. Both prototype variants render;
-// `html[data-booking]` (set in Layout) picks which one shows. See global.css.
+// PROTOTYPE: mobile-only persistent booking affordance. Every style renders;
+// `html[data-booking]` (set in Layout from ?variant=) picks which one shows. See global.css.
 ---
 
 <!-- Variant A: full-width bottom bar, Call and Text halves -->
 <nav
   aria-label="Book an appointment"
-  class="proto-bar fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 border-t border-primary-500/40 bg-gray-950/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
+  class="proto-bar fixed inset-x-0 bottom-0 z-40 grid transition-transform duration-300 grid-cols-2 border-t border-primary-500/40 bg-gray-950/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
 >
   <a
     href={booking.telHref}
@@ -63,3 +63,89 @@ import { booking } from '~/data/booking'
     <p class="mt-3 text-center text-sm text-gray-300">{booking.phoneDisplay}</p>
   </div>
 </details>
+
+<!-- Variant F: square gold "Book" tab in the site's button style, expands into Call / Text -->
+<details
+  class="proto-tab group fixed right-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-40 md:hidden"
+>
+  <summary
+    class="ml-auto flex h-12 w-fit cursor-pointer list-none items-center gap-2 border border-primary-500 bg-primary-600 px-6 text-xs font-medium uppercase tracking-[0.2em] text-black shadow-lg shadow-black/50 group-open:bg-gray-950 group-open:text-primary-300 [&::-webkit-details-marker]:hidden"
+  >
+    <Icon name="lucide:phone" class="h-4 w-4 group-open:hidden" aria-hidden="true" />
+    <Icon name="lucide:x" class="hidden h-4 w-4 group-open:block" aria-hidden="true" />
+    <span class="group-open:hidden">Book</span>
+    <span class="hidden group-open:inline">Close</span>
+  </summary>
+  <div
+    class="absolute right-0 bottom-full mb-3 w-64 border border-primary-500/40 bg-gray-950/95 p-4 shadow-xl shadow-black/60 backdrop-blur-md"
+  >
+    <p class="font-cursive text-2xl text-white">Book by phone</p>
+    <p class="mt-1 text-xs text-gray-400">{booking.hours}</p>
+    <div class="mt-4 flex flex-col gap-2">
+      <a
+        href={booking.telHref}
+        class="flex h-12 items-center justify-center gap-2 bg-primary-600 text-xs font-medium uppercase tracking-[0.2em] text-black"
+      >
+        <Icon name="lucide:phone" class="h-4 w-4" aria-hidden="true" />
+        Call
+      </a>
+      <a
+        href={booking.smsHref}
+        class="flex h-12 items-center justify-center gap-2 border border-primary-500/60 text-xs font-medium uppercase tracking-[0.2em] text-primary-300"
+      >
+        <Icon name="lucide:message-circle" class="h-4 w-4" aria-hidden="true" />
+        Text
+      </a>
+    </div>
+    <p class="mt-3 text-center text-sm text-gray-300">{booking.phoneDisplay}</p>
+  </div>
+</details>
+
+<!-- Variant G: one slim full-width strip that slides up Call / Text -->
+<details
+  class="proto-strip group fixed inset-x-0 bottom-0 z-40 border-t border-primary-500/50 bg-gray-950/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
+>
+  <summary
+    class="flex h-12 cursor-pointer list-none items-center justify-center gap-2 text-xs font-medium uppercase tracking-[0.25em] text-primary-300 [&::-webkit-details-marker]:hidden"
+  >
+    <span class="group-open:hidden">Book an appointment</span>
+    <span class="hidden group-open:inline">Close</span>
+    <Icon name="lucide:chevron-up" class="h-4 w-4 transition-transform group-open:rotate-180" aria-hidden="true" />
+  </summary>
+  <div class="border-b border-gray-800 px-6 pt-5 pb-4 text-center">
+    <p class="text-xs text-gray-400">Call or text {booking.phoneDisplay} · {booking.hours}</p>
+    <div class="mt-4 grid grid-cols-2 gap-3">
+      <a
+        href={booking.telHref}
+        class="flex h-12 items-center justify-center gap-2 bg-primary-600 text-xs font-medium uppercase tracking-[0.2em] text-black"
+      >
+        <Icon name="lucide:phone" class="h-4 w-4" aria-hidden="true" />
+        Call
+      </a>
+      <a
+        href={booking.smsHref}
+        class="flex h-12 items-center justify-center gap-2 border border-primary-500/60 text-xs font-medium uppercase tracking-[0.2em] text-primary-300"
+      >
+        <Icon name="lucide:message-circle" class="h-4 w-4" aria-hidden="true" />
+        Text
+      </a>
+    </div>
+  </div>
+</details>
+
+<script>
+  // Variant E: keep the bar off screen while the hero's own Call / Text buttons are visible.
+  let observer: IntersectionObserver | undefined
+
+  document.addEventListener('astro:page-load', () => {
+    observer?.disconnect()
+    const root = document.documentElement
+    const heroCta = document.querySelector('.proto-hero-call')
+    root.toggleAttribute('data-hero-cta-visible', false)
+    if (!heroCta) return
+    observer = new IntersectionObserver(([entry]) =>
+      root.toggleAttribute('data-hero-cta-visible', entry.isIntersecting),
+    )
+    observer.observe(heroCta)
+  })
+</script>
