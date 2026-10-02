@@ -134,17 +134,17 @@ import { booking } from '~/data/booking'
 </details>
 
 <script>
-  // Variant E: keep the bar off screen while the hero's own Call / Text buttons are visible.
+  // Variant E: mark when the hero's own Call / Text buttons are off screen so the bar can show.
   let observer: IntersectionObserver | undefined
 
   document.addEventListener('astro:page-load', () => {
     observer?.disconnect()
     const root = document.documentElement
     const heroCta = document.querySelector('.proto-hero-call')
-    root.toggleAttribute('data-hero-cta-visible', false)
+    root.toggleAttribute('data-hero-cta-passed', false)
     if (!heroCta) return
     observer = new IntersectionObserver(([entry]) =>
-      root.toggleAttribute('data-hero-cta-visible', entry.isIntersecting),
+      root.toggleAttribute('data-hero-cta-passed', !entry.isIntersecting),
     )
     observer.observe(heroCta)
   })

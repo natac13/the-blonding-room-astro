@@ -56,7 +56,10 @@ html[data-hero='book'] .proto-hero-call {
   display: none !important;
 }
 
-html[data-booking='barscroll'][data-hero-cta-visible] .proto-bar {
+/* Variant E: on pages with hero Call/Text, the bar starts off screen from the
+   first paint and only slides up once BookingBar's script sees the hero leave. */
+html[data-booking='barscroll']:has(.proto-hero-call):not([data-hero-cta-passed])
+  .proto-bar {
   transform: translateY(100%);
 }
 
