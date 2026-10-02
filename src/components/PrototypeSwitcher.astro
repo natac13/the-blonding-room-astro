@@ -1,0 +1,87 @@
+---
+// PROTOTYPE ONLY: floating switcher for the booking CTA variants. Layout renders it
+// in dev only (`import.meta.env.DEV`), so it can't ship. Delete with the losing variants.
+const variants = {
+  A: 'Bar + call/text hero',
+  B: 'Bar + Book Now hero',
+  C: 'Pill + call/text hero',
+  D: 'Pill + Book Now hero',
+}
+---
+
+<div
+  data-proto-switcher
+  data-variants={JSON.stringify(variants)}
+  class="fixed left-1/2 z-[60] flex -translate-x-1/2 items-center gap-1 rounded-full bg-white px-1.5 py-1.5 text-black shadow-[0_8px_30px_rgba(0,0,0,0.5)] ring-2 ring-fuchsia-500 bottom-[calc(4.5rem+env(safe-area-inset-bottom))] md:bottom-6"
+>
+  <button
+    type="button"
+    data-proto-step="-1"
+    aria-label="Previous variant"
+    class="grid h-9 w-9 place-items-center rounded-full text-lg hover:bg-gray-200"
+  >
+    ◀
+  </button>
+  <div class="px-2 text-center leading-tight whitespace-nowrap">
+    <p data-proto-label class="text-sm font-semibold">A</p>
+    <p class="text-[11px] text-gray-600">
+      Prototype · ← → keys<span class="hidden md:inline"
+        > · bar shows below 768px</span
+      >
+    </p>
+  </div>
+  <button
+    type="button"
+    data-proto-step="1"
+    aria-label="Next variant"
+    class="grid h-9 w-9 place-items-center rounded-full text-lg hover:bg-gray-200"
+  >
+    ▶
+  </button>
+</div>
+
+<script>
+  // Set by the variant script in Layout's <head>.
+  declare global {
+    interface Window {
+      __applyProtoVariant: () => void
+    }
+  }
+
+  const switcher = () => document.querySelector<HTMLElement>('[data-proto-switcher]')
+
+  function render() {
+    const el = switcher()
+    if (!el) return
+    const names: Record<string, string> = JSON.parse(el.dataset.variants ?? '{}')
+    const current = document.documentElement.dataset.variant ?? 'A'
+    el.querySelector('[data-proto-label]')!.textContent = `${current} · ${names[current]}`
+  }
+
+  function step(by: number) {
+    const el = switcher()
+    if (!el) return
+    const keys = Object.keys(JSON.parse(el.dataset.variants ?? '{}'))
+    const index = keys.indexOf(document.documentElement.dataset.variant ?? 'A')
+    const next = keys[(index + by + keys.length) % keys.length]
+    const url = new URL(location.href)
+    url.searchParams.set('variant', next)
+    history.replaceState(history.state, '', url)
+    window.__applyProtoVariant()
+    render()
+  }
+
+  document.addEventListener('click', (event) => {
+    const button = (event.target as Element).closest<HTMLElement>('[data-proto-step]')
+    if (button) step(Number(button.dataset.protoStep))
+  })
+
+  document.addEventListener('keydown', (event) => {
+    const target = event.target as HTMLElement
+    if (target.closest('input, textarea, [contenteditable]')) return
+    if (event.key === 'ArrowLeft') step(-1)
+    if (event.key === 'ArrowRight') step(1)
+  })
+
+  document.addEventListener('astro:page-load', render)
+</script>

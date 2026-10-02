@@ -45,8 +45,8 @@
   --max-width-9xl: 100rem;
 }
 
-/* Booking CTA prototype switch. Layout sets html[data-booking] and html[data-hero]
-   from ?booking=bar|pill and ?hero=call|book; defaults are bar + call. */
+/* Booking CTA prototype switch. Layout maps ?variant=A|B|C|D to html[data-booking]
+   and html[data-hero]; A (bar + call hero) is the default. */
 html:not([data-booking='pill']) .proto-pill,
 html[data-booking='pill'] .proto-bar,
 html:not([data-hero='book']) .proto-hero-book,

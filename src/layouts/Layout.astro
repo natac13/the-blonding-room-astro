@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar.astro'
 import Footer from '../components/Footer.astro'
 import Schema from '../components/Schema.astro'
 import BookingBar from '../components/BookingBar.astro'
+import PrototypeSwitcher from '../components/PrototypeSwitcher.astro'
 import heroImage from '../assets/gallery-2/staff/group-0.jpg'
 
 interface Props {
@@ -114,24 +115,30 @@ const imageAlt = imageAltProp || 'The Blonding Room team in the salon'
       )
     </script>
     <script is:inline>
-      // Prototype variant switch: ?booking=bar|pill&hero=call|book, remembered for the tab.
+      // PROTOTYPE: ?variant=A|B|C|D picks a booking + hero combo, remembered for the tab.
       // Re-applied after ClientRouter swaps, which replaces <html> attributes.
       ;(() => {
-        const variants = { booking: ['bar', 'pill'], hero: ['call', 'book'] }
-        const apply = () => {
-          const params = new URLSearchParams(location.search)
-          for (const [key, allowed] of Object.entries(variants)) {
-            let value = params.get(key)
-            try {
-              if (allowed.includes(value))
-                sessionStorage.setItem(`proto-${key}`, value)
-              else value = sessionStorage.getItem(`proto-${key}`)
-            } catch {}
-            document.documentElement.dataset[key] = allowed.includes(value)
-              ? value
-              : allowed[0]
-          }
+        const variants = {
+          A: ['bar', 'call'],
+          B: ['bar', 'book'],
+          C: ['pill', 'call'],
+          D: ['pill', 'book'],
         }
+        const apply = () => {
+          let v = new URLSearchParams(location.search).get('variant')
+          try {
+            if (v in variants) sessionStorage.setItem('proto-variant', v)
+            else v = sessionStorage.getItem('proto-variant')
+          } catch {}
+          if (!(v in variants)) v = 'A'
+          const [booking, hero] = variants[v]
+          Object.assign(document.documentElement.dataset, {
+            variant: v,
+            booking,
+            hero,
+          })
+        }
+        window.__applyProtoVariant = apply
         apply()
         document.addEventListener('astro:after-swap', apply)
       })()
@@ -144,5 +151,6 @@ const imageAlt = imageAltProp || 'The Blonding Room team in the salon'
     </main>
     <Footer />
     <BookingBar />
+    {import.meta.env.DEV && <PrototypeSwitcher />}
   </body>
 </html>
