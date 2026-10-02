@@ -3,7 +3,7 @@ import '../styles/global.css'
 import type { ImageMetadata } from 'astro'
 import { Font, getImage } from 'astro:assets'
 import { ClientRouter } from 'astro:transitions'
-import { Navbar } from '../components/Navbar'
+import Navbar from '../components/Navbar.astro'
 import Footer from '../components/Footer.astro'
 import Schema from '../components/Schema.astro'
 import heroImage from '../assets/gallery-2/staff/group-0.jpg'
@@ -100,12 +100,21 @@ const imageAlt = imageAltProp || 'The Blonding Room team in the salon'
     <Font cssVariable="--font-montserrat" preload />
     <Font cssVariable="--font-parisienne" preload />
     <ClientRouter />
+    <!-- Marks JS as available so JS-only start states (e.g. [data-animate]) never
+         hide content without JS. ClientRouter replaces <html> attributes on each
+         navigation, so the class is re-applied after every swap. -->
+    <script is:inline>
+      document.documentElement.classList.add('js')
+      document.addEventListener('astro:after-swap', () =>
+        document.documentElement.classList.add('js'),
+      )
+    </script>
   </head>
   <body class="flex min-h-screen flex-col bg-gray-900 font-sans font-light">
-    <Navbar client:idle />
-    <div class="grow">
+    <Navbar />
+    <main class="grow">
       <slot />
-    </div>
+    </main>
     <Footer />
   </body>
 </html>

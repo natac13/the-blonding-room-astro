@@ -1,0 +1,117 @@
+---
+const links = [
+  { text: 'Hair Services', href: '/services' },
+  { text: 'About', href: '/#about' },
+  { text: 'Contact Us', href: '/#contact-us' },
+]
+---
+
+<!-- State lives in data-scrolled / data-open on <nav>; Tailwind data variants style it. -->
+<nav
+  data-navbar
+  class="group fixed top-0 right-0 left-0 z-50 bg-transparent transition-all duration-500 data-scrolled:bg-black/90 data-scrolled:shadow-lg data-scrolled:backdrop-blur-md"
+>
+  <div
+    class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4"
+  >
+    <a
+      href="/"
+      class="font-cursive text-xl tracking-wide text-white lg:text-2xl"
+    >
+      The Blonding Room
+    </a>
+
+    <ul class="hidden items-center gap-10 md:flex">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="hover:text-primary-400 text-[13px] font-light tracking-[0.2em] text-white/80 uppercase transition-colors duration-300"
+            >
+              {link.text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <button
+      type="button"
+      data-navbar-toggle
+      class="-mr-2.5 flex size-11 flex-col items-center justify-center gap-[5px] md:hidden"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span
+        class="block h-px w-6 bg-white transition-all duration-300 group-data-open:translate-y-[6px] group-data-open:rotate-45"
+      ></span>
+      <span
+        class="block h-px w-6 bg-white transition-all duration-300 group-data-open:opacity-0"
+      ></span>
+      <span
+        class="block h-px w-6 bg-white transition-all duration-300 group-data-open:-translate-y-[6px] group-data-open:-rotate-45"
+      ></span>
+    </button>
+  </div>
+
+  <div
+    id="mobile-menu"
+    class="max-h-0 overflow-hidden transition-all duration-500 group-data-open:max-h-60 group-data-open:bg-black/95 group-data-open:backdrop-blur-md md:hidden"
+  >
+    <ul class="flex flex-col items-center gap-6 px-6 pt-2 pb-8">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="hover:text-primary-400 text-sm font-light tracking-[0.2em] text-white/80 uppercase transition-colors duration-300"
+            >
+              {link.text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
+
+<script>
+  // ClientRouter swaps in a fresh <nav> on every navigation, so listeners are
+  // rebound on astro:page-load and the previous page's are aborted.
+  let controller: AbortController | undefined
+
+  function initNavbar() {
+    controller?.abort()
+    controller = new AbortController()
+    const { signal } = controller
+
+    const nav = document.querySelector<HTMLElement>('[data-navbar]')
+    const toggle = nav?.querySelector<HTMLButtonElement>('[data-navbar-toggle]')
+    if (!nav || !toggle) return
+
+    const setOpen = (open: boolean) => {
+      nav.toggleAttribute('data-open', open)
+      toggle.setAttribute('aria-expanded', String(open))
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu')
+    }
+    const onScroll = () =>
+      nav.toggleAttribute('data-scrolled', window.scrollY > 40)
+
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true, signal })
+    toggle.addEventListener(
+      'click',
+      () => setOpen(!nav.hasAttribute('data-open')),
+      { signal },
+    )
+    nav
+      .querySelectorAll('#mobile-menu a')
+      .forEach((a) =>
+        a.addEventListener('click', () => setOpen(false), { signal }),
+      )
+  }
+
+  document.addEventListener('astro:page-load', initNavbar)
+</script>

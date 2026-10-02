@@ -44,3 +44,11 @@
   --max-width-8xl: 90rem;
   --max-width-9xl: 100rem;
 }
+
+@layer base {
+  /* Site-wide keyboard focus ring; gold reads on both the dark page and gold buttons. */
+  :focus-visible {
+    outline: 2px solid var(--color-primary-400);
+    outline-offset: 4px;
+  }
+}
