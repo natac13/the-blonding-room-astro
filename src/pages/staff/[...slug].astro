@@ -4,6 +4,7 @@ import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
 import { getCollection, render } from 'astro:content'
 import Layout from '../../layouts/Layout.astro'
+import clientProfile from '../../data/client-profile.json'
 
 export async function getStaticPaths() {
   const staffEntries = await getCollection('staff')
@@ -17,75 +18,151 @@ interface Props {
   entry: CollectionEntry<'staff'>
 }
 const { entry } = Astro.props
+const { name, role, businessRole, headline, specialties, work, socials, image } = entry.data
 const { Content } = await render(entry)
 
-const roleDescription = entry.data.businessRole
-  ? `${entry.data.role} & ${entry.data.businessRole}`
-  : entry.data.role
-const staffDescription = `Meet ${entry.data.name}, ${roleDescription} at The Blonding Room in Arva, near London, Ontario. Specializing in blonding, balayage, and colour services.`
+const roleLine = businessRole ? `${role} & ${businessRole}` : role
+const pageTitle = `${name}, ${headline ?? role} in Arva near London, ON`
+const specialtyText = specialties?.length ? ` Specialties: ${specialties.join(', ')}.` : ''
+const staffDescription = `Book with ${name}, ${roleLine.toLowerCase()} at The Blonding Room in Arva, near London, Ontario.${specialtyText} Call or text ${clientProfile.phoneNumber}.`
+
+// There is no per-stylist line, so both actions reach the salon's shared number.
+const phoneDigits = `+1${clientProfile.phoneNumber.replace(/\D/g, '')}`
+const smsBody = encodeURIComponent(`Hi! I'd like to book an appointment with ${name}.`)
+const instagramHandle = new URL(socials.instagram).pathname.replaceAll('/', '')
+const hasPlaceholderWork = work?.some((photo) => photo.placeholder) ?? false
 ---
 
 <Layout
-  title={entry.data.name}
+  title={pageTitle}
   description={staffDescription}
-  imageAlt={entry.data.image.alt}
-  image={entry.data.image.src}
+  imageAlt={image.alt}
+  image={image.src}
 >
-  <div class="bg-gray-900 py-16 sm:py-28">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div
-        class="mx-auto grid max-w-sm grid-cols-1 items-start gap-10 sm:max-w-none md:gap-16 lg:grid-cols-2"
-      >
-        <div>
-          <div
-            class="aspect-4/5 relative overflow-hidden rounded-sm"
-          >
-            <Image
-              class="absolute inset-0 h-full w-full object-cover"
-              transition:name={`staff-image-${entry.id}`}
-              src={entry.data.image.src}
-              alt={entry.data.image.alt}
-              widths={[400, 600, 800, 1024]}
-              sizes="(min-width: 1024px) 600px, (min-width: 640px) 100vw, 384px"
-              priority
-            />
-          </div>
-        </div>
-        <div class="flex flex-col">
-          <p class="text-sm font-light uppercase tracking-[0.25em] text-primary-400">
-            {entry.data.role}{entry.data.businessRole && ` & ${entry.data.businessRole}`}
+  <article class="bg-gray-900">
+    <div class="mx-auto max-w-7xl px-4 pb-16 pt-24 sm:px-6 sm:pb-24 sm:pt-20 lg:px-8">
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:grid-rows-[auto_auto_1fr] lg:gap-x-16">
+        <header class="lg:col-start-2 lg:row-start-1">
+          <p class="text-xs font-light uppercase tracking-[0.25em] text-primary-400 sm:text-sm">
+            {roleLine}
           </p>
           <h1
             transition:name={`staff-name-${entry.id}`}
-            class="mt-3 font-cursive text-5xl font-thin text-white sm:text-6xl lg:text-7xl"
+            class="mt-2 font-cursive text-6xl font-thin text-white lg:text-7xl"
           >
-            {entry.data.name}
+            {name}
           </h1>
-          <div class="mt-4 h-px w-16 bg-primary-600"></div>
-          <div class="prose mt-8 max-w-xl text-base font-light leading-7 text-gray-300">
-            <Content />
-          </div>
-          <div class="mt-10">
-            <a
-              href={entry.data.socials.instagram}
-              class="group inline-flex items-center gap-2 text-primary-500 transition-colors hover:text-primary-400"
-            >
-              <Icon
-                name="lucide:instagram"
-                class="h-5 w-5"
-              />
-              <span class="text-sm tracking-wide group-hover:underline">
-                {
-                  entry.data.socials.instagram
-                    .replace('https://www.instagram.com/', '')
-                    .replace('/', '')
-                }
-              </span>
-              <span class="sr-only">Instagram link for {entry.data.name}</span>
-            </a>
+          {
+            specialties && (
+              <ul class="mt-5 flex flex-wrap gap-2" aria-label={`${name}'s specialties`}>
+                {specialties.map((specialty) => (
+                  <li class="rounded-full border border-primary-700 px-3 py-1 text-xs tracking-wide text-gray-200">
+                    {specialty}
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </header>
+
+        <div class="lg:col-start-1 lg:row-span-3 lg:row-start-1">
+          <div class="aspect-4/5 relative overflow-hidden rounded-sm lg:sticky lg:top-28">
+            <Image
+              class="absolute inset-0 h-full w-full object-cover"
+              transition:name={`staff-image-${entry.id}`}
+              src={image.src}
+              alt={image.alt}
+              widths={[400, 640, 960]}
+              sizes="(min-width: 1024px) 600px, 100vw"
+              loading="eager"
+            />
           </div>
         </div>
+
+        <div class="lg:col-start-2 lg:row-start-3">
+          <div class="prose max-w-xl text-base font-light leading-7 text-gray-300">
+            <Content />
+          </div>
+          <a
+            href={socials.instagram}
+            class="group mt-8 inline-flex items-center gap-2 text-primary-500 transition-colors hover:text-primary-400"
+          >
+            <Icon name="lucide:instagram" class="h-5 w-5" aria-hidden="true" />
+            <span class="text-sm tracking-wide group-hover:underline">@{instagramHandle}</span>
+            <span class="sr-only">on Instagram</span>
+          </a>
+        </div>
+
+        <!-- Mobile: after the bio so the stylist comes first. Desktop: under the name. -->
+        <section
+          aria-labelledby="book-heading"
+          class="border-l-2 border-primary-600 bg-gray-950/60 py-5 pl-5 pr-4 lg:col-start-2 lg:row-start-2"
+        >
+          <h2 id="book-heading" class="font-cursive text-3xl text-primary-300">
+            Book with {name}
+          </h2>
+          <p class="mt-1 text-sm font-light text-gray-300">
+            Call or text the salon at {clientProfile.phoneNumber} and ask for {name}.
+          </p>
+          <div class="mt-4 grid grid-cols-2 gap-3 sm:max-w-md">
+            <a
+              href={`tel:${phoneDigits}`}
+              class="flex items-center justify-center gap-2 border border-primary-500 bg-primary-600 px-3 py-3 text-sm font-medium text-black transition-colors hover:bg-transparent hover:text-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            >
+              <Icon name="lucide:phone" class="h-4 w-4" aria-hidden="true" />
+              Call
+            </a>
+            <a
+              href={`sms:${phoneDigits}?&body=${smsBody}`}
+              class="flex items-center justify-center gap-2 border border-primary-500 px-3 py-3 text-sm font-medium text-primary-400 transition-colors hover:bg-primary-600 hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            >
+              <Icon name="lucide:message-circle" class="h-4 w-4" aria-hidden="true" />
+              Text
+            </a>
+          </div>
+        </section>
       </div>
+
+      {
+        work && work.length > 0 && (
+          <section aria-labelledby="work-heading" class="mt-16 border-t border-gray-800 pt-12 sm:mt-24">
+            <div class="flex flex-wrap items-end justify-between gap-4">
+              <h2 id="work-heading" class="font-cursive text-4xl text-white sm:text-5xl">
+                Recent work
+              </h2>
+              <a
+                href={socials.instagram}
+                class="text-sm tracking-wide text-primary-500 hover:text-primary-400 hover:underline"
+              >
+                More on Instagram @{instagramHandle}
+              </a>
+            </div>
+            {hasPlaceholderWork && (
+              <p class="mt-3 text-sm font-light text-gray-400">
+                Placeholder photos from the salon gallery until {name}'s own work is added.
+              </p>
+            )}
+            <ul class="mt-8 grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-3">
+              {work.map((photo) => (
+                <li class="aspect-4/5 relative overflow-hidden rounded-sm bg-gray-800">
+                  <Image
+                    class="h-full w-full object-cover"
+                    src={photo.src}
+                    alt={photo.alt}
+                    widths={[300, 480, 720]}
+                    sizes="(min-width: 1024px) 400px, 50vw"
+                  />
+                  {photo.placeholder && (
+                    <span class="absolute left-2 top-2 rounded-full bg-gray-950/80 px-2 py-0.5 text-[11px] text-gray-200">
+                      Placeholder
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
     </div>
-  </div>
+  </article>
 </Layout>

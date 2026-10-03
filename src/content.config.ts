@@ -16,6 +16,20 @@ const staffCollection = defineCollection({
         src: image(),
         alt: z.string(),
       }),
+      // Search-facing descriptor used in the page title, e.g. "Blonde Specialist".
+      headline: z.string().optional(),
+      specialties: z.array(z.string()).optional(),
+      // Portfolio photos for the "Recent work" grid; the grid is hidden when absent.
+      work: z
+        .array(
+          z.object({
+            src: image(),
+            alt: z.string(),
+            // Marks stand-in photos so the page labels them until real work is added.
+            placeholder: z.boolean().default(false),
+          }),
+        )
+        .optional(),
     }),
 })
 
