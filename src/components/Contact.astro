@@ -3,6 +3,7 @@ import type { ImageMetadata } from "astro";
 import { Icon } from "astro-icon/components";
 import { getImage, Image } from "astro:assets";
 import clientProfile from "~/data/client-profile.json";
+import { booking } from "~/data/booking";
 import ContactItem from "./ContactItem.astro";
 import SectionHeader from "./SectionHeader.astro";
 
@@ -28,7 +29,7 @@ const location = {
 const phone = {
   title: "Phone",
   content: clientProfile.phoneNumber,
-  href: `tel:${clientProfile.phoneNumber.replace(/\D/g, "")}`,
+  href: booking.telHref,
 };
 
 const email = {

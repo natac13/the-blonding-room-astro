@@ -1,4 +1,6 @@
 ---
+import { booking } from '~/data/booking'
+
 const links = [
   { text: 'Hair Services', href: '/services' },
   { text: 'About', href: '/#about' },
@@ -34,6 +36,14 @@ const links = [
           </li>
         ))
       }
+      <li class="hidden lg:block">
+        <a
+          href={booking.telHref}
+          class="border-primary-500/60 text-primary-300 hover:bg-primary-600 border px-4 py-2 text-[13px] font-normal tracking-[0.15em] transition-colors duration-300 hover:text-black"
+        >
+          Call or text {booking.phoneDisplay}
+        </a>
+      </li>
     </ul>
 
     <button
