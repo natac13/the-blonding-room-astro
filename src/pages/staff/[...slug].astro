@@ -41,8 +41,8 @@ const hasPlaceholderWork = work?.some((photo) => photo.placeholder) ?? false
 >
   <article class="bg-gray-900">
     <div class="mx-auto max-w-7xl px-4 pb-16 pt-24 sm:px-6 sm:pb-24 sm:pt-20 lg:px-8">
-      <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-x-16">
-        <header class="lg:col-start-2">
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:grid-rows-[auto_auto_1fr] lg:gap-x-16">
+        <header class="lg:col-start-2 lg:row-start-1">
           <p class="text-xs font-light uppercase tracking-[0.25em] text-primary-400 sm:text-sm">
             {roleLine}
           </p>
@@ -63,37 +63,9 @@ const hasPlaceholderWork = work?.some((photo) => photo.placeholder) ?? false
               </ul>
             )
           }
-
-          <section
-            aria-labelledby="book-heading"
-            class="mt-7 border-l-2 border-primary-600 bg-gray-950/60 py-5 pl-5 pr-4"
-          >
-            <h2 id="book-heading" class="font-cursive text-3xl text-primary-300">
-              Book with {name}
-            </h2>
-            <p class="mt-1 text-sm font-light text-gray-300">
-              Call or text the salon at {clientProfile.phoneNumber} and ask for {name}.
-            </p>
-            <div class="mt-4 grid grid-cols-2 gap-3 sm:max-w-md">
-              <a
-                href={`tel:${phoneDigits}`}
-                class="flex items-center justify-center gap-2 border border-primary-500 bg-primary-600 px-3 py-3 text-sm font-medium text-black transition-colors hover:bg-transparent hover:text-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
-              >
-                <Icon name="lucide:phone" class="h-4 w-4" aria-hidden="true" />
-                Call
-              </a>
-              <a
-                href={`sms:${phoneDigits}?&body=${smsBody}`}
-                class="flex items-center justify-center gap-2 border border-primary-500 px-3 py-3 text-sm font-medium text-primary-400 transition-colors hover:bg-primary-600 hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
-              >
-                <Icon name="lucide:message-circle" class="h-4 w-4" aria-hidden="true" />
-                Text
-              </a>
-            </div>
-          </section>
         </header>
 
-        <div class="lg:col-start-1 lg:row-span-2 lg:row-start-1">
+        <div class="lg:col-start-1 lg:row-span-3 lg:row-start-1">
           <div class="aspect-4/5 relative overflow-hidden rounded-sm lg:sticky lg:top-28">
             <Image
               class="absolute inset-0 h-full w-full object-cover"
@@ -107,7 +79,7 @@ const hasPlaceholderWork = work?.some((photo) => photo.placeholder) ?? false
           </div>
         </div>
 
-        <div class="lg:col-start-2">
+        <div class="lg:col-start-2 lg:row-start-3">
           <div class="prose max-w-xl text-base font-light leading-7 text-gray-300">
             <Content />
           </div>
@@ -120,6 +92,35 @@ const hasPlaceholderWork = work?.some((photo) => photo.placeholder) ?? false
             <span class="sr-only">on Instagram</span>
           </a>
         </div>
+
+        <!-- Mobile: after the bio so the stylist comes first. Desktop: under the name. -->
+        <section
+          aria-labelledby="book-heading"
+          class="border-l-2 border-primary-600 bg-gray-950/60 py-5 pl-5 pr-4 lg:col-start-2 lg:row-start-2"
+        >
+          <h2 id="book-heading" class="font-cursive text-3xl text-primary-300">
+            Book with {name}
+          </h2>
+          <p class="mt-1 text-sm font-light text-gray-300">
+            Call or text the salon at {clientProfile.phoneNumber} and ask for {name}.
+          </p>
+          <div class="mt-4 grid grid-cols-2 gap-3 sm:max-w-md">
+            <a
+              href={`tel:${phoneDigits}`}
+              class="flex items-center justify-center gap-2 border border-primary-500 bg-primary-600 px-3 py-3 text-sm font-medium text-black transition-colors hover:bg-transparent hover:text-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            >
+              <Icon name="lucide:phone" class="h-4 w-4" aria-hidden="true" />
+              Call
+            </a>
+            <a
+              href={`sms:${phoneDigits}?&body=${smsBody}`}
+              class="flex items-center justify-center gap-2 border border-primary-500 px-3 py-3 text-sm font-medium text-primary-400 transition-colors hover:bg-primary-600 hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            >
+              <Icon name="lucide:message-circle" class="h-4 w-4" aria-hidden="true" />
+              Text
+            </a>
+          </div>
+        </section>
       </div>
 
       {
