@@ -17,11 +17,11 @@ const navLinks = [
       Where every shade tells a story
     </p>
 
-    <nav class="flex flex-wrap justify-center gap-6 md:gap-8">
+    <nav class="flex flex-wrap justify-center gap-x-6 md:gap-x-8">
       {navLinks.map(({ label, href }) => (
         <a
           href={href}
-          class="text-xs font-medium uppercase tracking-[0.2em] text-gray-400 transition-colors hover:text-primary-400"
+          class="inline-flex min-h-11 items-center text-xs font-medium uppercase tracking-[0.2em] text-gray-400 transition-colors hover:text-primary-400"
         >
           {label}
         </a>
@@ -38,7 +38,7 @@ const navLinks = [
       <span class="sr-only">Instagram</span>
     </a>
 
-    <p class="text-xs text-gray-500">
+    <p class="text-xs text-gray-400">
       &copy; {new Date().getFullYear()} The Blonding Room. All rights reserved.
     </p>
   </div>

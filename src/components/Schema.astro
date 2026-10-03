@@ -1,5 +1,5 @@
 ---
-import heroImage from '~/assets/new-hero.png'
+import heroImage from '~/assets/gallery-2/staff/group-0.jpg'
 import clientProfile from '~/data/client-profile.json'
 import { HAIR_SERVICES } from '~/data/hair-services'
 
@@ -12,16 +12,6 @@ const schema = {
   email: clientProfile.emailAddress,
   image: `https://${clientProfile.siteUrl}${heroImage.src}`,
   priceRange: '$$$',
-  keywords: [
-    'hair salon london ontario',
-    'hair stylist london ontario',
-    'hairdresser london ontario',
-    'balayage london ontario',
-    'hair colouring london ontario',
-    'blonde specialist london ontario',
-    'hair salon near masonville',
-    'hair salon arva ontario',
-  ],
   address: {
     '@type': 'PostalAddress',
     streetAddress: '21578 Richmond St',
@@ -107,12 +97,7 @@ const schema = {
       containedInPlace: { '@type': 'City', name: 'London' },
     },
   ],
-  sameAs: [clientProfile.socialMedia.instagram],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '53',
-  },
+  sameAs: [clientProfile.socialMedia.instagram, clientProfile.socialMedia.facebook],
 }
 ---
 

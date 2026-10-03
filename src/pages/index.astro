@@ -9,43 +9,32 @@ import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout title="Hair Salon Near London, Ontario — Blonding, Balayage & Colour">
-  <main>
-    <Hero />
-    <div data-animate><SalonGallery /></div>
-    <div data-animate><HairServices /></div>
-    <div data-animate><AboutUs /></div>
-    <div data-animate><StaffCards /></div>
-    <div data-animate><Contact /></div>
-  </main>
+  <Hero />
+  <div data-animate><SalonGallery /></div>
+  <div data-animate><HairServices /></div>
+  <div data-animate><AboutUs /></div>
+  <div data-animate><StaffCards /></div>
+  <div data-animate><Contact /></div>
 </Layout>
 
 <style>
-  [data-animate] {
-    opacity: 0;
-    transform: translateY(1.5rem);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  [data-animate].is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  @media (prefers-reduced-motion: reduce) {
+  /* Hidden start state only when JS can reveal it (html.js, set in Layout)
+     and the user has not asked for reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) [data-animate]:not(.is-visible) {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
     [data-animate] {
-      opacity: 1;
-      transform: none;
-      transition: none;
+      transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
     }
   }
 </style>
 
 <script>
   function initAnimations() {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) {
-      document.querySelectorAll('[data-animate]').forEach((el) => el.classList.add('is-visible'))
-      return
-    }
-
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
