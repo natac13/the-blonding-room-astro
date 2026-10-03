@@ -1,0 +1,47 @@
+---
+import { Icon } from 'astro-icon/components'
+import { booking } from '~/data/booking'
+---
+
+<!--
+  Booking strip fixed to the bottom of every page below lg; at lg+ the navbar's
+  call/text item takes over. <details> opens the Call / Text panel without JS.
+  z-40 keeps it under the navbar and the PhotoSwipe lightbox. Layout pads
+  <body> by the strip height (h-12 + border) below lg.
+-->
+<details
+  class="group fixed inset-x-0 bottom-0 z-40 border-t border-primary-500/50 bg-gray-950/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden"
+>
+  <summary
+    class="flex h-12 cursor-pointer list-none items-center justify-center gap-2 text-xs font-medium uppercase tracking-[0.25em] text-primary-300 [&::-webkit-details-marker]:hidden"
+  >
+    <span class="group-open:hidden">Book an appointment</span>
+    <span class="hidden group-open:inline">Close</span>
+    <Icon
+      name="lucide:chevron-up"
+      class="h-4 w-4 transition-transform group-open:rotate-180"
+      aria-hidden="true"
+    />
+  </summary>
+  <div class="border-b border-gray-800 px-6 pt-5 pb-4 text-center">
+    <p class="text-xs text-gray-400">
+      Call or text {booking.phoneDisplay} · {booking.hours}
+    </p>
+    <div class="mt-4 grid grid-cols-2 gap-3">
+      <a
+        href={booking.telHref}
+        class="flex h-12 items-center justify-center gap-2 bg-primary-600 text-xs font-medium uppercase tracking-[0.2em] text-black"
+      >
+        <Icon name="lucide:phone" class="h-4 w-4" aria-hidden="true" />
+        Call
+      </a>
+      <a
+        href={booking.smsHref}
+        class="flex h-12 items-center justify-center gap-2 border border-primary-500/60 text-xs font-medium uppercase tracking-[0.2em] text-primary-300"
+      >
+        <Icon name="lucide:message-circle" class="h-4 w-4" aria-hidden="true" />
+        Text
+      </a>
+    </div>
+  </div>
+</details>
